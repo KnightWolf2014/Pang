@@ -1,0 +1,72 @@
+﻿  Game.cpp
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.h(35,15): error C2143: error de sintaxis: falta ';' delante de '*'
+  (compilando archivo de origen "Game.cpp")
+  
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.h(35,15): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
+  (compilando archivo de origen "Game.cpp")
+  
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.h(35,26): error C2238: símbolos (token) inesperados delante de ';'
+  (compilando archivo de origen "Game.cpp")
+  
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Game.h(11,1): warning C4005: 'SCREEN_WIDTH': redefinición de macro
+  (compilando archivo de origen "Game.cpp")
+  J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Menu.h(12,1):
+  vea la definición anterior de 'SCREEN_WIDTH'
+  
+  main.cpp
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.h(35,15): error C2143: error de sintaxis: falta ';' delante de '*'
+  (compilando archivo de origen "main.cpp")
+  
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.h(35,15): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
+  (compilando archivo de origen "main.cpp")
+  
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.h(35,26): error C2238: símbolos (token) inesperados delante de ';'
+  (compilando archivo de origen "main.cpp")
+  
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Game.h(11,1): warning C4005: 'SCREEN_WIDTH': redefinición de macro
+  (compilando archivo de origen "main.cpp")
+  J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Menu.h(12,1):
+  vea la definición anterior de 'SCREEN_WIDTH'
+  
+  Menu.cpp
+  Player.cpp
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.h(35,15): error C2143: error de sintaxis: falta ';' delante de '*'
+  (compilando archivo de origen "Player.cpp")
+  
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.h(35,15): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
+  (compilando archivo de origen "Player.cpp")
+  
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.h(35,26): error C2238: símbolos (token) inesperados delante de ';'
+  (compilando archivo de origen "Player.cpp")
+  
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Game.h(11,1): warning C4005: 'SCREEN_WIDTH': redefinición de macro
+  (compilando archivo de origen "Player.cpp")
+  J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Menu.h(12,1):
+  vea la definición anterior de 'SCREEN_WIDTH'
+  
+  Scene.cpp
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.h(35,15): error C2143: error de sintaxis: falta ';' delante de '*'
+  (compilando archivo de origen "Scene.cpp")
+  
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.h(35,15): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
+  (compilando archivo de origen "Scene.cpp")
+  
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.h(35,26): error C2238: símbolos (token) inesperados delante de ';'
+  (compilando archivo de origen "Scene.cpp")
+  
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Game.h(11,1): warning C4005: 'SCREEN_WIDTH': redefinición de macro
+  (compilando archivo de origen "Scene.cpp")
+  J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Menu.h(12,1):
+  vea la definición anterior de 'SCREEN_WIDTH'
+  
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(19,2): error C2065: 'background': identificador no declarado
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(28,6): error C2065: 'background': identificador no declarado
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(29,10): error C2065: 'background': identificador no declarado
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(29,3): error C2541: 'delete': no se pueden eliminar objetos que no sean punteros
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(41,3): error C2065: 'background': identificador no declarado
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(91,2): error C2065: 'background': identificador no declarado
+  ShadersClass.cpp
+  Sprite.cpp
+  TexturedQuad.cpp
+  TileMap.cpp
+  Generando código...
