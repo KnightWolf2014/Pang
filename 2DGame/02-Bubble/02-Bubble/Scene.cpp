@@ -35,7 +35,7 @@ void Scene::init(const int& level){
 	
 	currentTime = 0.0f;
 
-	cout << "level " << level << endl;
+	cout << "Level " << level << endl;
 
 	levels = new Levels();
 	levels->init(level);
