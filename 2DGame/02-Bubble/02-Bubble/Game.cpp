@@ -32,8 +32,6 @@ bool Game::update(int deltaTime)
 		if (viewType == 0 || viewType == 1) menu->update(deltaTime);
 	}
 
-	
-
 	return bPlay;
 }
 

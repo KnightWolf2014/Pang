@@ -1,7 +1,6 @@
 #ifndef _MENU_INCLUDE
 #define _MENU_INCLUDE
 
-//#include "ShaderProgramManager.h"
 #include <vector>
 #include <glm/glm.hpp>
 #include "TexturedQuad.h"

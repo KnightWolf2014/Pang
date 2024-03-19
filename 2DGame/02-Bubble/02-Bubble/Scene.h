@@ -7,7 +7,8 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "Levels.h"
-//#include <GL/glut.h>
+#include "UI.h"
+//#include "Text.h"
 
 
 // Scene contains all the entities of our game.
@@ -24,8 +25,7 @@ public:
 	void init(const int& level);
 	void update(int deltaTime);
 	void render();
-	void renderText(const std::string& text, float x, float y, float size, const glm::vec3& color);
-
+	
 private:
 	void initShaders();
 
@@ -33,6 +33,7 @@ private:
 	TileMap *map;
 	Player *player;
 	Levels *levels;
+	UI* ui;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;

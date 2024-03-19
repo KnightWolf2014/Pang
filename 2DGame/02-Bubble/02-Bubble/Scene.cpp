@@ -5,7 +5,6 @@
 #include "Game.h"
 
 
-
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
@@ -18,6 +17,7 @@ Scene::Scene()
 	map = NULL;
 	player = NULL;
 	levels = NULL;
+	ui = NULL;
 }
 
 Scene::~Scene()
@@ -28,6 +28,8 @@ Scene::~Scene()
 		delete player;
 	if (levels != NULL)
 		delete levels;
+	if (ui != NULL)
+		delete ui;
 }
 
 
@@ -39,6 +41,9 @@ void Scene::init(const int& level){
 
 	levels = new Levels();
 	levels->init(level);
+
+	ui = new UI();
+	ui->init(level);
 
 	initShaders();
 
@@ -64,6 +69,7 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+	ui->update(deltaTime);
 }
 
 void Scene::render()
@@ -80,22 +86,11 @@ void Scene::render()
 	levels->render();
 	map->render();
 	player->render();
+	ui->render();
 
-	//renderText("LONDON", 577, 640, 14, glm::vec3(1.f,1.f,1.f));
 }
 
-/*void Scene::renderText(const std::string& text, float x, float y, float size, const glm::vec3& color)
-{
-	glPointSize(size);
 
-	glColor3f(color.r, color.g, color.b);
-
-	glRasterPos2f(x, y);
-
-	for (char c : text) {
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, c);
-	}
-}*/
 
 void Scene::initShaders()
 {

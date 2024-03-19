@@ -1,7 +1,6 @@
 #ifndef _LEVELS_INCLUDE
 #define _LEVELS_INCLUDE
 
-//#include "ShaderProgramManager.h"
 #include <vector>
 #include <glm/glm.hpp>
 #include "TexturedQuad.h"

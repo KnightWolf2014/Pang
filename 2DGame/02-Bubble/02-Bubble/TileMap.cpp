@@ -225,5 +225,5 @@ bool TileMap::inStairs(const glm::ivec2& pos, const glm::ivec2& size) const {
 }
 
 bool TileMap::exitStairs(const glm::ivec2& pos, const glm::ivec2& size) const {
-
+	return true;
 }
