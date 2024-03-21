@@ -175,17 +175,14 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	x = (pos.x + size.x-1) / tileSize;
 	y0 = pos.y / tileSize;
 	y1 = (pos.y + size.y - 1) / tileSize;
-	for(int y=y0; y<=y1; y++)
-	{
+	for(int y=y0; y<=y1; y++) {
 		if ((map[y * mapSize.x + x] != 0) && (map[y * mapSize.x + x] != 2) && (map[y * mapSize.x + x] != 3) && (map[y * mapSize.x + x] != 4))
 			return true;
 	}
-	
 	return false;
 }
 
-bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const
-{
+bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const {
 	int x0, x1, y;
 	
 	x0 = pos.x / tileSize;
@@ -193,33 +190,28 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	y = (pos.y + size.y - 1) / tileSize;
 	for(int x=x0; x<=x1; x++)
 	{
-		if(map[y*mapSize.x+x] != 0)
-		{
-			if(*posY - tileSize * y + size.y <= 4)
-			{
-				*posY = tileSize * y - size.y;
-				return true;
-			}
+		if(map[y*mapSize.x+x] != 0 && *posY-tileSize*y+size.y <= 4) {
+			*posY = tileSize * y - size.y;
+			return true;
 		}
 	}
 	
 	return false;
 }
 
-bool TileMap::bubbleCollisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const
-{
-	int x0, x1, y;
+bool TileMap::collisionStairs(const glm::ivec2& pos, const glm::ivec2& size, int& posX) const {
 
-	x0 = pos.x / tileSize;
-	x1 = (pos.x + size.x - 1) / tileSize;
-	y = (pos.y + size.y - 1) / tileSize;
-	for (int x = x0; x <= x1; x++)
-	{
-		if (map[y * mapSize.x + x] != 0)
-		{
-			if (*posY - tileSize * y + size.y <= 4)
-			{
-				*posY = tileSize * y - size.y;
+	int x0, x1, y0, y1;
+
+	x0 = (pos.x) / tileSize -1;
+	x1 = (pos.x + size.x) / tileSize;
+	y0 = pos.y / tileSize;
+	y1 = (pos.y + size.y-1) / tileSize;
+
+	for (int y = y0; y <= y1; y++) {
+		for (int x = x0; x <= x1; ++x) {
+			if (map[y * mapSize.x + x] == 3 || map[y * mapSize.x + x] == 14) {
+				posX = x*tileSize-size.x/2;
 				return true;
 			}
 		}
@@ -228,25 +220,56 @@ bool TileMap::bubbleCollisionMoveDown(const glm::ivec2& pos, const glm::ivec2& s
 	return false;
 }
 
-bool TileMap::inStairs(const glm::ivec2& pos, const glm::ivec2& size) const {
+bool TileMap::exitUpStairs(const glm::ivec2& pos, const glm::ivec2& size) const {
 
 	int x0, x1, y0, y1;
 
 	x0 = pos.x / tileSize;
 	x1 = (pos.x + size.x - 1) / tileSize;
 	y0 = pos.y / tileSize;
-	y1 = (pos.y + size.y - 1) / tileSize;
+	y1 = (pos.y + size.y/2-4) / tileSize;
 
+	//Detectar que la meitat del cos esta fora
 	for (int y = y0; y <= y1; y++) {
 		for (int x = x0; x <= x1; ++x) {
-			if (map[y * mapSize.y + x] == 3)
-				return true;
+			if (map[y * mapSize.x + x] != 0) return false;
 		}
 	}
 
-	return false;
+	return true;
 }
 
-bool TileMap::exitStairs(const glm::ivec2& pos, const glm::ivec2& size) const {
-	return true;
+bool TileMap::exitDownStairs(const glm::ivec2& pos, const glm::ivec2& size) const {
+	int x0, x1, y0, y1;
+	bool colision, bodyOut;
+
+	x0 = pos.x / tileSize;
+	x1 = (pos.x + size.x - 1) / tileSize;
+	y0 = (pos.y + size.y/2) / tileSize;
+	y1 = (pos.y + size.y-1) / tileSize;
+
+	colision = false;
+	bodyOut = true;
+
+	//Detectar si hi ha colisio per sota
+	for (int x = x0; x <= x1; x++)
+	{
+		if (map[y1*mapSize.x+x] != 0 && map[y1*mapSize.x+x] != 2 && map[y1*mapSize.x+x] != 3 && map[y1*mapSize.x+x] != 4 && map[y1 * mapSize.x + x] != 13 && 
+			map[y1 * mapSize.x + x] != 14 && map[y1 * mapSize.x + x] != 15 && map[y1 * mapSize.x + x] != 21 && map[y1*mapSize.x + x] != 22 && pos.y-tileSize*y1+size.y <= 4) {
+			colision = true;
+			break;
+			
+		}
+	}
+
+	//Detectar que la meitat del cos esta fora
+	for (int y = y0; y <= y1; y++) {
+		for (int x = x0; x <= x1; ++x) {
+			if (map[y * mapSize.x + x] != 0) {
+				bodyOut = false;
+				break;
+			}
+		}
+	}
+	return colision || bodyOut;
 }

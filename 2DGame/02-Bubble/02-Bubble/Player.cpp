@@ -4,30 +4,29 @@
 #include "Player.h"
 #include "Game.h"
 
-
-#define JUMP_ANGLE_STEP 4
-#define JUMP_HEIGHT 96
 #define FALL_STEP 4
+#define TIME_EXIT_STAIRS 150
 
-
-enum PlayerAnims
-{
-	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, SHOOTING, MOVE_UP, MOVE_DOWN
+enum PlayerAnims {
+	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, SHOOTING_LEFT, SHOOTING_RIGHT, MOVE_UP, MOVE_DOWN, EXIT_STAIRS
 };
 
 
-void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
-{
+void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	falling = true;
+	inStairs = false;
+	activeExitStairs = false;
+	timerExitStairs = TIME_EXIT_STAIRS;
+
 	spritesheet.loadFromFile("images/playerSheet.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(96, 96), glm::vec2(0.20, 0.20), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(7);
+	sprite->setNumberAnimations(9);
 	
 		sprite->setAnimationSpeed(STAND_LEFT, 16);
 		sprite->addKeyframe(STAND_LEFT, glm::vec2(0.6f, 0.f));
 		
 		sprite->setAnimationSpeed(STAND_RIGHT, 16);
-		sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.6f, 0.f));
+		sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.8f, 0.f));
 		
 		sprite->setAnimationSpeed(MOVE_LEFT, 16);
 		sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.2f, 0.f));
@@ -43,8 +42,11 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0., 0.6f));
 		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0., 0.8f));
 
-		sprite->setAnimationSpeed(SHOOTING, 16);
-		sprite->addKeyframe(SHOOTING, glm::vec2(0.6f, 0.2f));
+		sprite->setAnimationSpeed(SHOOTING_LEFT, 16);
+		sprite->addKeyframe(SHOOTING_LEFT, glm::vec2(0.6f, 0.2f));
+
+		sprite->setAnimationSpeed(SHOOTING_RIGHT, 16);
+		sprite->addKeyframe(SHOOTING_RIGHT, glm::vec2(0.8f, 0.2f));
 
 		sprite->setAnimationSpeed(MOVE_UP, 16);
 		sprite->addKeyframe(MOVE_UP, glm::vec2(0.4f, 0.0f));
@@ -56,84 +58,132 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 		sprite->addKeyframe(MOVE_DOWN, glm::vec2(0.4f, 0.2f));
 		sprite->addKeyframe(MOVE_DOWN, glm::vec2(0.4f, 0.0f));
 
+		sprite->setAnimationSpeed(EXIT_STAIRS, 16);
+		sprite->addKeyframe(EXIT_STAIRS, glm::vec2(0.4f, 0.6f));
 
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + 3*posPlayer.x), float(tileMapDispl.y + 3*posPlayer.y)));
-	
 }
 
 void Player::update(int deltaTime)
 {
 
 	sprite->update(deltaTime);
-	if(Game::instance().getKey(GLFW_KEY_LEFT))
-	{
-		if(sprite->animation() != MOVE_LEFT)
+
+	if (activeExitStairs) {
+		if (timerExitStairs < 0) {
+			timerExitStairs = TIME_EXIT_STAIRS;
+			playerOrientation();
+			activeExitStairs = false;
+		}
+		timerExitStairs -= deltaTime;
+	}
+	
+	// DISPARAR
+	if (Game::instance().getKey(GLFW_KEY_SPACE) && !inStairs && !activeExitStairs) {
+		if (left_orientation && sprite->animation() != SHOOTING_LEFT)
+			sprite->changeAnimation(SHOOTING_LEFT);
+		else if (right_orientation && sprite->animation() != SHOOTING_RIGHT)
+			sprite->changeAnimation(SHOOTING_RIGHT);
+
+	// MOURE ESQUERRA
+	} else if (Game::instance().getKey(GLFW_KEY_LEFT) && !inStairs && !activeExitStairs) {
+		posPlayer.x -= 4;
+
+		left_orientation = true;
+		right_orientation = false;
+
+		if (sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
-		posPlayer.x -= 8;
-		if(map->collisionMoveLeft(posPlayer, glm::ivec2(96, 96)))
-		{
-			posPlayer.x += 8;
+
+		if (map->collisionMoveLeft(posPlayer, glm::ivec2(96, 96))) {
+			posPlayer.x += 4;
 			sprite->changeAnimation(STAND_LEFT);
 		}
-	}
-	else if(Game::instance().getKey(GLFW_KEY_RIGHT))
-	{
-		if(sprite->animation() != MOVE_RIGHT)
+		
+	// MOURE DRETA
+	} else if(Game::instance().getKey(GLFW_KEY_RIGHT) && !inStairs && !activeExitStairs) {
+		posPlayer.x += 4;
+
+		left_orientation = false;
+		right_orientation = true;
+		
+		if (sprite->animation() != MOVE_RIGHT)
 			sprite->changeAnimation(MOVE_RIGHT);
-		posPlayer.x += 8;
-		if(map->collisionMoveRight(posPlayer, glm::ivec2(96, 96)))
-		{
-			posPlayer.x -= 8;
+
+		if (map->collisionMoveRight(posPlayer, glm::ivec2(96, 96))) {
+			posPlayer.x -= 4;
 			sprite->changeAnimation(STAND_RIGHT);
 		}
-	}
 
-	//ARREGLAR ESCALERAS!!!
-	else if (Game::instance().getKey(GLFW_KEY_UP)) {
-		if (map->inStairs(posPlayer, glm::ivec2(96, 96))) {
-			posPlayer.y -= 8;
-			sprite->changeAnimation(MOVE_UP);
+	// MOURE AMUNT
+	} else if (Game::instance().getKey(GLFW_KEY_UP) && !activeExitStairs) {
+
+		//Aixo ho fem per evitar moure el personatge abans de saber que fara
+		glm::ivec2 posAux = posPlayer;
+		int newPos;
+		posAux.y -= 4;
+
+		//Sortir d'escales
+		if (inStairs && map->exitUpStairs(posAux, glm::ivec2(96, 96))) {
+			inStairs = false;
+			activeExitStairs = true;
+			posPlayer.y = posPlayer.y - 96/2 -4;
+			sprite->changeAnimation(EXIT_STAIRS);
+		
+		//Pujar escales
+		} else if (map->collisionStairs(posAux, glm::ivec2(96, 96), newPos)) {
+			inStairs = true;
+			posPlayer.y -= 4; //Aquest -4 s'ha afegit perque es detecta 4 pixels abans quan ha de pujar escales. Es per evitar bug d'animacio!
+			posPlayer.x = newPos; //Ajustar posicio del jugador a l'escala
+			if (sprite->animation() != MOVE_UP) sprite->changeAnimation(MOVE_UP);
 		}
-		//posPlayer.y -= 8;
-	}
-	else if (Game::instance().getKey(GLFW_KEY_DOWN)) {
-		if (map->inStairs(posPlayer, glm::ivec2(96, 96))) {
-			posPlayer.y += 8;
-			sprite->changeAnimation(MOVE_DOWN);
+		
+	// MOURE A BAIX
+	} else if (Game::instance().getKey(GLFW_KEY_DOWN) && !activeExitStairs) {
+
+		//Aixo ho fem per evitar moure el personatge abans de saber que fara
+		glm::ivec2 posAux = posPlayer;
+		posAux.y += 4;
+		
+		int newPos;
+		bool collisionPostMove = map->collisionStairs(posAux, glm::ivec2(96, 96), newPos);
+		bool exitStairs = map->exitDownStairs(posAux, glm::ivec2(96, 96));
+
+		//Pot baixar escales
+		if (collisionPostMove && !exitStairs) {
+
+			//Entra a les escales per amunt o segueix baixant
+			if (!inStairs) posPlayer.y += (96/2);
+			else posPlayer.y += 4;
+			
+			posPlayer.x = newPos; //Ajustar posicio del jugador a l'escala
+			inStairs = true;
+			if (sprite->animation() != MOVE_DOWN) sprite->changeAnimation(MOVE_DOWN);
+
+		//No pot baixar escales o surt d'elles
+		} else if (exitStairs){
+			inStairs = false;
+			activeExitStairs = true;
+			playerOrientation();
 		}
-	}
 
 
-	else if (Game::instance().getKey(GLFW_KEY_SPACE))
-	{
-		if (sprite->animation() != SHOOTING)
-			sprite->changeAnimation(SHOOTING);
-		/*else {
-			sprite->changeAnimation(STAND_RIGHT);
-		}*/
+	} else if (!activeExitStairs) {
+		if (!inStairs) playerOrientation();
+		else sprite->update(-deltaTime);
 	}
 	
-	else{
-		if(sprite->animation() == MOVE_LEFT)
-			sprite->changeAnimation(STAND_LEFT);
-		else if(sprite->animation() == MOVE_RIGHT)
-			sprite->changeAnimation(STAND_RIGHT);
-	}
-	
-	if(!falling)
-	{
-		if (!map->collisionMoveDown(posPlayer, glm::ivec2(96, 96), &posPlayer.y))
-		{
-			falling = true;
-		}
-	}
-	else
-	{
+	//CODI DE CAIGUDA DEL PERSONATGE
+	if (!falling && !inStairs && !map->collisionMoveDown(posPlayer, glm::ivec2(96, 96), &posPlayer.y)) {
+			falling = true;	
+
+	} else if (!inStairs){
+
 		posPlayer.y += FALL_STEP;
-		if(map->collisionMoveDown(posPlayer, glm::ivec2(96, 96), &posPlayer.y))
-		{
+
+		if(map->collisionMoveDown(posPlayer, glm::ivec2(96, 96), &posPlayer.y)) {
 			falling = false;
 		}
 	}
@@ -157,6 +207,14 @@ void Player::setPosition(const glm::vec2 &pos)
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
+void Player::playerOrientation() {
+	if (left_orientation && sprite->animation() != STAND_LEFT) {
+		sprite->changeAnimation(STAND_LEFT);
+	
+	} else if (right_orientation && sprite->animation() != STAND_RIGHT) {
+		sprite->changeAnimation(STAND_RIGHT);
+	}
+}
 
 
 

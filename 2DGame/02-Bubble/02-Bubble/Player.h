@@ -22,12 +22,16 @@ public:
 	void setPosition(const glm::vec2 &pos);
 	
 private:
-	bool falling;
+	bool falling, inStairs, activeExitStairs,left_orientation, right_orientation;
 	glm::ivec2 tileMapDispl, posPlayer;
 	int jumpAngle, startY;
+	int timerExitStairs;
+
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
+
+	void playerOrientation();
 
 };
 
