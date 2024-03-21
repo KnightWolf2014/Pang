@@ -33,10 +33,10 @@ public:
 	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const;
+	bool collisionStairs(const glm::ivec2& pos, const glm::ivec2& size, int &posX) const;
+	bool exitDownStairs(const glm::ivec2& pos, const glm::ivec2& size) const;
+	bool exitUpStairs(const glm::ivec2& pos, const glm::ivec2& size) const;
 
-	bool inStairs(const glm::ivec2& pos, const glm::ivec2& size) const;
-	bool exitStairs(const glm::ivec2& pos, const glm::ivec2& size) const;
-	
 private:
 	bool loadLevel(const string &levelFile);
 	void prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program);
