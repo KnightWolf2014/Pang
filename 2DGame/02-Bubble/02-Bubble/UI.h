@@ -28,14 +28,14 @@ private:
 	void initShaders();
 
 private:
-	float currentTime, timeAccumulator;
+	float currentTime, timeAccumulatorCoin, timeAccumulatorTimer;
 	bool showInsertCoin;
 	Quad* quad;
 	Texture texs[2];
 	TexturedQuad* texQuad[3];
 	glm::mat4 projection;
 	Texture scene, level1, level2, level3;
-	int game_ui;
+	int game_ui, timer, timerInverse;
 
 	ShaderProgram texProgram, simpleProgram;
 	Text text;

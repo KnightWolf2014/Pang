@@ -1,6 +1,7 @@
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
 #include "UI.h"
+#include <string>
 
 UI::UI() {
 	quad = NULL;
@@ -26,7 +27,9 @@ void UI::init(const int& level) {
 	initShaders();
 
 	currentTime = 0.0f;
-	timeAccumulator = 0.0f;
+	timeAccumulatorCoin = 0.0f;
+	timeAccumulatorTimer = 0.0f;
+	timerInverse = 90;
 	showInsertCoin = false;
 
 	texCoords[0] = glm::vec2(0.f, 0.f); texCoords[1] = glm::vec2(1.f, 1.f);
@@ -49,7 +52,8 @@ void UI::init(const int& level) {
 
 void UI::update(int deltaTime) {
 	currentTime += deltaTime;
-	timeAccumulator += deltaTime;
+	timeAccumulatorCoin += deltaTime;
+	timeAccumulatorTimer += deltaTime;
 }
 
 void UI::render() {
@@ -81,7 +85,18 @@ void UI::render() {
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[2]->render(texs[0]);
 
+	if (timeAccumulatorTimer >= 1000) {
+		timer++;
+		timeAccumulatorTimer = 0;
+	}
 
+	if (timerInverse >= 0) timerInverse -= timer;
+
+	std::string temp = std::to_string(timerInverse);
+	std::string timeScreen = "TIME: " + temp;
+
+
+	text.render(timeScreen, glm::vec2(CAMERA_WIDTH - 270, 65), 50, glm::vec4(1, 1, 1, 1));
 
 
 	if (game_ui == 1){
@@ -104,9 +119,9 @@ void UI::render() {
 
 	text.render("PLAYER-2", glm::vec2(CAMERA_WIDTH - 300, CAMERA_HEIGHT - 90), 32, glm::vec4(1, 1, 1, 1));
 
-	if (timeAccumulator >= 500.0f) {
+	if (timeAccumulatorCoin >= 500.0f) {
 		showInsertCoin = !showInsertCoin;
-		timeAccumulator = 0.0f;
+		timeAccumulatorCoin = 0.0f;
 	}
 	if (showInsertCoin) text.render("INSERT COIN", glm::vec2(CAMERA_WIDTH - 300, CAMERA_HEIGHT - 40), 26, glm::vec4(1, 1, 1, 1));
 }

@@ -45,6 +45,7 @@ void Scene::init(const int& level){
 	ui = new UI();
 	ui->init(level);
 
+
 	initShaders();
 
 	if (level == 1) {
@@ -61,6 +62,17 @@ void Scene::init(const int& level){
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	player->setTileMap(map);
+
+
+	bubble = new Bubble();
+	bubble->init(glm::ivec2(0, 0), texProgram);
+	if (level == 1) {
+
+		bubble->setPosition(glm::vec2(4 * map->getTileSize(), 2 * map->getTileSize()));
+		bubble->setTileMap(map);
+	}
+
+
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH), float(SCREEN_HEIGHT), 0.f);
 
 }
@@ -69,6 +81,7 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+	bubble->update(deltaTime);
 	ui->update(deltaTime);
 }
 
@@ -86,6 +99,7 @@ void Scene::render()
 	levels->render();
 	map->render();
 	player->render();
+	bubble->render();
 	ui->render();
 
 }

@@ -33,6 +33,7 @@ public:
 	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const;
+	bool bubbleCollisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 
 	bool inStairs(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool exitStairs(const glm::ivec2& pos, const glm::ivec2& size) const;

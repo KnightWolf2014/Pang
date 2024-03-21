@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Levels.h"
 #include "UI.h"
+#include "Bubble.h"
 //#include "Text.h"
 
 
@@ -33,7 +34,8 @@ private:
 	TileMap *map;
 	Player *player;
 	Levels *levels;
-	UI* ui;
+	Bubble *bubble;
+	UI *ui;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
