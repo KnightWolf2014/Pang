@@ -4,8 +4,7 @@
 #include "Bubble.h"
 
 
-#define JUMP_ANGLE_STEP 4
-#define JUMP_HEIGHT 96
+#define JUMP_ANGLE_STEP 1
 #define FALL_STEP 4
 
 
@@ -15,11 +14,27 @@ enum BubbleAnims
 };
 
 
-void Bubble::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
+void Bubble::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, int type)
 {
 	falling = false;
-	spritesheet.loadFromFile("images/BubbleRock.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(128, 128), glm::vec2(1, 1), &spritesheet, &shaderProgram);
+
+	movement = true;
+
+	jumpAngle = 90;
+	startY = 472;
+	direction = 0;
+	alturaMax = 72;
+
+
+	if (type == 1) tamany = glm::ivec2(128, 128);
+	if (type == 2) tamany = glm::ivec2(64, 64);
+	if (type == 3) tamany = glm::ivec2(32, 32);
+	if (type == 4) tamany = glm::ivec2(16, 16);
+
+
+	spritesheet.loadFromFile("images/bubbleRock.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	
+	sprite = Sprite::createSprite(tamany, glm::vec2(1, 1), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(4);
 
 	sprite->setAnimationSpeed(FASEONE, 16);
@@ -34,32 +49,99 @@ void Bubble::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 void Bubble::update(int deltaTime)
 {
-	sprite->update(deltaTime);
+	sprite->update(deltaTime); 
 
-	if (falling)
-	{
-		jumpAngle += JUMP_ANGLE_STEP;
-		if (jumpAngle == 180)
+	cout << "posBubble.y: " << posBubble.y << endl;
+	cout << "jumpAngle: " << jumpAngle << endl;
+
+	//if (!falling)
+	//{
+
+
+		if (map->bubbleCollisionMoveUp(posBubble, tamany, &posBubble.y))
 		{
-			falling = false;
-			posBubble.y = startY;
+			cout << "UUUUUUUUUUUUUUUUUUUUUUP" << endl;
+			//falling = false;
+			jumpAngle = 90;
+			if (alturaMax >= 72) alturaMax = posBubble.y;
+			else alturaMax = 72;
+
 		}
-		else
+
+
+		if (map->bubbleCollisionFloor(posBubble, tamany, &posBubble.y))
 		{
-			posBubble.y = int(startY - 400 * sin(3.14159f * jumpAngle / 180.f));
-			if (jumpAngle > 90)
-				falling = !map->bubbleCollisionMoveDown(posBubble, glm::ivec2(128, 128), &posBubble.y);
+			alturaMax = 72;
 		}
-	}
-	else
+
+		//
+		//
+		//crec que l'error hi es aqui, ja que al ficarse a 90 de cop el jumpAngle al tocar un sostre, el jumpAngle s'hauria de modificar
+		//
+		//
+		float alturaAux;
+		if (startY > alturaMax) {
+			alturaAux = (startY - alturaMax) * 45 / 400;
+		}
+		else {
+			alturaAux = (alturaMax - startY) * 45 / 400;
+		}
+		float jump = 90 / alturaAux;
+
+
+		jumpAngle += ceil(jump);
+
+		/*if (jumpAngle >= 180) {
+				falling = true;
+				posBubble.y = startY;
+		}
+		else {*/
+
+			int alturaProv = int(startY - 400 * sin(3.14159f * jumpAngle / 180.f));
+			cout << "startY: " << startY << endl;
+			cout << "alturaProv: " << alturaProv << endl;
+			cout << "alturaMax: " << alturaMax << endl;
+
+			if (alturaProv >= alturaMax) {
+				cout << "if" << endl;
+				posBubble.y = alturaProv;
+			}
+			else {
+				cout << "else" << endl;
+				if (jumpAngle < 90) {
+					jumpAngle = 90;
+				}
+				posBubble.y = alturaMax;
+			}
+
+			
+			if ((jumpAngle > 90) && map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y)) {
+				jumpAngle = 0;
+				startY = posBubble.y;
+			}
+			
+		//}
+	/* }
+	else 
 	{
 		posBubble.y += FALL_STEP;
-		if (map->bubbleCollisionMoveDown(posBubble, glm::ivec2(128, 128), &posBubble.y))
+		if (map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y))
 		{
-			falling = true;
-			jumpAngle = 0;
-			startY = posBubble.y;
+			falling = false;
+
 		}
+	}*/
+
+	if (direction == 0) posBubble.x += 4;
+	else posBubble.x -= 4;
+
+	if (map->bubbleCollisionMoveRight(posBubble, tamany, &posBubble.x)) {
+		posBubble.x -= 4;
+		direction = 1;
+	}
+	if (map->bubbleCollisionMoveLeft(posBubble, tamany, &posBubble.x)) {
+		posBubble.x += 4;
+		direction = 0;
 	}
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBubble.x), float(tileMapDispl.y + posBubble.y)));

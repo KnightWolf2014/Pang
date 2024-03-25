@@ -199,6 +199,171 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	return false;
 }
 
+bool TileMap::bubbleCollisionFloor(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const {
+	int x0, x1, y0, y1;
+
+	x0 = pos.x / tileSize;
+	x1 = (pos.x + size.x - 1) / tileSize;
+	y0 = pos.y / tileSize;
+	y1 = (pos.y + size.y - 1) / tileSize;
+
+	int yMedio = (y0 + y1) / 2;
+
+	for (int y = yMedio; y <= y1; y++) {
+		for (int x = x0; x <= x1; x++) {
+
+			int dx = pos.x + size.x / 2 - (x * tileSize + tileSize / 2);
+			int dy = pos.y + size.y / 2 - (y * tileSize + tileSize / 2);
+			int distanceSquared = dx * dx + dy * dy;
+
+			int radiusSquared = (size.x / 2) * (size.x / 2);
+			if (distanceSquared <= radiusSquared) {
+				if (map[y * mapSize.x + x] != 1) {
+					int collisionY = (y)*tileSize - size.y - 1;
+					if (*posY + size.y > collisionY) {
+						*posY = collisionY;
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+bool TileMap::bubbleCollisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const {
+	int x0, x1, y0, y1;
+
+	x0 = pos.x / tileSize;
+	x1 = (pos.x + size.x - 1) / tileSize;
+	y0 = pos.y / tileSize;
+	y1 = (pos.y + size.y - 1) / tileSize;
+
+	int yMedio = (y0 + y1) / 2;
+
+	for (int y = yMedio; y <= y1; y++) {
+		for (int x = x0; x <= x1; x++) {
+
+			int dx = pos.x + size.x / 2 - (x * tileSize + tileSize / 2);
+			int dy = pos.y + size.y / 2 - (y * tileSize + tileSize / 2);
+			int distanceSquared = dx * dx + dy * dy;
+
+			int radiusSquared = (size.x / 2) * (size.x / 2);
+			if (distanceSquared <= radiusSquared) {
+				if (map[y * mapSize.x + x] != 0 && map[y * mapSize.x + x] != 2 && map[y * mapSize.x + x] != 3 && map[y * mapSize.x + x] != 4) {
+					int collisionY = (y) * tileSize - size.y - 1;
+					if (*posY + size.y > collisionY) {
+						*posY = collisionY;
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+bool TileMap::bubbleCollisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, int* posX) const {
+	int x0, x1, y0, y1;
+
+	x0 = pos.x / tileSize;
+	x1 = (pos.x + size.x - 1) / tileSize;
+	y0 = pos.y / tileSize;
+	y1 = (pos.y + size.y - 1) / tileSize;
+
+	int xMedio = (x0 + x1) / 2;
+
+	for (int x = xMedio; x <= x1; x++) {
+		for (int y = y0; y <= y1; y++) {
+
+			int dx = pos.x + size.x / 2 - (x * tileSize + tileSize / 2);
+			int dy = pos.y + size.y / 2 - (y * tileSize + tileSize / 2);
+			int distanceSquared = dx * dx + dy * dy; 
+
+			int radiusSquared = (size.x / 2) * (size.x / 2);
+			if (distanceSquared <= radiusSquared) {
+				if (map[y * mapSize.x + x] != 0 && map[y * mapSize.x + x] != 2 && map[y * mapSize.x + x] != 3 && map[y * mapSize.x + x] != 4) {
+					int collisionX = x * tileSize - size.x - 1;
+					if (*posX + size.x > collisionX) {
+						*posX = collisionX;
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+bool TileMap::bubbleCollisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const {
+	int x0, x1, y0, y1;
+
+	x0 = pos.x / tileSize;
+	x1 = (pos.x + size.x - 1) / tileSize;
+	y0 = pos.y / tileSize;
+	y1 = (pos.y + size.y - 1) / tileSize;
+
+	int yMedio = (y0 + y1) / 2;
+
+	for (int y = yMedio; y >= y0; y--) {
+		for (int x = x0; x <= x1; x++) {
+
+			int dx = pos.x + size.x / 2 - (x * tileSize + tileSize / 2);
+			int dy = pos.y + size.y / 2 - (y * tileSize + tileSize / 2);
+			int distanceSquared = dx * dx + dy * dy;
+
+			int radiusSquared = (size.x / 2) * (size.x / 2);
+			if (distanceSquared <= radiusSquared) {
+				if (map[y * mapSize.x + x] != 0 && map[y * mapSize.x + x] != 2 && map[y * mapSize.x + x] != 3 && map[y * mapSize.x + x] != 4) {
+					int collisionY = (y + 1) * tileSize + 1;
+					if (*posY < collisionY) {
+						*posY = collisionY;
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+bool TileMap::bubbleCollisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, int* posX) const {
+	int x0, x1, y0, y1;
+
+	x0 = pos.x / tileSize;
+	x1 = (pos.x + size.x - 1) / tileSize;
+	y0 = pos.y / tileSize;
+	y1 = (pos.y + size.y - 1) / tileSize;
+
+	int xMedio = (x0 + x1) / 2;
+
+	for (int x = xMedio; x >= x0; x--) {
+		for (int y = y0; y <= y1; y++) {
+
+			int dx = pos.x + size.x / 2 - (x * tileSize + tileSize / 2);
+			int dy = pos.y + size.y / 2 - (y * tileSize + tileSize / 2);
+			int distanceSquared = dx * dx + dy * dy;
+
+			int radiusSquared = (size.x / 2) * (size.x / 2);
+			if (distanceSquared <= radiusSquared) {
+				if (map[y * mapSize.x + x] != 0 && map[y * mapSize.x + x] != 2 && map[y * mapSize.x + x] != 3 && map[y * mapSize.x + x] != 4) {
+					int collisionX = (x + 1) * tileSize + 1;
+					if (*posX < collisionX) {
+						*posX = collisionX;
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
 bool TileMap::collisionStairs(const glm::ivec2& pos, const glm::ivec2& size, int& posX) const {
 
 	int x0, x1, y0, y1;

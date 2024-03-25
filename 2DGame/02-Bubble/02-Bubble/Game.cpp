@@ -14,6 +14,10 @@ void Game::init()
 	bPlay = true, start = false;
 	viewType = 0, level = 0;
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
+
+	SoundProgram::instance().init();
+	engine = SoundProgram::instance().getSoundEngine();
+
 	
 	menu = new Menu();
 	menu->init(viewType);
@@ -29,7 +33,7 @@ bool Game::update(int deltaTime)
 		}
 	}
 	else {
-		if (viewType == 0 || viewType == 1) menu->update(deltaTime);
+		if (viewType == 0) menu->update(deltaTime);
 	}
 
 	return bPlay;
@@ -57,6 +61,7 @@ void Game::keyPressed(int key)
 		else {
 			viewType = 0;
 			start = false;
+			engine->removeAllSoundSources();
 			menu->init(viewType);
 		}
 	}

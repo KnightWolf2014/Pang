@@ -9,7 +9,11 @@
 #include "Levels.h"
 #include "UI.h"
 #include "Bubble.h"
-//#include "Text.h"
+#include "Text.h"
+#include "SoundProgram.h"
+#include <irrKlang.h>
+using namespace irrklang;
+
 
 
 // Scene contains all the entities of our game.
@@ -39,6 +43,8 @@ private:
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
+	ISoundEngine* engine;
+	Text text;
 
 };
 

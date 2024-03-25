@@ -1,9 +1,12 @@
-#include <iostream>
+
 #include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
 #include "Game.h"
+#include <chrono>
+#include <thread>
 
+#include <iostream>
 
 #define SCREEN_X 0
 #define SCREEN_Y 0
@@ -18,6 +21,9 @@ Scene::Scene()
 	player = NULL;
 	levels = NULL;
 	ui = NULL;
+	bubble = NULL;
+
+	engine = SoundProgram::instance().getSoundEngine();
 }
 
 Scene::~Scene()
@@ -30,6 +36,8 @@ Scene::~Scene()
 		delete levels;
 	if (ui != NULL)
 		delete ui;
+	if (bubble != NULL)
+		delete bubble;
 }
 
 
@@ -38,6 +46,8 @@ void Scene::init(const int& level){
 	currentTime = 0.0f;
 
 	cout << "Level " << level << endl;
+
+	engine = SoundProgram::instance().getSoundEngine();
 
 	levels = new Levels();
 	levels->init(level);
@@ -63,17 +73,47 @@ void Scene::init(const int& level){
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	player->setTileMap(map);
 
+	//if (!text.init("fonts/DroidSerif.ttf"))
+	//	cout << "Could not load font!!!" << endl;
 
-	bubble = new Bubble();
-	bubble->init(glm::ivec2(0, 0), texProgram);
+	//text.render("READY", glm::vec2(50, CAMERA_HEIGHT - 90), 40, glm::vec4(1, 1, 1, 1));
+
 	if (level == 1) {
-
+		bubble = new Bubble();
+		bubble->init(glm::ivec2(0, 0), texProgram, 1);
 		bubble->setPosition(glm::vec2(4 * map->getTileSize(), 2 * map->getTileSize()));
 		bubble->setTileMap(map);
+
+
+		engine->removeAllSoundSources();
+		engine->play2D("sounds/MtFuji.mp3");
+
+	}
+	if (level == 2) {
+		bubble = new Bubble();
+		bubble->init(glm::ivec2(0, 0), texProgram, 1);
+		bubble->setPosition(glm::vec2(4 * map->getTileSize(), 2 * map->getTileSize()));
+		bubble->setTileMap(map);
+
+		engine->removeAllSoundSources();
+		engine->play2D("sounds/London.mp3");
+	}
+	if (level == 3) {
+		bubble = new Bubble();
+		bubble->init(glm::ivec2(0, 0), texProgram, 1);
+		bubble->setPosition(glm::vec2(4 * map->getTileSize(), 2 * map->getTileSize()));
+		bubble->setTileMap(map);
+
+		engine->removeAllSoundSources();
+		engine->play2D("sounds/Barcelona.mp3");
 	}
 
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH), float(SCREEN_HEIGHT), 0.f);
+
+	// Hem de mirar on colocar aixo (per coordinar la música)
+	//
+	//this_thread::sleep_for(chrono::milliseconds(2000));
 
 }
 

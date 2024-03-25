@@ -14,6 +14,8 @@ Menu::~Menu() {
 void Menu::init(const int& viewType) {
 
 	currentTime = 0.0f;
+	timeAccumulatorCoin = 0.0f;
+	showInsertCoin = false;
 
 	initShaders();
 
@@ -32,10 +34,14 @@ void Menu::init(const int& viewType) {
 	scene.setMagFilter(GL_NEAREST);
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH), float(SCREEN_HEIGHT), 0.f);
+
+	if (!text.init("fonts/DroidSerif.ttf"))
+		cout << "Could not load font!!!" << endl;
 }
 
 void Menu::update(int deltaTime) {
 	currentTime += deltaTime;
+	timeAccumulatorCoin += deltaTime;
 
 }
 
@@ -51,6 +57,12 @@ void Menu::render() {
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 
 	background->render(scene);
+
+	if (timeAccumulatorCoin >= 500.0f) {
+		showInsertCoin = !showInsertCoin;
+		timeAccumulatorCoin = 0.0f;
+	}
+	if (showInsertCoin) text.render("INSERT COIN [space]", glm::vec2(330, 600), 52, glm::vec4(1, 0.5, 0, 1));
 }
 
 void Menu::initShaders()

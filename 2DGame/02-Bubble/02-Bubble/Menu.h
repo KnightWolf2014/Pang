@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include "TexturedQuad.h"
 #include "ShaderProgram.h"
+#include "Text.h"
 
 #define SCREEN_WIDTH 1152
 #define SCREEN_HEIGHT 624
@@ -22,12 +23,14 @@ private:
 	void initShaders();
 
 private:
-	float currentTime;
+	float currentTime, timeAccumulatorCoin;
+	bool showInsertCoin;
 	TexturedQuad *background;
 	glm::mat4 projection;
 	Texture scene, menu, instructions;
 
 	ShaderProgram texProgram;
+	Text text;
 };
 
 #endif // _MENU_INCLUDE

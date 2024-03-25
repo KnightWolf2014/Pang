@@ -5,7 +5,7 @@
 #include <GLFW/glfw3.h>
 #include "Scene.h"
 #include "Menu.h"
-//#include "Text.h"
+#include "SoundProgram.h"
 
 
 #define SCREEN_WIDTH 1152
@@ -55,7 +55,7 @@ private:
 							    // we can have access at any time
 	Scene *scene;
 	Menu *menu;
-	//Text text;
+	ISoundEngine* engine;
 
 };
 

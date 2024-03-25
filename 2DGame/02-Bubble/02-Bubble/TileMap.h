@@ -31,8 +31,13 @@ public:
 	int getTileSize() const { return tileSize; }
 
 	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
+	bool bubbleCollisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size, int* posX) const;
 	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;
+	bool bubbleCollisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size, int* posX) const;
 	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const;
+	bool bubbleCollisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
+	bool bubbleCollisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
+	bool bubbleCollisionFloor(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 	bool collisionStairs(const glm::ivec2& pos, const glm::ivec2& size, int &posX) const;
 	bool exitDownStairs(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool exitUpStairs(const glm::ivec2& pos, const glm::ivec2& size) const;
