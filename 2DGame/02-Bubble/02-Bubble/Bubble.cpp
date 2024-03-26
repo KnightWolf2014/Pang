@@ -47,90 +47,70 @@ void Bubble::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, in
 
 }
 
+int Bubble::getPosX() {
+	return posBubble.x;
+}
+
+int Bubble::getPosY() {
+	return posBubble.y;
+}
+
+int Bubble::getSize() {
+	return tamany.x;
+}
+
 void Bubble::update(int deltaTime)
 {
 	sprite->update(deltaTime); 
 
-	cout << "posBubble.y: " << posBubble.y << endl;
-	cout << "jumpAngle: " << jumpAngle << endl;
-
-	//if (!falling)
-	//{
+	//cout << "posBubble.y: " << posBubble.y << endl;
+	//cout << "jumpAngle: " << jumpAngle << endl;
 
 
-		if (map->bubbleCollisionMoveUp(posBubble, tamany, &posBubble.y))
-		{
-			cout << "UUUUUUUUUUUUUUUUUUUUUUP" << endl;
-			//falling = false;
+	if (map->bubbleCollisionMoveUp(posBubble, tamany, &posBubble.y)) {
+		//cout << "UUUUUUUUUUUUUUUUUUUUUUP" << endl;
+		jumpAngle = 90;
+		if (alturaMax >= 72) alturaMax = posBubble.y;
+		else alturaMax = 72;
+	}
+
+	if (map->bubbleCollisionFloor(posBubble, tamany, &posBubble.y)) {
+		alturaMax = 72;
+	}
+
+	float alturaAux;
+	if (startY > alturaMax) {
+		alturaAux = (startY - alturaMax) * 45 / 400;
+	}
+	else {
+		alturaAux = (alturaMax - startY) * 45 / 400;
+	}
+	float jump = 90 / alturaAux;
+
+	jumpAngle += ceil(jump);
+
+	int alturaProv = int(startY - 400 * sin(3.14159f * jumpAngle / 180.f));
+	//cout << "startY: " << startY << endl;
+	//cout << "alturaProv: " << alturaProv << endl;
+	//cout << "alturaMax: " << alturaMax << endl;
+
+	if (alturaProv >= alturaMax) {
+		//cout << "if" << endl;
+		posBubble.y = alturaProv;
+	}
+	else {
+		//cout << "else" << endl;
+		if (jumpAngle < 90) {
 			jumpAngle = 90;
-			if (alturaMax >= 72) alturaMax = posBubble.y;
-			else alturaMax = 72;
-
 		}
-
-
-		if (map->bubbleCollisionFloor(posBubble, tamany, &posBubble.y))
-		{
-			alturaMax = 72;
-		}
-
-		//
-		//
-		//crec que l'error hi es aqui, ja que al ficarse a 90 de cop el jumpAngle al tocar un sostre, el jumpAngle s'hauria de modificar
-		//
-		//
-		float alturaAux;
-		if (startY > alturaMax) {
-			alturaAux = (startY - alturaMax) * 45 / 400;
-		}
-		else {
-			alturaAux = (alturaMax - startY) * 45 / 400;
-		}
-		float jump = 90 / alturaAux;
-
-
-		jumpAngle += ceil(jump);
-
-		/*if (jumpAngle >= 180) {
-				falling = true;
-				posBubble.y = startY;
-		}
-		else {*/
-
-			int alturaProv = int(startY - 400 * sin(3.14159f * jumpAngle / 180.f));
-			cout << "startY: " << startY << endl;
-			cout << "alturaProv: " << alturaProv << endl;
-			cout << "alturaMax: " << alturaMax << endl;
-
-			if (alturaProv >= alturaMax) {
-				cout << "if" << endl;
-				posBubble.y = alturaProv;
-			}
-			else {
-				cout << "else" << endl;
-				if (jumpAngle < 90) {
-					jumpAngle = 90;
-				}
-				posBubble.y = alturaMax;
-			}
-
+		posBubble.y = alturaMax;
+	}
+		
+	if ((jumpAngle > 90) && map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y)) {
+		jumpAngle = 0;
+		startY = posBubble.y;
+	}
 			
-			if ((jumpAngle > 90) && map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y)) {
-				jumpAngle = 0;
-				startY = posBubble.y;
-			}
-			
-		//}
-	/* }
-	else 
-	{
-		posBubble.y += FALL_STEP;
-		if (map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y))
-		{
-			falling = false;
-
-		}
-	}*/
 
 	if (direction == 0) posBubble.x += 4;
 	else posBubble.x -= 4;

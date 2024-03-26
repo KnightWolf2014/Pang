@@ -20,22 +20,22 @@ public:
 	UI();
 	~UI();
 
-	void init(const int& level);
+	void init(const int& level, const int& lives, const bool& godMode);
 	void render();
-	void update(int deltaTime);
+	void update(int deltaTime, int& lives, bool& godMode);
 
 private:
 	void initShaders();
 
 private:
 	float currentTime, timeAccumulatorCoin, timeAccumulatorTimer;
-	bool showInsertCoin;
+	bool showInsertCoin, god;
 	Quad* quad;
 	Texture texs[2];
 	TexturedQuad* texQuad[3];
 	glm::mat4 projection;
 	Texture scene, level1, level2, level3;
-	int game_ui, timer, timerInverse;
+	int game_ui, timer, timerInverse, hp;
 
 	ShaderProgram texProgram, simpleProgram;
 	Text text;

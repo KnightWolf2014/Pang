@@ -16,6 +16,7 @@ void Menu::init(const int& viewType) {
 	currentTime = 0.0f;
 	timeAccumulatorCoin = 0.0f;
 	showInsertCoin = false;
+	type = viewType;
 
 	initShaders();
 
@@ -28,6 +29,9 @@ void Menu::init(const int& viewType) {
 	}
 	if (viewType == 1) {
 		scene.loadFromFile("images/Instructions.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	}
+	if (viewType == 3) {
+		scene.loadFromFile("images/GameOver.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	}
 
 	scene.setMinFilter(GL_NEAREST);
@@ -58,11 +62,13 @@ void Menu::render() {
 
 	background->render(scene);
 
-	if (timeAccumulatorCoin >= 500.0f) {
-		showInsertCoin = !showInsertCoin;
-		timeAccumulatorCoin = 0.0f;
+	if (type == 0) {
+		if (timeAccumulatorCoin >= 500.0f) {
+			showInsertCoin = !showInsertCoin;
+			timeAccumulatorCoin = 0.0f;
+		}
+		if (showInsertCoin) text.render("INSERT COIN [space]", glm::vec2(330, 600), 52, glm::vec4(1, 0.5, 0, 1));
 	}
-	if (showInsertCoin) text.render("INSERT COIN [space]", glm::vec2(330, 600), 52, glm::vec4(1, 0.5, 0, 1));
 }
 
 void Menu::initShaders()

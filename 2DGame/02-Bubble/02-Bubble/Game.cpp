@@ -1,7 +1,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "Game.h"
-
+#include <iostream>
 
 Game::~Game() {
 	if (menu != NULL) delete menu;
@@ -11,29 +11,30 @@ Game::~Game() {
 void Game::init()
 {
 
-	bPlay = true, start = false;
-	viewType = 0, level = 0;
+	bPlay = true, start = false, gameOver = false, godMode = false;
+	viewType = 0, level = 0, lives = 3;
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
 
 	SoundProgram::instance().init();
 	engine = SoundProgram::instance().getSoundEngine();
-
 	
 	menu = new Menu();
 	menu->init(viewType);
 
 	scene = new Scene();
+
 }
 
 bool Game::update(int deltaTime)
 {
 	if (start) {
 		if (viewType == 2) {
-			scene->update(deltaTime);
+			scene->update(deltaTime, godMode);
+			
 		}
 	}
 	else {
-		if (viewType == 0) menu->update(deltaTime);
+		if (viewType == 0 || viewType == 1 || viewType == 3 || viewType == 4) menu->update(deltaTime);
 	}
 
 	return bPlay;
@@ -45,13 +46,20 @@ void Game::render()
 	if (start) {
 		if (viewType == 2) {
 			scene->render();
+			gameOver = scene->gameOver();
+
+			if (gameOver) {
+				viewType = 3;
+				start = false;
+				engine->removeAllSoundSources();
+				menu->init(viewType);
+			}
 		}
 	}
 	else {
-		if (viewType == 0 || viewType == 1) menu->render();
+		if (viewType == 0 || viewType == 1 || viewType == 3 || viewType == 4) menu->render();
 	}
 
-	//scene.render();
 }
 
 void Game::keyPressed(int key)
@@ -76,26 +84,31 @@ void Game::keyPressed(int key)
 			start = true;
 			level = 1;
 			viewType = 2;
-			scene->init(level);
+			scene->init(level, lives, godMode);
 		}
 	}
 	if (key == GLFW_KEY_1) {
 		if (viewType == 2) {
 			level = 1;
-			scene->init(level);
+			scene->init(level, lives, godMode);
 		}
 	}
 	if (key == GLFW_KEY_2) {
 		if (viewType == 2) {
 			level = 2;
-			scene->init(level);
+			scene->init(level, lives, godMode);
 		}
 	}
 	if (key == GLFW_KEY_3) {
 		if (viewType == 2) {
 			level = 3;
-			scene->init(level);
+			scene->init(level, lives, godMode);
 		}
+	}
+	if (key == GLFW_KEY_G) {
+		godMode = !godMode;
+
+		cout << "godmode: " << godMode << endl;
 	}
 	
 	keys[key] = true;

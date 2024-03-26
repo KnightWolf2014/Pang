@@ -25,6 +25,7 @@ private:
 private:
 	float currentTime, timeAccumulatorCoin;
 	bool showInsertCoin;
+	int type;
 	TexturedQuad *background;
 	glm::mat4 projection;
 	Texture scene, menu, instructions;

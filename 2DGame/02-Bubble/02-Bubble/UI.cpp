@@ -15,9 +15,11 @@ UI::~UI() {
 			delete texQuad[i];
 }
 
-void UI::init(const int& level) {
+void UI::init(const int& level, const int& lives, const bool& godMode) {
 	
 	game_ui = level;
+	hp = lives;
+	god = godMode;
 
 
 	glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(36.f, 36.f) };
@@ -50,10 +52,13 @@ void UI::init(const int& level) {
 		cout << "Could not load font!!!" << endl;
 }
 
-void UI::update(int deltaTime) {
+void UI::update(int deltaTime, int& lives, bool& godMode) {
 	currentTime += deltaTime;
 	timeAccumulatorCoin += deltaTime;
 	timeAccumulatorTimer += deltaTime;
+
+	hp = lives;
+	god = godMode;
 }
 
 void UI::render() {
@@ -64,26 +69,52 @@ void UI::render() {
 	texProgram.setUniformMatrix4f("projection", projection);
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
 
-	// Renderizar texQuad[0] en la parte inferior
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(50.f, CAMERA_HEIGHT - 40.f, 0.f));  // Cambia la altura según sea necesario
-	modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
-	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
-	texProgram.setUniformMatrix4f("modelview", modelview);
-	texQuad[0]->render(texs[0]);
+	if (hp == 3) {
+		// Renderizar texQuad[0] en la parte inferior
+		modelview = glm::translate(glm::mat4(1.0f), glm::vec3(50.f, CAMERA_HEIGHT - 40.f, 0.f));  // Cambia la altura según sea necesario
+		modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
+		modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texQuad[0]->render(texs[0]);
 
-	// Renderizar texQuad[1] en la parte inferior
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(90.f, CAMERA_HEIGHT - 40.f, 0.f));  // Cambia la altura según sea necesario
-	modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
-	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
-	texProgram.setUniformMatrix4f("modelview", modelview);
-	texQuad[1]->render(texs[0]);
+		// Renderizar texQuad[1] en la parte inferior
+		modelview = glm::translate(glm::mat4(1.0f), glm::vec3(90.f, CAMERA_HEIGHT - 40.f, 0.f));  // Cambia la altura según sea necesario
+		modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
+		modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texQuad[1]->render(texs[0]);
 
-	// Renderizar texQuad[2] en la parte inferior
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(130.f, CAMERA_HEIGHT - 40.f, 0.f));  // Cambia la altura según sea necesario
-	modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
-	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
-	texProgram.setUniformMatrix4f("modelview", modelview);
-	texQuad[2]->render(texs[0]);
+		// Renderizar texQuad[2] en la parte inferior
+		modelview = glm::translate(glm::mat4(1.0f), glm::vec3(130.f, CAMERA_HEIGHT - 40.f, 0.f));  // Cambia la altura según sea necesario
+		modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
+		modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texQuad[2]->render(texs[0]);
+	}
+
+	if (hp == 2) {
+		// Renderizar texQuad[0] en la parte inferior
+		modelview = glm::translate(glm::mat4(1.0f), glm::vec3(50.f, CAMERA_HEIGHT - 40.f, 0.f));  // Cambia la altura según sea necesario
+		modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
+		modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texQuad[0]->render(texs[0]);
+
+		// Renderizar texQuad[1] en la parte inferior
+		modelview = glm::translate(glm::mat4(1.0f), glm::vec3(90.f, CAMERA_HEIGHT - 40.f, 0.f));  // Cambia la altura según sea necesario
+		modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
+		modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texQuad[1]->render(texs[0]);
+	}
+	if (hp == 1) {
+		// Renderizar texQuad[0] en la parte inferior
+		modelview = glm::translate(glm::mat4(1.0f), glm::vec3(50.f, CAMERA_HEIGHT - 40.f, 0.f));  // Cambia la altura según sea necesario
+		modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
+		modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texQuad[0]->render(texs[0]);
+	}
 
 	if (timeAccumulatorTimer >= 1000) {
 		timer++;
@@ -115,6 +146,7 @@ void UI::render() {
 	text.render("PLAYER-1", glm::vec2(50, CAMERA_HEIGHT - 90), 32, glm::vec4(1, 1, 1, 1));
 	text.render("0000000", glm::vec2(150, CAMERA_HEIGHT - 60), 32, glm::vec4(1, 1, 1, 1));
 
+	if (god) text.render("GODMODE", glm::vec2(170, CAMERA_HEIGHT - 10), 32, glm::vec4(1, 1, 1, 1));
 
 
 	text.render("PLAYER-2", glm::vec2(CAMERA_WIDTH - 300, CAMERA_HEIGHT - 90), 32, glm::vec4(1, 1, 1, 1));

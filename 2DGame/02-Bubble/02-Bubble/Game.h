@@ -47,9 +47,12 @@ public:
 private:
 	bool bPlay; // Continue to play game?
 	bool start;
-	int viewType; // menu = 0, instructions = 1, game = 2, credits = 3
+	int viewType; // menu = 0, instructions = 1, game = 2, gameOver = 3, credits = 4
 	int level; // level1 = 1, level2 = 2, level3 = 3
 	bool level1, level2, level3;
+	int lives;
+	bool gameOver;
+	bool godMode;
 
 	bool keys[GLFW_KEY_LAST+1]; // Store key states so that 
 							    // we can have access at any time

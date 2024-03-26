@@ -66,6 +66,18 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + 3*posPlayer.x), float(tileMapDispl.y + 3*posPlayer.y)));
 }
 
+int Player::getPosX() {
+	return posPlayer.x;
+}
+
+int Player::getPosY() {
+	return posPlayer.y;
+}
+
+int Player::getSize() {
+	return 96;
+}
+
 void Player::update(int deltaTime)
 {
 

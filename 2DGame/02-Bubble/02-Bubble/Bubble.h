@@ -21,6 +21,11 @@ public:
 	void setTileMap(TileMap* tileMap);
 	void setPosition(const glm::vec2& pos);
 
+	int getPosX();
+	int getPosY();
+	int getSize();
+
+
 private:
 	bool falling, movement;
 	int direction; //0 left, 1 right

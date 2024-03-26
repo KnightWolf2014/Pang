@@ -42,6 +42,8 @@ public:
 	bool exitDownStairs(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool exitUpStairs(const glm::ivec2& pos, const glm::ivec2& size) const;
 
+	bool collisionBubblePlayer(int& posPlayerX, int& posPlayerY, int& sizePlayer, int& posBubbleX, int& posBubbleY, int& sizeBubble) const;
+
 private:
 	bool loadLevel(const string &levelFile);
 	void prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program);

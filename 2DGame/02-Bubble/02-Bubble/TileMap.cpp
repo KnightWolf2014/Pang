@@ -438,3 +438,33 @@ bool TileMap::exitDownStairs(const glm::ivec2& pos, const glm::ivec2& size) cons
 	}
 	return colision || bodyOut;
 }
+
+bool TileMap::collisionBubblePlayer(int& posPlayerX, int& posPlayerY, int& sizePlayer, int& posBubbleX, int& posBubbleY, int& sizeBubble) const {
+
+	int halfSizePlayer = sizePlayer / 2; // Mitad del tamaño del jugador
+
+	// Calcular el centro del jugador
+	int centerXPlayer = posPlayerX + halfSizePlayer;
+	int centerYPlayer = posPlayerY + halfSizePlayer;
+
+	// Calcular el centro del bubble
+	int radiusBubble = sizeBubble / 2; // Radio del bubble
+	int centerXBubble = posBubbleX + radiusBubble;
+	int centerYBubble = posBubbleY + radiusBubble;
+
+	// Calcular la distancia entre los centros
+	int dx = centerXBubble - centerXPlayer;
+	int dy = centerYBubble - centerYPlayer;
+	int distanceSquared = dx * dx + dy * dy;
+
+	// Calcular la distancia mínima entre el centro del bubble y el borde del jugador
+	int minDistSquared = (halfSizePlayer + radiusBubble) * (halfSizePlayer + radiusBubble);
+
+	// Si la distancia entre los centros es menor o igual a la distancia mínima, hay colisión
+	if (distanceSquared <= minDistSquared) {
+		return true; // Hay colisión
+	}
+	else {
+		return false; // No hay colisión
+	}
+}

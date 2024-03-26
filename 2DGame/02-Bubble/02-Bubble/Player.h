@@ -20,6 +20,10 @@ public:
 	
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
+
+	int getPosX();
+	int getPosY();
+	int getSize();
 	
 private:
 	bool falling, inStairs, activeExitStairs,left_orientation, right_orientation;

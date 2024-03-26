@@ -14,6 +14,8 @@
 #define INIT_PLAYER_X_TILES 22
 #define INIT_PLAYER_Y_TILES 21
 
+#define TIME_HITBOX 150
+
 
 Scene::Scene()
 {
@@ -41,9 +43,14 @@ Scene::~Scene()
 }
 
 
-void Scene::init(const int& level){
+void Scene::init(const int& level, const int& lives, bool& godMode){
 	
 	currentTime = 0.0f;
+	hp = lives;
+	god = godMode;
+
+	timerHitbox = TIME_HITBOX;
+	activeHitbox = true;
 
 	cout << "Level " << level << endl;
 
@@ -53,7 +60,7 @@ void Scene::init(const int& level){
 	levels->init(level);
 
 	ui = new UI();
-	ui->init(level);
+	ui->init(level, hp, godMode);
 
 
 	initShaders();
@@ -117,12 +124,27 @@ void Scene::init(const int& level){
 
 }
 
-void Scene::update(int deltaTime)
+void Scene::update(int deltaTime, bool& godMode)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	bubble->update(deltaTime);
-	ui->update(deltaTime);
+	ui->update(deltaTime, hp, godMode);
+
+	if (!activeHitbox) {
+		if (timerHitbox < 0) {
+			timerHitbox = TIME_HITBOX;
+			activeHitbox = true;
+		}
+		timerHitbox -= deltaTime;
+	}
+
+	if (!godMode) collisionBubblePlayer();
+}
+
+bool Scene::gameOver() {
+	if (hp == 0) return true;
+	else return false;
 }
 
 void Scene::render()
@@ -142,6 +164,40 @@ void Scene::render()
 	bubble->render();
 	ui->render();
 
+}
+
+void Scene::collisionBubblePlayer() {
+	posPlayerX = player->getPosX();
+	posPlayerY = player->getPosY();
+	sizePlayer = player->getSize();
+
+	posBubbleX = bubble->getPosX();
+	posBubbleY = bubble->getPosY();
+	sizeBubble = bubble->getSize();
+
+	/*cout << "playerPos: (" << posPlayerX << ", " << posPlayerY << "), playerSize: " << sizePlayer << endl;
+	cout << "bubblePos: (" << posBubbleX << ", " << posBubbleY << "), bubbleSize: " << sizeBubble << endl;
+	cout << "-------------------------" << endl;*/
+
+	if (activeHitbox && map->collisionBubblePlayer(posPlayerX, posPlayerY, sizePlayer, posBubbleX, posBubbleY, sizeBubble)) {
+
+		--hp;
+		activeHitbox = false;
+
+		/*cout << endl;
+		cout << endl;
+		cout << endl;
+		cout << endl;
+		cout << endl;
+		cout << "-------------------------" << endl;
+		cout << "TOCADOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" << endl;
+		cout << "-------------------------" << endl;
+		cout << endl;
+		cout << endl;
+		cout << endl;
+		cout << endl;
+		cout << endl;*/
+	}
 }
 
 
