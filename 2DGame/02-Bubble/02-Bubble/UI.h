@@ -23,6 +23,7 @@ public:
 	void init(const int& level, const int& lives, const bool& godMode);
 	void render();
 	void update(int deltaTime, int& lives, bool& godMode);
+	int getCountDown();
 
 private:
 	void initShaders();
@@ -35,7 +36,8 @@ private:
 	TexturedQuad* texQuad[3];
 	glm::mat4 projection;
 	Texture scene, level1, level2, level3;
-	int game_ui, timer, timerInverse, hp;
+	int game_ui, timer, timerInverse, hp, time;
+	std::string timeScreen;
 
 	ShaderProgram texProgram, simpleProgram;
 	Text text;

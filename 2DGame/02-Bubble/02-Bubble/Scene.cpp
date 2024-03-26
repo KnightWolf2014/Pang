@@ -46,6 +46,7 @@ Scene::~Scene()
 void Scene::init(const int& level, const int& lives, bool& godMode){
 	
 	currentTime = 0.0f;
+	lvl = level;
 	hp = lives;
 	god = godMode;
 
@@ -139,7 +140,10 @@ void Scene::update(int deltaTime, bool& godMode)
 		timerHitbox -= deltaTime;
 	}
 
-	if (!godMode) collisionBubblePlayer();
+	if (!godMode) {
+		collisionBubblePlayer();
+		timerOut();
+	}
 }
 
 bool Scene::gameOver() {
@@ -164,6 +168,15 @@ void Scene::render()
 	bubble->render();
 	ui->render();
 
+}
+
+void Scene::timerOut() {
+	int time = ui->getCountDown();
+	if (time == 0) {
+		--hp;
+
+		init(lvl, hp, god);
+	}
 }
 
 void Scene::collisionBubblePlayer() {

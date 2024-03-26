@@ -35,6 +35,7 @@ public:
 private:
 	void initShaders();
 	void collisionBubblePlayer();
+	void timerOut();
 
 private:
 	TileMap *map;
@@ -44,7 +45,7 @@ private:
 	UI *ui;
 	ShaderProgram texProgram;
 	float currentTime;
-	int hp;
+	int hp, lvl;
 	glm::mat4 projection;
 	ISoundEngine* engine;
 	Text text;

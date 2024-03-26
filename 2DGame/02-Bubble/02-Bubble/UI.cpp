@@ -61,6 +61,10 @@ void UI::update(int deltaTime, int& lives, bool& godMode) {
 	god = godMode;
 }
 
+int UI::getCountDown() {
+	return time;
+}
+
 void UI::render() {
 
 	glm::mat4 modelview;
@@ -117,15 +121,26 @@ void UI::render() {
 	}
 
 	if (timeAccumulatorTimer >= 1000) {
-		timer++;
-		timeAccumulatorTimer = 0;
+		int countdown = 100 - (currentTime / 1000);
+		countdown = std::max(0, countdown);
+		time = countdown;
+
+		if (god && countdown == 0) {
+			timeScreen = "TIME: 000";
+		}
+		else {
+			timeScreen = "TIME: ";
+			if (countdown < 10) {
+				timeScreen += "00";
+			}
+			else if (countdown < 100) {
+				timeScreen += "0";
+			}
+			timeScreen += std::to_string(countdown);
+		}
+
+		timeAccumulatorTimer -= 1000;
 	}
-
-	if (timerInverse >= 0) timerInverse -= timer;
-
-	std::string temp = std::to_string(timerInverse);
-	std::string timeScreen = "TIME: " + temp;
-
 
 	text.render(timeScreen, glm::vec2(CAMERA_WIDTH - 270, 65), 50, glm::vec4(1, 1, 1, 1));
 
