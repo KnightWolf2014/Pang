@@ -4,6 +4,9 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "SoundProgram.h"
+#include <irrKlang.h>
+using namespace irrklang;
 
 class Hook
 {
@@ -22,6 +25,7 @@ public:
 
 private:
 
+	ISoundEngine* engine;
 	glm::ivec2 tileMapDispl, posHook;
 	Texture spritesheet;
 	Sprite* sprite;

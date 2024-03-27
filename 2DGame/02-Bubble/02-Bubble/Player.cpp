@@ -24,6 +24,8 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) {
 	timerShootAnim = TIME_EXIT_ANIM;
 	texProgram = shaderProgram;
 
+	engine = SoundProgram::instance().getSoundEngine();
+
 	spritesheet.loadFromFile("images/playerSheet.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(SIZE_PLAYER_X, SIZE_PLAYER_Y), glm::vec2(0.20, 0.20), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(9);
@@ -129,6 +131,8 @@ void Player::update(int deltaTime)
 		shooting = true;
 		activeShootAnim = true;
 		hook->setPosition(glm::vec2(posPlayer));
+
+		engine->play2D("sounds/Shoot.mp3");
 
 		// MOURE ESQUERRA
 	}

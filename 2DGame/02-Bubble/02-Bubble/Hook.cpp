@@ -14,6 +14,8 @@ void Hook::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) {
 
 	sprite->setAnimationSpeed(ACTION, 48);
 
+	engine = SoundProgram::instance().getSoundEngine();
+
 	for (int i = 0; i <= 69; i++)
 		sprite->addKeyframe(ACTION, glm::vec2(i / 70.0f, 0.f));
 
@@ -38,7 +40,10 @@ TileMap* Hook::updateIfMapDestroyed() {
 	int keyFrame = sprite->getCurrentKeyFrame();  //DEL 0 al 69
 	TileMap* newMap = map->collisionHookNewMap(posHook, glm::ivec2(27, 567), keyFrame);
 
-	if (newMap != NULL) map = newMap;
+	if (newMap != NULL) {
+		engine->play2D("sounds/Glass.mp3");
+		map = newMap;
+	}
 
 	return newMap;
 }

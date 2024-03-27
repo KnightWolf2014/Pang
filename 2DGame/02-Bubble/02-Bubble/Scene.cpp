@@ -15,6 +15,7 @@
 #define INIT_PLAYER_Y_TILES 21
 
 #define TIME_HITBOX 150
+#define TIME_TIMER 3000
 
 
 Scene::Scene()
@@ -51,7 +52,9 @@ void Scene::init(const int& level, const int& lives, bool& godMode){
 	god = godMode;
 
 	timerHitbox = TIME_HITBOX;
+	timerTime = TIME_TIMER;
 	activeHitbox = true;
+	activeTime = false;
 
 	cout << "Level " << level << endl;
 
@@ -140,6 +143,13 @@ void Scene::update(int deltaTime, bool& godMode)
 		timerHitbox -= deltaTime;
 	}
 
+	if (!activeTime) {
+		if (timerTime < 0) {
+			activeTime = true;
+		}
+		timerTime -= deltaTime;
+	}
+
 	if (!godMode) {
 		collisionBubblePlayer();
 		timerOut();
@@ -171,11 +181,15 @@ void Scene::render()
 }
 
 void Scene::timerOut() {
-	int time = ui->getCountDown();
-	if (time == 0) {
-		--hp;
+	if (activeTime) {
+		int time = ui->getCountDown();
+		if (time == 0) {
+			--hp;
 
-		init(lvl, hp, god);
+			cout << "time" << endl;
+
+			init(lvl, hp, god);
+		}
 	}
 }
 
@@ -198,6 +212,7 @@ void Scene::collisionBubblePlayer() {
 	cout << "-------------------------" << endl;*/
 
 	if (activeHitbox && map->collisionBubblePlayer(posPlayerX, posPlayerY, sizePlayer, posBubbleX, posBubbleY, sizeBubble)) {
+
 
 		--hp;
 		activeHitbox = false;

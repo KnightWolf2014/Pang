@@ -53,8 +53,8 @@ private:
 
 	int posPlayerX, posPlayerY, posBubbleX, posBubbleY;
 	int sizePlayer, sizeBubble;
-	int timerHitbox;
-	bool activeHitbox;
+	int timerHitbox, timerTime;
+	bool activeHitbox, activeTime;
 	bool god;
 
 };

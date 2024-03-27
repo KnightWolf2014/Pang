@@ -5,6 +5,9 @@
 #include "Sprite.h"
 #include "TileMap.h"
 #include "Hook.h"
+#include "SoundProgram.h"
+#include <irrKlang.h>
+using namespace irrklang;
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -33,7 +36,7 @@ private:
 	int timerExitStairs;
 	int timerShootAnim;
 
-
+	ISoundEngine* engine;
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
