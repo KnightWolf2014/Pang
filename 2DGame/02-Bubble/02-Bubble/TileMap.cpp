@@ -468,3 +468,67 @@ bool TileMap::collisionBubblePlayer(int& posPlayerX, int& posPlayerY, int& sizeP
 		return false; // No hay colisión
 	}
 }
+
+bool TileMap::collisionHook(const glm::ivec2& pos, const glm::ivec2& size, const int keyFrame) const {
+
+	int x0, x1, y0, y1, ay, ax;
+
+	x0 = pos.x / tileSize + 1;
+	x1 = (pos.x + size.x) / tileSize + 1;
+	y1 = (pos.y + 96) / tileSize - 1;
+	y0 = (pos.y - (size.y - 96) * (keyFrame - 1) / 70) / tileSize;
+
+	for (int y = y0; y <= y1; y++) {
+		for (int x = x0; x <= x1; ++x) {
+			if (map[y * mapSize.x + x] != 0 && map[y * mapSize.x + x] != 2 && map[y * mapSize.x + x] != 3 && map[y * mapSize.x + x] != 4)
+				return true;
+		}
+	}
+
+	return false;
+
+}
+
+TileMap* TileMap::collisionHookNewMap(const glm::ivec2& pos, const glm::ivec2& size, const int keyFrame) {
+
+	int x0, x1, y0, y1, ay, ax;
+
+	x0 = pos.x / tileSize + 1;
+	x1 = (pos.x + size.x) / tileSize + 1;
+	y1 = (pos.y + 96) / tileSize - 1;
+	y0 = (pos.y - (size.y - 96) * (keyFrame - 1) / 70) / tileSize;
+
+
+	for (int y = y0; y <= y1; y++) {
+		for (int x = x0; x <= x1; ++x) {
+
+			int index = y * mapSize.x + x;
+			int tile = map[y * mapSize.x + x];
+
+			if (tile == 9 || tile == 10 || tile == 11 || tile == 12) {
+
+				tile = tile % 9;
+				index -= tile;
+
+				for (int i = 0; i < 4; i++) map[index + i] = 0;
+				return this;
+
+			}
+			else if (tile == 17 || tile == 18 || tile == 19) {
+
+				tile = tile % 17;
+				index -= tile;
+
+				for (int i = 0; i < 3; i++) map[index + i] = 0;
+				return this;
+
+			}
+		}
+	}
+
+	return NULL;
+}
+
+void TileMap::updateTileMap(const glm::vec2& minCoords, ShaderProgram& program) {
+	prepareArrays(minCoords, program);
+}

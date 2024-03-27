@@ -34,6 +34,7 @@ public:
 	void init();
 	bool update(int deltaTime);
 	void render();
+	void updateTileMap(TileMap* mapV);
 	
 	// Input callback methods
 	void keyPressed(int key);

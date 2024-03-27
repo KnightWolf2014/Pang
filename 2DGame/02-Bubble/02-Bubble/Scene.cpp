@@ -77,9 +77,9 @@ void Scene::init(const int& level, const int& lives, bool& godMode){
 	}
 
 	player = new Player();
+	player->setTileMap(map);
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
-	player->setTileMap(map);
 
 	//if (!text.init("fonts/DroidSerif.ttf"))
 	//	cout << "Could not load font!!!" << endl;
@@ -177,6 +177,11 @@ void Scene::timerOut() {
 
 		init(lvl, hp, god);
 	}
+}
+
+void Scene::updateTileMap(TileMap* mapV) {
+	map = mapV;
+	map->updateTileMap(glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 }
 
 void Scene::collisionBubblePlayer() {

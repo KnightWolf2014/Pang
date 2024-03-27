@@ -4,6 +4,7 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "Hook.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -26,14 +27,19 @@ public:
 	int getSize();
 	
 private:
-	bool falling, inStairs, activeExitStairs,left_orientation, right_orientation;
+	bool falling, inStairs, activeExitStairs, activeShootAnim, left_orientation, right_orientation, shooting;
 	glm::ivec2 tileMapDispl, posPlayer;
 	int jumpAngle, startY;
 	int timerExitStairs;
+	int timerShootAnim;
+
 
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
+	Hook* hook;
+
+	ShaderProgram texProgram;
 
 	void playerOrientation();
 

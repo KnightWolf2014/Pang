@@ -35,6 +35,8 @@ public:
 	
 	void setPosition(const glm::vec2 &pos);
 
+	int getCurrentKeyFrame() const;
+
 private:
 	Texture *texture;
 	ShaderProgram *shaderProgram;

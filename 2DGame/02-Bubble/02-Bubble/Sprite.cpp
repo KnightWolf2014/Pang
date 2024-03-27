@@ -106,5 +106,7 @@ void Sprite::setPosition(const glm::vec2 &pos)
 	position = pos;
 }
 
-
+int Sprite::getCurrentKeyFrame() const {
+	return currentKeyframe;
+}
 

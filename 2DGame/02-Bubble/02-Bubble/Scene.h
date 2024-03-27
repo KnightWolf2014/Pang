@@ -31,6 +31,7 @@ public:
 	void update(int deltaTime, bool& godMode);
 	void render();
 	bool gameOver();
+	void updateTileMap(TileMap* mapV);
 	
 private:
 	void initShaders();

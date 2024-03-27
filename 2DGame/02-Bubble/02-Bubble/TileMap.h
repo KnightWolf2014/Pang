@@ -22,6 +22,7 @@ private:
 public:
 	// Tile maps can only be created inside an OpenGL context
 	static TileMap *createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program);
+	void updateTileMap(const glm::vec2& minCoords, ShaderProgram& program);
 
 	~TileMap();
 
@@ -43,6 +44,9 @@ public:
 	bool exitUpStairs(const glm::ivec2& pos, const glm::ivec2& size) const;
 
 	bool collisionBubblePlayer(int& posPlayerX, int& posPlayerY, int& sizePlayer, int& posBubbleX, int& posBubbleY, int& sizeBubble) const;
+
+	bool collisionHook(const glm::ivec2& pos, const glm::ivec2& size, const int keyFrame) const;
+	TileMap* collisionHookNewMap(const glm::ivec2& pos, const glm::ivec2& size, const int keyFrame);
 
 private:
 	bool loadLevel(const string &levelFile);
