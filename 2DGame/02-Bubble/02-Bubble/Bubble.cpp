@@ -30,9 +30,9 @@ void Bubble::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, in
 
 
 	if (type == 1) tamany = glm::ivec2(128, 128);
-	if (type == 2) tamany = glm::ivec2(64, 64);
-	if (type == 3) tamany = glm::ivec2(32, 32);
-	if (type == 4) tamany = glm::ivec2(16, 16);
+	if (type == 2) tamany = glm::ivec2(80, 80);
+	if (type == 3) tamany = glm::ivec2(64, 64);
+	if (type == 4) tamany = glm::ivec2(32, 32);
 
 
 	spritesheet.loadFromFile("images/bubbleRock.png", TEXTURE_PIXEL_FORMAT_RGBA);

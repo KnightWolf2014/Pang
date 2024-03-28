@@ -7,6 +7,7 @@
 #include <thread>
 
 #include <iostream>
+#include <vector>
 
 #define SCREEN_X 0
 #define SCREEN_Y 0
@@ -14,7 +15,7 @@
 #define INIT_PLAYER_X_TILES 22
 #define INIT_PLAYER_Y_TILES 21
 
-#define TIME_HITBOX 150
+#define TIME_HITBOX 500
 #define TIME_TIMER 3000
 
 
@@ -24,7 +25,7 @@ Scene::Scene()
 	player = NULL;
 	levels = NULL;
 	ui = NULL;
-	bubble = NULL;
+	//bubble = NULL;
 
 	engine = SoundProgram::instance().getSoundEngine();
 }
@@ -39,8 +40,8 @@ Scene::~Scene()
 		delete levels;
 	if (ui != NULL)
 		delete ui;
-	if (bubble != NULL)
-		delete bubble;
+	/*if (bubble != NULL)
+		delete bubble;*/
 }
 
 
@@ -66,6 +67,7 @@ void Scene::init(const int& level, const int& lives, bool& godMode){
 	ui = new UI();
 	ui->init(level, hp, godMode);
 
+	while (bubbles.size() > 0) bubbles.pop_back();
 
 	initShaders();
 
@@ -90,30 +92,63 @@ void Scene::init(const int& level, const int& lives, bool& godMode){
 	//text.render("READY", glm::vec2(50, CAMERA_HEIGHT - 90), 40, glm::vec4(1, 1, 1, 1));
 
 	if (level == 1) {
-		bubble = new Bubble();
-		bubble->init(glm::ivec2(0, 0), texProgram, 1);
-		bubble->setPosition(glm::vec2(4 * map->getTileSize(), 2 * map->getTileSize()));
-		bubble->setTileMap(map);
+		Bubble* bubble1 = new Bubble();
+		bubble1->init(glm::ivec2(0, 0), texProgram, 1);
+		bubble1->setPosition(glm::vec2(4 * map->getTileSize(), 2 * map->getTileSize()));
+		bubble1->setTileMap(map);
 
+		bubbles.push_back(bubble1);
 
 		engine->removeAllSoundSources();
 		engine->play2D("sounds/MtFuji.mp3");
 
 	}
 	if (level == 2) {
-		bubble = new Bubble();
-		bubble->init(glm::ivec2(0, 0), texProgram, 1);
-		bubble->setPosition(glm::vec2(4 * map->getTileSize(), 2 * map->getTileSize()));
-		bubble->setTileMap(map);
+		Bubble* bubble1 = new Bubble();
+		bubble1->init(glm::ivec2(0, 0), texProgram, 1);
+		bubble1->setPosition(glm::vec2(32 * map->getTileSize(), 2 * map->getTileSize()));
+		bubble1->setTileMap(map);
+
+		bubbles.push_back(bubble1);
+
+		Bubble* bubble2 = new Bubble();
+		bubble2->init(glm::ivec2(0, 0), texProgram, 3);
+		bubble2->setPosition(glm::vec2(12 * map->getTileSize(), 12 * map->getTileSize()));
+		bubble2->setTileMap(map);
+
+		bubbles.push_back(bubble2);
+
+		Bubble* bubble3 = new Bubble();
+		bubble3->init(glm::ivec2(0, 0), texProgram, 3);
+		bubble3->setPosition(glm::vec2(20 * map->getTileSize(), 12 * map->getTileSize()));
+		bubble3->setTileMap(map);
+
+		bubbles.push_back(bubble3);
+
+		Bubble* bubble4 = new Bubble();
+		bubble4->init(glm::ivec2(0, 0), texProgram, 3);
+		bubble4->setPosition(glm::vec2(32 * map->getTileSize(), 12 * map->getTileSize()));
+		bubble4->setTileMap(map);
+
+		bubbles.push_back(bubble4);
 
 		engine->removeAllSoundSources();
 		engine->play2D("sounds/London.mp3");
 	}
 	if (level == 3) {
-		bubble = new Bubble();
-		bubble->init(glm::ivec2(0, 0), texProgram, 1);
-		bubble->setPosition(glm::vec2(4 * map->getTileSize(), 2 * map->getTileSize()));
-		bubble->setTileMap(map);
+		Bubble* bubble1 = new Bubble();
+		bubble1->init(glm::ivec2(0, 0), texProgram, 1);
+		bubble1->setPosition(glm::vec2(4 * map->getTileSize(), 2 * map->getTileSize()));
+		bubble1->setTileMap(map);
+
+		bubbles.push_back(bubble1);
+
+		Bubble* bubble2 = new Bubble();
+		bubble2->init(glm::ivec2(0, 0), texProgram, 1);
+		bubble2->setPosition(glm::vec2(18 * map->getTileSize(), 1 * map->getTileSize()));
+		bubble2->setTileMap(map);
+
+		bubbles.push_back(bubble2);
 
 		engine->removeAllSoundSources();
 		engine->play2D("sounds/Barcelona.mp3");
@@ -122,9 +157,6 @@ void Scene::init(const int& level, const int& lives, bool& godMode){
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH), float(SCREEN_HEIGHT), 0.f);
 
-	// Hem de mirar on colocar aixo (per coordinar la música)
-	//
-	//this_thread::sleep_for(chrono::milliseconds(2000));
 
 }
 
@@ -132,7 +164,7 @@ void Scene::update(int deltaTime, bool& godMode)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
-	bubble->update(deltaTime);
+	for (auto& bubble: bubbles) bubble->update(deltaTime);
 	ui->update(deltaTime, hp, godMode);
 
 	if (!activeHitbox) {
@@ -177,7 +209,7 @@ void Scene::render()
 	levels->render();
 	map->render();
 	player->render();
-	bubble->render();
+	for (auto& bubble : bubbles) bubble->render();
 	ui->render();
 
 }
@@ -205,26 +237,28 @@ void Scene::collisionBubblePlayer() {
 	posPlayerY = player->getPosY();
 	sizePlayer = player->getSize();
 
-	posBubbleX = bubble->getPosX();
-	posBubbleY = bubble->getPosY();
-	sizeBubble = bubble->getSize();
+	for (auto& bubble : bubbles) {
+		posBubbleX = bubble->getPosX();
+		posBubbleY = bubble->getPosY();
+		sizeBubble = bubble->getSize();
 
-	if (activeHitbox && map->collisionBubblePlayer(posPlayerX, posPlayerY, sizePlayer, posBubbleX, posBubbleY, sizeBubble)) {
+		if (activeHitbox && map->collisionBubblePlayer(posPlayerX, posPlayerY, sizePlayer, posBubbleX, posBubbleY, sizeBubble)) {
 
 
-		--hp;
-		activeHitbox = false;
+			--hp;
+			activeHitbox = false;
+		}
 	}
 }
 
 void Scene::collisionBubbleHook() {
 
-	posBubbleX = bubble->getPosX();
+	/*posBubbleX = bubble->getPosX();
 	posBubbleY = bubble->getPosY();
 	sizeBubble = bubble->getSize();
 
 	posHookX = hook->getPosX();
-	posHookY = hook->getPosY();
+	posHookY = hook->getPosY();*/
 
 }
 

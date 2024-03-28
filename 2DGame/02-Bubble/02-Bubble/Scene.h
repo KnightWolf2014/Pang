@@ -44,7 +44,7 @@ private:
 	Hook* hook;
 	Player* player;
 	Levels *levels;
-	Bubble *bubble;
+	//Bubble *bubble;
 	UI *ui;
 	ShaderProgram texProgram;
 	float currentTime;
@@ -52,6 +52,8 @@ private:
 	glm::mat4 projection;
 	ISoundEngine* engine;
 	Text text;
+
+	vector<Bubble*> bubbles;
 
 	int posPlayerX, posPlayerY, posBubbleX, posBubbleY, posHookX, posHookY;
 	int sizePlayer, sizeBubble;
