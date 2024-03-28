@@ -93,33 +93,34 @@ void Bubble::update(int deltaTime)
 	}
 
 
-	if (map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y))
-	{
-		while (map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y))
-			posBubble.y -= 1;
-		jump = 0;
-		energy = alturaMax - posBubble.y;
-	}
 
-	if (map->bubbleCollisionMoveUp(posBubble, tamany, &posBubble.y))
-	{
-		while (map->bubbleCollisionMoveUp(posBubble, tamany, &posBubble.y))
-			posBubble.y += 1;
-		jump = 0;
-		energy = 0;
-	}
+		if (map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y))
+		{
+			while (map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y))
+				posBubble.y -= 1;
+			jump = 0;
+			energy = alturaMax - posBubble.y;
+		}
 
-	if (direction == 0) posBubble.x += 4;
-	else posBubble.x -= 4;
+		if (map->bubbleCollisionMoveUp(posBubble, tamany, &posBubble.y))
+		{
+			while (map->bubbleCollisionMoveUp(posBubble, tamany, &posBubble.y))
+				posBubble.y += 1;
+			jump = 0;
+			energy = 0;
+		}
 
-	if (map->bubbleCollisionMoveRight(posBubble, tamany, &posBubble.x)) {
-		posBubble.x -= 4;
-		direction = 1;
-	}
-	if (map->bubbleCollisionMoveLeft(posBubble, tamany, &posBubble.x)) {
-		posBubble.x += 4;
-		direction = 0;
-	}
+		if (direction == 0) posBubble.x += 4;
+		else posBubble.x -= 4;
+
+		if (map->bubbleCollisionMoveRight(posBubble, tamany, &posBubble.x)) {
+			posBubble.x -= 4;
+			direction = 1;
+		}
+		if (map->bubbleCollisionMoveLeft(posBubble, tamany, &posBubble.x)) {
+			posBubble.x += 4;
+			direction = 0;
+		}
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBubble.x), float(tileMapDispl.y + posBubble.y)));
 }

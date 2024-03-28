@@ -28,7 +28,8 @@ public:
 
 
 private:
-	bool falling, movement, mida;
+	bool falling, movement;
+	int mida;
 	int direction; //1 left, 0 right
 	glm::ivec2 tileMapDispl, posBubble;
 	int jumpAngle, startY, alturaMax, jump, gravetatMax, contJump, energy;
