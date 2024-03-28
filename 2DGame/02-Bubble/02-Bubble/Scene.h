@@ -32,6 +32,7 @@ public:
 	void render();
 	bool gameOver();
 	void updateTileMap(TileMap* mapV);
+	void burst();
 	
 private:
 	void initShaders();

@@ -14,7 +14,7 @@ class Bubble
 {
 
 public:
-	void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, int type); //type = 1 -> gran, type = 4 -> petita
+	void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, int type, int dir); //type = 1 -> gran, type = 4 -> petita -- dir = 1 -> left, dir 0 -> right
 	void update(int deltaTime);
 	void render();
 
@@ -24,11 +24,12 @@ public:
 	int getPosX();
 	int getPosY();
 	int getSize();
+	int getType();
 
 
 private:
-	bool falling, movement;
-	int direction; //0 left, 1 right
+	bool falling, movement, mida;
+	int direction; //1 left, 0 right
 	glm::ivec2 tileMapDispl, posBubble;
 	int jumpAngle, startY, alturaMax, jump, gravetatMax, contJump, energy;
 	Texture spritesheet;

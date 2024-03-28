@@ -114,6 +114,12 @@ void Game::keyPressed(int key)
 
 		cout << "godmode: " << godMode << endl;
 	}
+	if (key == GLFW_KEY_U) {
+		if (viewType == 2) {
+			cout << "burst!" << endl;
+			scene->burst();
+		}
+	}
 	
 	keys[key] = true;
 }

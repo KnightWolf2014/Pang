@@ -14,13 +14,14 @@ enum BubbleAnims
 };
 
 
-void Bubble::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, int type)
+void Bubble::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, int type, int dir)
 {
 	falling = false;
 
 	movement = true;
+	mida = type;
 
-	direction = 0;
+	direction = dir;
 	alturaMax = 16;
 	jump = -4;
 	gravetatMax = 8;
@@ -35,7 +36,7 @@ void Bubble::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, in
 	if (type == 4) tamany = glm::ivec2(32, 32);
 
 
-	spritesheet.loadFromFile("images/bubbleRock.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/Bubble.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	
 	sprite = Sprite::createSprite(tamany, glm::vec2(1, 1), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(4);
@@ -60,6 +61,10 @@ int Bubble::getPosY() {
 
 int Bubble::getSize() {
 	return tamany.x;
+}
+
+int Bubble::getType() {
+	return mida;
 }
 
 void Bubble::update(int deltaTime)
