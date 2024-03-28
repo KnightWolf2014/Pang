@@ -36,10 +36,12 @@ public:
 private:
 	void initShaders();
 	void collisionBubblePlayer();
+	void collisionBubbleHook();
 	void timerOut();
 
 private:
 	TileMap *map;
+	Hook* hook;
 	Player* player;
 	Levels *levels;
 	Bubble *bubble;
@@ -51,7 +53,7 @@ private:
 	ISoundEngine* engine;
 	Text text;
 
-	int posPlayerX, posPlayerY, posBubbleX, posBubbleY;
+	int posPlayerX, posPlayerY, posBubbleX, posBubbleY, posHookX, posHookY;
 	int sizePlayer, sizeBubble;
 	int timerHitbox, timerTime;
 	bool activeHitbox, activeTime;

@@ -30,11 +30,12 @@ private:
 	bool falling, movement;
 	int direction; //0 left, 1 right
 	glm::ivec2 tileMapDispl, posBubble;
-	int jumpAngle, startY, alturaMax;
+	int jumpAngle, startY, alturaMax, jump, gravetatMax, contJump, energy;
 	Texture spritesheet;
 	Sprite* sprite;
 	TileMap* map;
 	glm::vec2 tamany;
+
 
 };
 

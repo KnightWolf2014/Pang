@@ -61,3 +61,11 @@ void Hook::setPosition(const glm::vec2& pos) {
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posHook.x + 32), float(tileMapDispl.y + posHook.y - (567 - 96))));
 	sprite->changeAnimation(ACTION);
 }
+
+int Hook::getPosX() {
+	return posHook.x;
+}
+
+int Hook::getPosY() {
+	return posHook.y;
+}

@@ -150,6 +150,8 @@ void Scene::update(int deltaTime, bool& godMode)
 		timerTime -= deltaTime;
 	}
 
+	collisionBubbleHook();
+
 	if (!godMode) {
 		collisionBubblePlayer();
 		timerOut();
@@ -207,30 +209,23 @@ void Scene::collisionBubblePlayer() {
 	posBubbleY = bubble->getPosY();
 	sizeBubble = bubble->getSize();
 
-	/*cout << "playerPos: (" << posPlayerX << ", " << posPlayerY << "), playerSize: " << sizePlayer << endl;
-	cout << "bubblePos: (" << posBubbleX << ", " << posBubbleY << "), bubbleSize: " << sizeBubble << endl;
-	cout << "-------------------------" << endl;*/
-
 	if (activeHitbox && map->collisionBubblePlayer(posPlayerX, posPlayerY, sizePlayer, posBubbleX, posBubbleY, sizeBubble)) {
 
 
 		--hp;
 		activeHitbox = false;
-
-		/*cout << endl;
-		cout << endl;
-		cout << endl;
-		cout << endl;
-		cout << endl;
-		cout << "-------------------------" << endl;
-		cout << "TOCADOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" << endl;
-		cout << "-------------------------" << endl;
-		cout << endl;
-		cout << endl;
-		cout << endl;
-		cout << endl;
-		cout << endl;*/
 	}
+}
+
+void Scene::collisionBubbleHook() {
+
+	posBubbleX = bubble->getPosX();
+	posBubbleY = bubble->getPosY();
+	sizeBubble = bubble->getSize();
+
+	posHookX = hook->getPosX();
+	posHookY = hook->getPosY();
+
 }
 
 

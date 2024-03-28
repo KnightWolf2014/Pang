@@ -20,10 +20,13 @@ void Bubble::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, in
 
 	movement = true;
 
-	jumpAngle = 90;
-	startY = 472;
 	direction = 0;
-	alturaMax = 72;
+	alturaMax = 16;
+	jump = -4;
+	gravetatMax = 8;
+
+	energy = 0;
+	contJump = 0;
 
 
 	if (type == 1) tamany = glm::ivec2(128, 128);
@@ -63,54 +66,43 @@ void Bubble::update(int deltaTime)
 {
 	sprite->update(deltaTime); 
 
-	//cout << "posBubble.y: " << posBubble.y << endl;
-	//cout << "jumpAngle: " << jumpAngle << endl;
+	posBubble.y += jump;
 
-
-	if (map->bubbleCollisionMoveUp(posBubble, tamany, &posBubble.y)) {
-		//cout << "UUUUUUUUUUUUUUUUUUUUUUP" << endl;
-		jumpAngle = 90;
-		if (alturaMax >= 72) alturaMax = posBubble.y;
-		else alturaMax = 72;
-	}
-
-	if (map->bubbleCollisionFloor(posBubble, tamany, &posBubble.y)) {
-		alturaMax = 72;
-	}
-
-	float alturaAux;
-	if (startY > alturaMax) {
-		alturaAux = (startY - alturaMax) * 45 / 400;
-	}
-	else {
-		alturaAux = (alturaMax - startY) * 45 / 400;
-	}
-	float jump = 90 / alturaAux;
-
-	jumpAngle += ceil(jump);
-
-	int alturaProv = int(startY - 400 * sin(3.14159f * jumpAngle / 180.f));
-	//cout << "startY: " << startY << endl;
-	//cout << "alturaProv: " << alturaProv << endl;
-	//cout << "alturaMax: " << alturaMax << endl;
-
-	if (alturaProv >= alturaMax) {
-		//cout << "if" << endl;
-		posBubble.y = alturaProv;
-	}
-	else {
-		//cout << "else" << endl;
-		if (jumpAngle < 90) {
-			jumpAngle = 90;
+	if (energy >= 0) {
+		if (jump < 0) {
+			jump = 0;
 		}
-		posBubble.y = alturaMax;
+
+		contJump += 2;
+
+		if (contJump > 4) {
+			contJump = 0;
+			jump = (jump + 1 > gravetatMax) ? gravetatMax : jump + 1;
+		}
 	}
-		
-	if ((jumpAngle > 90) && map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y)) {
-		jumpAngle = 0;
-		startY = posBubble.y;
+	else {
+		int velParabola = energy / 4;
+		jump = (velParabola < -gravetatMax) ? -gravetatMax : velParabola;
+		jump = (velParabola > -1) ? -1 : jump;
+		energy = alturaMax - posBubble.y;
 	}
-			
+
+
+	if (map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y))
+	{
+		while (map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y))
+			posBubble.y -= 1;
+		jump = 0;
+		energy = alturaMax - posBubble.y;
+	}
+
+	if (map->bubbleCollisionMoveUp(posBubble, tamany, &posBubble.y))
+	{
+		while (map->bubbleCollisionMoveUp(posBubble, tamany, &posBubble.y))
+			posBubble.y += 1;
+		jump = 0;
+		energy = 0;
+	}
 
 	if (direction == 0) posBubble.x += 4;
 	else posBubble.x -= 4;
