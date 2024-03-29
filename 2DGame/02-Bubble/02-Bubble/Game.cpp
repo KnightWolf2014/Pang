@@ -136,6 +136,12 @@ void Game::keyPressed(int key)
 			scene->stop();
 		}
 	}
+	if (key == GLFW_KEY_LEFT_CONTROL) {
+		if (viewType == 2) {
+			cout << "equip weapon!" << endl;
+			scene->equipWeapon();
+		}
+	}
 	
 	keys[key] = true;
 }

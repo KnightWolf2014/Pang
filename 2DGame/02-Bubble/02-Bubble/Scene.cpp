@@ -62,6 +62,7 @@ void Scene::init(const int& level, const int& lives, bool& godMode, int points){
 	lastBubble = 0;
 	contLastBubble = 0;
 
+	equipedWeapon = false;
 	mostrarPoints = false;
 	mostrarFruita = false;
 	posXpoints = 0;
@@ -95,6 +96,7 @@ void Scene::init(const int& level, const int& lives, bool& godMode, int points){
 
 	while (bubbles.size() > 0) bubbles.pop_back();
 	while (fruits.size() > 0) fruits.pop_back();
+	while (powers.size() > 0) powers.pop_back();
 
 	initShaders();
 
@@ -191,6 +193,7 @@ void Scene::update(int deltaTime, bool& godMode)
 	if (!activeStop) for (auto& bubble: bubbles) bubble->update(deltaTime);
 	ui->update(deltaTime, hp, godMode, totalPoints);
 	for (auto& fruit: fruits) fruit->update(deltaTime);
+	for (auto& power : powers) power->update(deltaTime);
 
 	if (!activeHitbox) {
 		if (timerHitbox < 0) {
@@ -224,6 +227,7 @@ void Scene::update(int deltaTime, bool& godMode)
 	}
 
 	collisionFruitPlayer();
+	collisionPowerPlayer();
 
 
 	if(player->isShooting()) collisionBubbleHook();
@@ -277,6 +281,7 @@ void Scene::render()
 	for (auto& bubble : bubbles) bubble->render();
 	ui->render();
 	for (auto& fruit : fruits) fruit->render();
+	for (auto& power : powers) power->render();
 
 
 	if (mostrarPoints) {
@@ -414,6 +419,19 @@ void Scene::divideBubble(Bubble* bubble, int type, int index) {
 
 		if ((rand() % 100) < 100) {
 
+			cout << "poder generat?" << endl;
+
+			Power* power = new Power();
+			power->setTileMap(map);
+			power->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, rand() % 3);
+			power->setPosition(glm::vec2(posXpoints, posYpoints));
+
+			powers.push_back(power);
+		}
+
+		if ((rand() % 100) < 100) {
+
+
 			cout << "fruta generada?" << endl;
 
 			Fruit* fruit = new Fruit();
@@ -542,11 +560,24 @@ void Scene::divideBubble(Bubble* bubble, int type, int index) {
 
 }
 
+void Scene::equipWeapon() {
+	ui->usePower();
+	if (typePower == 0) stop();
+	if (typePower == 1) doubleHook(); //CAMBIAR
+	if (typePower == 2) burst();
+	typePower = -1;
+}
+
+void Scene::doubleHook() {
+
+	cout << "doubleHook" << endl;
+	cout << "--------------" << endl;
+}
+
 void Scene::stop() {
-
-
 	activeStop = true;
-
+	cout << "stop" << endl;
+	cout << "--------------" << endl;
 }
 
 void Scene::burst() {
@@ -554,24 +585,55 @@ void Scene::burst() {
 	for (int index = 0; index < bubbles.size(); ++index) {
 		Bubble* bubble = bubbles[index];
 		int type = bubble->getType();
-
-		//cout << "type: " << type << endl;
 		
 		divideBubble(bubble,type,index);
 
-
-		cout << "index: " << index << endl;
-		//cout << "maxRec: " << maxRec << endl;
-
 	}
 
-	//cout << "burst completo" << endl;
+	cout << "burst" << endl;
 	cout << "--------------" << endl;
 }
 
 void Scene::updateTileMap(TileMap* mapV) {
 	map = mapV;
 	map->updateTileMap(glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+}
+
+void Scene::collisionPowerPlayer() {
+	posPlayerX = player->getPosX();
+	posPlayerY = player->getPosY();
+	sizePlayer = player->getSize();
+
+	for (int index = 0; index < powers.size(); ++index) {
+		Power* power = powers[index];
+
+		posPowerX = power->getPosX();
+		posPowerY = power->getPosY();
+		sizePower = power->getSize();
+		typePower = power->getType();
+
+		if (map->collisionFruitPlayer(posPlayerX, posPlayerY, sizePlayer, posPowerX, posPowerY, sizePower)) {
+
+
+			if (typePower == 0) ui->setPower(1);
+			if (typePower == 1) ui->setPower(2);
+			if (typePower == 2) ui->setPower(3);
+
+
+			if (index >= 0 && index < powers.size()) {
+				powers.erase(powers.begin() + index);
+			}
+
+			engine->play2D("sounds/Power.mp3");
+
+			posXpoder = posPowerX;
+			posYpoder = posPowerY;
+
+			cout << "poder obtingut!" << endl;
+
+		}
+
+	}
 }
 
 void Scene::collisionFruitPlayer() {

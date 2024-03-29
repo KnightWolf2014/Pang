@@ -121,7 +121,7 @@ void Fruit::update(int deltaTime)
 
 	sprite->update(deltaTime);
 
-	cout << posFruit.x << " " << posFruit.y << endl;
+	//cout << posFruit.x << " " << posFruit.y << endl;
 
 	if (falling) {
 		posFruit.y += 4;

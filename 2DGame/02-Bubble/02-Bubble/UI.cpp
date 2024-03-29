@@ -10,7 +10,7 @@ UI::UI() {
 UI::~UI() {
 	if (quad != NULL)
 		delete quad;
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 		if (texQuad[i] != NULL)
 			delete texQuad[i];
 }
@@ -20,6 +20,8 @@ void UI::init(const int& level, const int& lives, const bool& godMode) {
 	game_ui = level;
 	hp = lives;
 	god = godMode;
+
+	power = 0;
 
 
 	glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(36.f, 36.f) };
@@ -40,9 +42,17 @@ void UI::init(const int& level, const int& lives, const bool& godMode) {
 	texQuad[1] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	texCoords[0] = glm::vec2(0.f, 0.f); texCoords[1] = glm::vec2(1.f, 1.f);
 	texQuad[2] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	texCoords[0] = glm::vec2(0.f, 0.f); texCoords[1] = glm::vec2(1.f, 1.f);
+	texQuad[3] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	// Load textures
 	texs[0].loadFromFile("images/hp.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[0].setMagFilter(GL_NEAREST);
+	texs[1].loadFromFile("images/Stop.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[1].setMagFilter(GL_NEAREST);
+	texs[2].loadFromFile("images/DoubleHook.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[2].setMagFilter(GL_NEAREST);
+	texs[3].loadFromFile("images/Burst.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[3].setMagFilter(GL_NEAREST);
 
 
 
@@ -66,6 +76,14 @@ int UI::getCountDown() {
 	return time;
 }
 
+void UI::setPower(int poder) {
+	power = poder;
+}
+
+void UI::usePower() {
+	power = 0;
+}
+
 void UI::render() {
 
 	glm::mat4 modelview;
@@ -73,6 +91,30 @@ void UI::render() {
 	texProgram.use();
 	texProgram.setUniformMatrix4f("projection", projection);
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+
+	if (power != 0) {
+		if (power == 1) {
+			modelview = glm::translate(glm::mat4(1.0f), glm::vec3(200.f, CAMERA_HEIGHT - 120.f, 0.f));  // Cambia la altura según sea necesario
+			modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
+			modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+			texProgram.setUniformMatrix4f("modelview", modelview);
+			texQuad[3]->render(texs[1]);
+		}
+		if (power == 2) {
+			modelview = glm::translate(glm::mat4(1.0f), glm::vec3(200.f, CAMERA_HEIGHT - 120.f, 0.f));  // Cambia la altura según sea necesario
+			modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
+			modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+			texProgram.setUniformMatrix4f("modelview", modelview);
+			texQuad[3]->render(texs[2]);
+		}
+		if (power == 3) {
+			modelview = glm::translate(glm::mat4(1.0f), glm::vec3(200.f, CAMERA_HEIGHT - 120.f, 0.f));  // Cambia la altura según sea necesario
+			modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
+			modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
+			texProgram.setUniformMatrix4f("modelview", modelview);
+			texQuad[3]->render(texs[3]);
+		}
+	}
 
 	if (hp == 3) {
 		// Renderizar texQuad[0] en la parte inferior

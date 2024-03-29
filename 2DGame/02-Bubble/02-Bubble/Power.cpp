@@ -54,7 +54,7 @@ void Power::update(int deltaTime)
 
 	sprite->update(deltaTime);
 
-	cout << posPower.x << " " << posPower.y << endl;
+	//cout << posPower.x << " " << posPower.y << endl;
 
 	if (falling) {
 		posPower.y += 4;

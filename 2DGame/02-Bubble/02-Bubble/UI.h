@@ -24,6 +24,8 @@ public:
 	void render();
 	void update(int deltaTime, int& lives, bool& godMode, int totalPoints);
 	int getCountDown();
+	void setPower(int poder);
+	void usePower();
 
 private:
 	void initShaders();
@@ -31,10 +33,10 @@ private:
 private:
 	float currentTime, timeAccumulatorCoin, timeAccumulatorTimer;
 	bool showInsertCoin, god;
-	int points;
+	int points, power;
 	Quad* quad;
-	Texture texs[2];
-	TexturedQuad* texQuad[3];
+	Texture texs[4];
+	TexturedQuad* texQuad[4];
 	glm::mat4 projection;
 	Texture scene, level1, level2, level3;
 	int game_ui, timer, timerInverse, hp, time;

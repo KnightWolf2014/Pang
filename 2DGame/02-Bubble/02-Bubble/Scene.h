@@ -13,6 +13,7 @@
 #include "Menu.h"
 #include "SoundProgram.h"
 #include "Fruit.h"
+#include "Power.h"
 #include <irrKlang.h>
 using namespace irrklang;
 
@@ -37,13 +38,16 @@ public:
 	void updateTileMap(TileMap* mapV);
 	void burst();
 	void stop();
+	void doubleHook();
 	int getScore();
+	void equipWeapon();
 	
 private:
 	void initShaders();
 	void collisionBubblePlayer();
 	void collisionBubbleHook();
 	void collisionFruitPlayer();
+	void collisionPowerPlayer();
 	void divideBubble(Bubble* bubble, int type, int index);
 	void timerOut();
 	void deleteExteriorBubbles();
@@ -65,15 +69,16 @@ private:
 
 	vector<Bubble*> bubbles;
 	vector<Fruit*> fruits;
+	vector<Power*> powers;
 
-	int posPlayerX, posPlayerY, posBubbleX, posBubbleY, posHookX, posHookY, posFruitX, posFruitY;
-	int sizePlayer, sizeBubble, sizeFruit;
+	int posPlayerX, posPlayerY, posBubbleX, posBubbleY, posHookX, posHookY, posFruitX, posFruitY, posPowerX, posPowerY;
+	int sizePlayer, sizeBubble, sizeFruit, sizePower;
 	int timerHitbox, timerTime, timerScore, timerStop;
-	int typeFruit, posXfruita, posYfruita;
+	int typeFruit, posXfruita, posYfruita, typePower, posXpoder, posYpoder;
 	bool activeHitbox, activeTime, activeScore, activeStop;
 	bool god;
 	bool finish;
-	bool mostrarPoints, mostrarFruita;
+	bool mostrarPoints, mostrarFruita, equipedWeapon;
 
 	int viewType;
 	int totalPoints, lastBubble, actualPoints, contLastBubble, posXpoints, posYpoints;
