@@ -1,4 +1,28 @@
-﻿  Scene.cpp
+﻿  Fruit.cpp
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Game.h(12,1): warning C4005: 'SCREEN_HEIGHT': redefinición de macro
+  (compilando archivo de origen "Fruit.cpp")
+  C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\UI.h(15,1):
+  vea la definición anterior de 'SCREEN_HEIGHT'
+  
+  Game.cpp
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Game.h(12,1): warning C4005: 'SCREEN_HEIGHT': redefinición de macro
+  (compilando archivo de origen "Game.cpp")
+  C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\UI.h(15,1):
+  vea la definición anterior de 'SCREEN_HEIGHT'
+  
+  Levels.cpp
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Game.h(12,1): warning C4005: 'SCREEN_HEIGHT': redefinición de macro
+  (compilando archivo de origen "Levels.cpp")
+  C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\UI.h(15,1):
+  vea la definición anterior de 'SCREEN_HEIGHT'
+  
+  Player.cpp
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Game.h(12,1): warning C4005: 'SCREEN_HEIGHT': redefinición de macro
+  (compilando archivo de origen "Player.cpp")
+  C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\UI.h(15,1):
+  vea la definición anterior de 'SCREEN_HEIGHT'
+  
+  Scene.cpp
 C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Game.h(12,1): warning C4005: 'SCREEN_HEIGHT': redefinición de macro
   (compilando archivo de origen "Scene.cpp")
   C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\UI.h(15,1):
@@ -14,5 +38,12 @@ C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(505,27): warning C
 C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(536,28): warning C4018: '<': no coinciden signed/unsigned
 C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(564,28): warning C4018: '<': no coinciden signed/unsigned
 C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(594,28): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(635,28): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(638,28): warning C4018: '<': no coinciden signed/unsigned
+  main.cpp
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Game.h(12,1): warning C4005: 'SCREEN_HEIGHT': redefinición de macro
+  (compilando archivo de origen "main.cpp")
+  C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\UI.h(15,1):
+  vea la definición anterior de 'SCREEN_HEIGHT'
+  
+  Generando código...
   02-Bubble.vcxproj -> C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\Debug\02-Bubble.exe

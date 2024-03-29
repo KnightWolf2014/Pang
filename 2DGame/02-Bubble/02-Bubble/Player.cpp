@@ -78,13 +78,12 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) {
 	hook->init(glm::vec2(0), texProgram);
 	hook->setTileMap(map);
 
-
 }
 
 void Player::update(int deltaTime)
 {
 	if (shooting) {
-		if (hook->stopShooting()) {
+		if (hook->stopShooting() ) {
 			shooting = false;
 
 
@@ -297,4 +296,8 @@ int Player::getHookKeyFrame() {
 
 bool Player::isShooting() {
 	return shooting;
+}
+
+void Player::setIsShooting(bool val) {
+	shooting = false;
 }
