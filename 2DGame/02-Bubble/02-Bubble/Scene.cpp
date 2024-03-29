@@ -209,7 +209,7 @@ void Scene::update(int deltaTime, bool& godMode)
 
 	collisionBubbleHook();
 
-	
+	deleteExteriorBubbles();
 
 	if (!godMode) {
 		collisionBubblePlayer();
@@ -287,6 +287,29 @@ void Scene::timerOut() {
 
 			init(lvl, hp, god, actualPoints);
 		}
+	}
+}
+
+void Scene::deleteExteriorBubbles() {
+	for (int index = 0; index < bubbles.size(); ++index) {
+		Bubble* bubble = bubbles[index];
+
+		int posX = bubble->getPosX();
+		int posY = bubble->getPosY();
+
+		if (posX < 0 || posX > 1152) {
+			if (index >= 0 && index < bubbles.size()) {
+				bubbles.erase(bubbles.begin() + index);
+			}
+		}
+		if (posY < 0 || posY > 624) {
+			if (index >= 0 && index < bubbles.size()) {
+				bubbles.erase(bubbles.begin() + index);
+			}
+		}
+
+
+
 	}
 }
 

@@ -44,6 +44,7 @@ private:
 	void collisionBubbleHook();
 	void divideBubble(Bubble* bubble, int type, int index);
 	void timerOut();
+	void deleteExteriorBubbles();
 
 private:
 	TileMap *map;
