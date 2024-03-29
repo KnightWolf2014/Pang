@@ -130,6 +130,12 @@ void Game::keyPressed(int key)
 			scene->burst();
 		}
 	}
+	if (key == GLFW_KEY_Y) {
+		if (viewType == 2) {
+			cout << "STOP!" << endl;
+			scene->stop();
+		}
+	}
 	
 	keys[key] = true;
 }

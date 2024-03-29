@@ -23,6 +23,8 @@
 #define TIME_TIMER 3000
 #define TIME_SCORE 1000
 
+#define TIME_STOP 2000
+
 
 Scene::Scene()
 {
@@ -70,12 +72,14 @@ void Scene::init(const int& level, const int& lives, bool& godMode, int points){
 	hp = lives;
 	god = godMode;
 
+	timerStop = TIME_STOP;
 	timerHitbox = TIME_HITBOX;
 	timerTime = TIME_TIMER;
 	timerScore = TIME_SCORE;
 	activeHitbox = true;
 	activeTime = false;
 	activeScore = false;
+	activeStop = false;
 
 	cout << "Level " << level << endl;
 
@@ -184,7 +188,7 @@ void Scene::update(int deltaTime, bool& godMode)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
-	for (auto& bubble: bubbles) bubble->update(deltaTime);
+	if (!activeStop) for (auto& bubble: bubbles) bubble->update(deltaTime);
 	ui->update(deltaTime, hp, godMode, totalPoints);
 	for (auto& fruit: fruits) fruit->update(deltaTime);
 
@@ -209,6 +213,14 @@ void Scene::update(int deltaTime, bool& godMode)
 			activeScore = true;
 		}
 		timerScore -= deltaTime;
+	}
+
+	if (activeStop) {
+		if (timerStop < 0) {
+			timerStop = TIME_STOP;
+			activeStop = false;
+		}
+		timerStop -= deltaTime;
 	}
 
 	collisionFruitPlayer();
@@ -530,7 +542,12 @@ void Scene::divideBubble(Bubble* bubble, int type, int index) {
 
 }
 
+void Scene::stop() {
 
+
+	activeStop = true;
+
+}
 
 void Scene::burst() {
 

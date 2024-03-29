@@ -36,6 +36,7 @@ public:
 	bool gameFinished();
 	void updateTileMap(TileMap* mapV);
 	void burst();
+	void stop();
 	int getScore();
 	
 private:
@@ -67,9 +68,9 @@ private:
 
 	int posPlayerX, posPlayerY, posBubbleX, posBubbleY, posHookX, posHookY, posFruitX, posFruitY;
 	int sizePlayer, sizeBubble, sizeFruit;
-	int timerHitbox, timerTime, timerScore;
+	int timerHitbox, timerTime, timerScore, timerStop;
 	int typeFruit, posXfruita, posYfruita;
-	bool activeHitbox, activeTime, activeScore;
+	bool activeHitbox, activeTime, activeScore, activeStop;
 	bool god;
 	bool finish;
 	bool mostrarPoints, mostrarFruita;
