@@ -78,7 +78,8 @@ private:
 	bool activeHitbox, activeTime, activeScore, activeStop;
 	bool god;
 	bool finish;
-	bool mostrarPoints, mostrarFruita, equipedWeapon;
+	bool mostrarPoints, mostrarFruita, equipedWeapon, pop;
+	int contPop;
 
 	int viewType;
 	int totalPoints, lastBubble, actualPoints, contLastBubble, posXpoints, posYpoints;

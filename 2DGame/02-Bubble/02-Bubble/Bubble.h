@@ -26,11 +26,14 @@ public:
 	int getPosY();
 	int getSize();
 	int getType();
+	int getContador();
+	void setContador(int cont);
+
 
 
 private:
 	bool falling, movement, pop;
-	int mida;
+	int mida, contador;
 	int direction; //1 left, 0 right
 	glm::ivec2 tileMapDispl, posBubble;
 	int jumpAngle, startY, alturaMax, jump, gravetatMax, contJump, energy;

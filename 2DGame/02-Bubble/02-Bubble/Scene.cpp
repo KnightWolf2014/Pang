@@ -375,13 +375,12 @@ void Scene::divideBubble(Bubble* bubble, int type, int index) {
 
 	srand(static_cast<unsigned int>(time(nullptr)));
 
+	bubble->popping();
 
 	if (type == 1) {
 
 		int posX = bubble->getPosX();
 		int posY = bubble->getPosY();
-
-		bubble->popping();
 
 
 		if (index >= 0 && index < bubbles.size()) {

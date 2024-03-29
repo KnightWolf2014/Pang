@@ -21,6 +21,7 @@ void Bubble::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, in
 	pop = false;
 	movement = true;
 	mida = type;
+	contador = 4;
 
 	direction = dir;
 
@@ -236,4 +237,11 @@ void Bubble::popping() {
 	sprite->changeAnimation(POPPING);
 }
 
+int Bubble::getContador() {
+	return contador;
+}
+
+void Bubble::setContador(int cont) {
+	contador = cont;
+}
 

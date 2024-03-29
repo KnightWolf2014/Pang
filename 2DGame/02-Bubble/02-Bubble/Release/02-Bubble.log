@@ -7,23 +7,22 @@ J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Game.h(12,1): warning C4005: 'SCRE
 J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(350,28): warning C4018: '<': no coinciden signed/unsigned
 J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(357,28): warning C4018: '<': no coinciden signed/unsigned
 J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(362,28): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(385,46): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(387,27): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(453,27): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(518,27): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(583,27): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(653,28): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(675,28): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(691,28): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(712,28): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(742,28): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(786,28): warning C4018: '<': no coinciden signed/unsigned
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(386,27): warning C4018: '<': no coinciden signed/unsigned
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(452,27): warning C4018: '<': no coinciden signed/unsigned
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(517,27): warning C4018: '<': no coinciden signed/unsigned
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(582,27): warning C4018: '<': no coinciden signed/unsigned
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(652,28): warning C4018: '<': no coinciden signed/unsigned
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(674,28): warning C4018: '<': no coinciden signed/unsigned
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(690,28): warning C4018: '<': no coinciden signed/unsigned
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(711,28): warning C4018: '<': no coinciden signed/unsigned
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(741,28): warning C4018: '<': no coinciden signed/unsigned
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(785,28): warning C4018: '<': no coinciden signed/unsigned
 SOIL.lib(SOIL.obj) : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificación '/OPT:ICF'
 LINK : warning LNK4098: la biblioteca predeterminada'MSVCRTD' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
   Generando código
-  1 of 832 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+  5 of 832 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    55 functions had inline decision re-evaluated but remain unchanged
+    7 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
 SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_DXT.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_helper.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
