@@ -294,3 +294,7 @@ glm::ivec2 Player::getHookPos() {
 int Player::getHookKeyFrame() {
 	return hook->getKeyFrame();
 }
+
+bool Player::isShooting() {
+	return shooting;
+}

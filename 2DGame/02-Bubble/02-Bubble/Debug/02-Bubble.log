@@ -1,6 +1,18 @@
-﻿LINK : warning LNK4098: la biblioteca predeterminada'MSVCRT' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
-SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_DXT.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_helper.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-SOIL.lib(SOIL.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(SOIL.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-SOIL.lib(stb_image_aug.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(stb_image_aug.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-  02-Bubble.vcxproj -> J:\Escritorio\Pang\2DGame\02-Bubble\Debug\02-Bubble.exe
+﻿  Scene.cpp
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Game.h(12,1): warning C4005: 'SCREEN_HEIGHT': redefinición de macro
+  (compilando archivo de origen "Scene.cpp")
+  C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\UI.h(15,1):
+  vea la definición anterior de 'SCREEN_HEIGHT'
+  
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(331,28): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(338,28): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(343,28): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(365,27): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(421,27): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(463,27): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(505,27): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(536,28): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(564,28): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(594,28): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\02-Bubble\Scene.cpp(635,28): warning C4018: '<': no coinciden signed/unsigned
+  02-Bubble.vcxproj -> C:\Users\Pc\Desktop\PANG\2DGame\02-Bubble\Debug\02-Bubble.exe

@@ -212,7 +212,9 @@ void Scene::update(int deltaTime, bool& godMode)
 	}
 
 	collisionFruitPlayer();
-	collisionBubbleHook();
+
+
+	if(player->isShooting()) collisionBubbleHook();
 
 	deleteExteriorBubbles();
 

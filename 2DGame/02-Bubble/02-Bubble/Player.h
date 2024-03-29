@@ -30,6 +30,8 @@ public:
 	int getSize();
 	int getHookKeyFrame();
 
+	bool isShooting();
+
 	glm::ivec2 getHookPos();
 	
 private:
