@@ -26,6 +26,7 @@ Scene::Scene()
 	player = NULL;
 	levels = NULL;
 	ui = NULL;
+	menu = NULL;
 	//bubble = NULL;
 
 	engine = SoundProgram::instance().getSoundEngine();
@@ -41,6 +42,8 @@ Scene::~Scene()
 		delete levels;
 	if (ui != NULL)
 		delete ui;
+	if (menu != NULL)
+		delete menu;
 	/*if (bubble != NULL)
 		delete bubble;*/
 }
@@ -59,6 +62,8 @@ void Scene::init(const int& level, const int& lives, bool& godMode){
 	activeTime = false;
 
 	cout << "Level " << level << endl;
+
+	finish = false;
 
 	engine = SoundProgram::instance().getSoundEngine();
 
@@ -192,10 +197,19 @@ void Scene::update(int deltaTime, bool& godMode)
 		timerOut();
 	}
 
-	if (bubbles.size() == 0) {
+	if (bubbles.size() == 0 && (lvl < 3)) {
+		cout << "next lvl!" << endl;
 		lvl++;
 		init(lvl, hp, godMode);
 	}
+	else if (bubbles.size() == 0 && lvl == 3) {
+		cout << "credits!" << endl;
+		finish = true;
+	}
+}
+
+bool Scene::gameFinished() {
+	return finish;
 }
 
 bool Scene::gameOver() {

@@ -52,7 +52,7 @@ private:
 	int level; // level1 = 1, level2 = 2, level3 = 3
 	bool level1, level2, level3;
 	int lives;
-	bool gameOver;
+	bool gameOver, gameFinished;
 	bool godMode;
 
 	bool keys[GLFW_KEY_LAST+1]; // Store key states so that 

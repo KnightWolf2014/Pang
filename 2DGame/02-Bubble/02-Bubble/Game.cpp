@@ -11,7 +11,7 @@ Game::~Game() {
 void Game::init()
 {
 
-	bPlay = true, start = false, gameOver = false, godMode = false;
+	bPlay = true, start = false, gameOver = false, godMode = false, gameFinished = false;
 	viewType = 0, level = 0, lives = 3;
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
 
@@ -51,9 +51,17 @@ void Game::render()
 		if (viewType == 2) {
 			scene->render();
 			gameOver = scene->gameOver();
+			gameFinished = scene->gameFinished();
 
 			if (gameOver) {
 				viewType = 3;
+				start = false;
+				engine->removeAllSoundSources();
+				menu->init(viewType);
+			}
+
+			if (gameFinished) {
+				viewType = 4;
 				start = false;
 				engine->removeAllSoundSources();
 				menu->init(viewType);

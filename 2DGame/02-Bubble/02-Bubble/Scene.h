@@ -10,6 +10,7 @@
 #include "UI.h"
 #include "Bubble.h"
 #include "Text.h"
+#include "Menu.h"
 #include "SoundProgram.h"
 #include <irrKlang.h>
 using namespace irrklang;
@@ -31,8 +32,10 @@ public:
 	void update(int deltaTime, bool& godMode);
 	void render();
 	bool gameOver();
+	bool gameFinished();
 	void updateTileMap(TileMap* mapV);
 	void burst();
+
 	
 private:
 	void initShaders();
@@ -45,6 +48,7 @@ private:
 	TileMap *map;
 	Player* player;
 	Levels *levels;
+	Menu* menu;
 	//Bubble *bubble;
 	UI *ui;
 	ShaderProgram texProgram;
@@ -61,7 +65,9 @@ private:
 	int timerHitbox, timerTime;
 	bool activeHitbox, activeTime;
 	bool god;
+	bool finish;
 
+	int viewType;
 };
 
 

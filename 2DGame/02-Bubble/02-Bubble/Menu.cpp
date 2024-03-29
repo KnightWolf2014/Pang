@@ -33,6 +33,9 @@ void Menu::init(const int& viewType) {
 	if (viewType == 3) {
 		scene.loadFromFile("images/GameOver.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	}
+	if (viewType == 4) {
+		scene.loadFromFile("images/Credits.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	}
 
 	scene.setMinFilter(GL_NEAREST);
 	scene.setMagFilter(GL_NEAREST);
