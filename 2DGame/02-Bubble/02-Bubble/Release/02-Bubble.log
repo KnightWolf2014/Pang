@@ -1,15 +1,15 @@
-﻿  Bubble.cpp
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Bubble.cpp(75,15): warning C4244: 'return': conversión de 'T' a 'int'; posible pérdida de datos
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Bubble.cpp(75,15): warning C4244:         with
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Bubble.cpp(75,15): warning C4244:         [
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Bubble.cpp(75,15): warning C4244:             T=float
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Bubble.cpp(75,15): warning C4244:         ]
+﻿  Player.cpp
+J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Game.h(12,1): warning C4005: 'SCREEN_HEIGHT': redefinición de macro
+  (compilando archivo de origen "Player.cpp")
+  J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\UI.h(15,1):
+  vea la definición anterior de 'SCREEN_HEIGHT'
+  
 SOIL.lib(SOIL.obj) : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificación '/OPT:ICF'
 LINK : warning LNK4098: la biblioteca predeterminada'MSVCRTD' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
   Generando código
-  1 of 757 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+  1 of 758 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    57 functions had inline decision re-evaluated but remain unchanged
+    8 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
 SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_DXT.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_helper.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración

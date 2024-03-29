@@ -136,7 +136,7 @@ void Player::update(int deltaTime)
 		// MOURE ESQUERRA
 	}
 	else if (Game::instance().getKey(GLFW_KEY_LEFT) && !inStairs && !activeExitStairs && !activeShootAnim) {
-		posPlayer.x -= 4;
+		posPlayer.x -= 6;
 
 		left_orientation = true;
 		right_orientation = false;
@@ -145,14 +145,14 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(MOVE_LEFT);
 
 		if (map->collisionMoveLeft(posPlayer, glm::ivec2(SIZE_PLAYER_X, SIZE_PLAYER_Y))) {
-			posPlayer.x += 4;
+			posPlayer.x += 6;
 			sprite->changeAnimation(STAND_LEFT);
 		}
 
 		// MOURE DRETA
 	}
 	else if (Game::instance().getKey(GLFW_KEY_RIGHT) && !inStairs && !activeExitStairs && !activeShootAnim) {
-		posPlayer.x += 4;
+		posPlayer.x += 6;
 
 		left_orientation = false;
 		right_orientation = true;
@@ -161,7 +161,7 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(MOVE_RIGHT);
 
 		if (map->collisionMoveRight(posPlayer, glm::ivec2(SIZE_PLAYER_X, SIZE_PLAYER_Y))) {
-			posPlayer.x -= 4;
+			posPlayer.x -= 6;
 			sprite->changeAnimation(STAND_RIGHT);
 		}
 

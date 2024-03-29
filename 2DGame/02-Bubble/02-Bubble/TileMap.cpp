@@ -468,7 +468,7 @@ bool TileMap::collisionBubblePlayer(int& posPlayerX, int& posPlayerY, int& sizeP
 	int centerXPlayer = posPlayerX + halfSizePlayer;
 	int centerYPlayer = posPlayerY + halfSizePlayer;
 
-	int radiusBubble = sizeBubble / 2;
+	int radiusBubble = (sizeBubble-20) / 2;
 	int centerXBubble = posBubbleX + radiusBubble;
 	int centerYBubble = posBubbleY + radiusBubble;
 
