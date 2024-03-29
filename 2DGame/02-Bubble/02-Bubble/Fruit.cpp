@@ -134,7 +134,7 @@ void Fruit::update(int deltaTime)
 	else falling = true;
 
 
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posFruit.x), float(tileMapDispl.y + posFruit.y)));
+	sprite->setPosition(glm::vec2(float(posFruit.x), float(posFruit.y)));
 
 }
 
@@ -151,7 +151,7 @@ void Fruit::setTileMap(TileMap* tileMap)
 void Fruit::setPosition(const glm::vec2& pos)
 {
 	posFruit = pos;
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posFruit.x), float(tileMapDispl.y + posFruit.y)));
+	sprite->setPosition(glm::vec2(float(posFruit.x), float(posFruit.y)));
 }
 
 int Fruit::getPosX() {
