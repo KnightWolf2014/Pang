@@ -22,7 +22,7 @@ void Bubble::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, in
 	mida = type;
 
 	direction = dir;
-	alturaMax = 16;
+
 	jump = -4;
 	gravetatMax = 8;
 
@@ -30,10 +30,22 @@ void Bubble::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, in
 	contJump = 0;
 
 
-	if (type == 1) tamany = glm::ivec2(128, 128);
-	if (type == 2) tamany = glm::ivec2(112, 112);
-	if (type == 3) tamany = glm::ivec2(96, 96);
-	if (type == 4) tamany = glm::ivec2(80, 80);
+	if (type == 1) {
+		tamany = glm::ivec2(128, 128);
+		alturaMax = 16;
+	}
+	if (type == 2) {
+		tamany = glm::ivec2(112, 112);
+		alturaMax = 64;
+	}
+	if (type == 3) {
+		tamany = glm::ivec2(96, 96);
+		alturaMax = 256;
+	}
+	if (type == 4) {
+		tamany = glm::ivec2(80, 80);
+		alturaMax = 400;
+	}
 
 
 	spritesheet.loadFromFile("images/Bubble.png", TEXTURE_PIXEL_FORMAT_RGBA);

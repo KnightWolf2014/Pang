@@ -43,6 +43,7 @@ public:
 	bool exitDownStairs(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool exitUpStairs(const glm::ivec2& pos, const glm::ivec2& size) const;
 
+	bool collisionFruitPlayer(int& posPlayerX, int& posPlayerY, int& sizePlayer, int& posFruitX, int& posFruitY, int& sizeFruit) const;
 	bool collisionBubblePlayer(int& posPlayerX, int& posPlayerY, int& sizePlayer, int& posBubbleX, int& posBubbleY, int& sizeBubble) const;
 	bool collisionBubbleHook(int& posBubbleX, int& posBubbleY, int& sizeBubbl, const glm::ivec2& pos, const glm::ivec2& size, const int keyFrame) const;
 	bool collisionBubbleHook2(int x0, int x1, int y0, int y1, int xBubble, int yBubble) const;

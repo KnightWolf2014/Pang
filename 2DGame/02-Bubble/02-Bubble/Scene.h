@@ -12,6 +12,7 @@
 #include "Text.h"
 #include "Menu.h"
 #include "SoundProgram.h"
+#include "Fruit.h"
 #include <irrKlang.h>
 using namespace irrklang;
 
@@ -36,12 +37,12 @@ public:
 	void updateTileMap(TileMap* mapV);
 	void burst();
 	int getScore();
-
 	
 private:
 	void initShaders();
 	void collisionBubblePlayer();
 	void collisionBubbleHook();
+	void collisionFruitPlayer();
 	void divideBubble(Bubble* bubble, int type, int index);
 	void timerOut();
 	void deleteExteriorBubbles();
@@ -51,6 +52,7 @@ private:
 	Player* player;
 	Levels *levels;
 	Menu* menu;
+	//Fruit* fruit;
 	//Bubble *bubble;
 	UI *ui;
 	ShaderProgram texProgram;
@@ -61,14 +63,16 @@ private:
 	Text text;
 
 	vector<Bubble*> bubbles;
+	vector<Fruit*> fruits;
 
-	int posPlayerX, posPlayerY, posBubbleX, posBubbleY, posHookX, posHookY;
-	int sizePlayer, sizeBubble;
+	int posPlayerX, posPlayerY, posBubbleX, posBubbleY, posHookX, posHookY, posFruitX, posFruitY;
+	int sizePlayer, sizeBubble, sizeFruit;
 	int timerHitbox, timerTime, timerScore;
+	int typeFruit, posXfruita, posYfruita;
 	bool activeHitbox, activeTime, activeScore;
 	bool god;
 	bool finish;
-	bool mostrarPoints;
+	bool mostrarPoints, mostrarFruita;
 
 	int viewType;
 	int totalPoints, lastBubble, actualPoints, contLastBubble, posXpoints, posYpoints;

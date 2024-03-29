@@ -10,6 +10,9 @@
 #include <vector>
 #include <algorithm>
 
+#include <cstdlib>
+#include <ctime>  
+
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
@@ -58,6 +61,7 @@ void Scene::init(const int& level, const int& lives, bool& godMode, int points){
 	contLastBubble = 0;
 
 	mostrarPoints = false;
+	mostrarFruita = false;
 	posXpoints = 0;
 	posYpoints = 0;
 
@@ -86,6 +90,7 @@ void Scene::init(const int& level, const int& lives, bool& godMode, int points){
 	ui->init(level, hp, godMode);
 
 	while (bubbles.size() > 0) bubbles.pop_back();
+	while (fruits.size() > 0) fruits.pop_back();
 
 	initShaders();
 
@@ -173,8 +178,6 @@ void Scene::init(const int& level, const int& lives, bool& godMode, int points){
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH), float(SCREEN_HEIGHT), 0.f);
 
-
-
 }
 
 void Scene::update(int deltaTime, bool& godMode)
@@ -183,6 +186,7 @@ void Scene::update(int deltaTime, bool& godMode)
 	player->update(deltaTime);
 	for (auto& bubble: bubbles) bubble->update(deltaTime);
 	ui->update(deltaTime, hp, godMode, totalPoints);
+	for (auto& fruit: fruits) fruit->update(deltaTime);
 
 	if (!activeHitbox) {
 		if (timerHitbox < 0) {
@@ -207,6 +211,7 @@ void Scene::update(int deltaTime, bool& godMode)
 		timerScore -= deltaTime;
 	}
 
+	collisionFruitPlayer();
 	collisionBubbleHook();
 
 	deleteExteriorBubbles();
@@ -256,6 +261,7 @@ void Scene::render()
 	player->render();
 	for (auto& bubble : bubbles) bubble->render();
 	ui->render();
+	for (auto& fruit : fruits) fruit->render();
 
 
 	if (mostrarPoints) {
@@ -275,12 +281,41 @@ void Scene::render()
 		}
 	}
 
+	if (mostrarFruita) {
+		mostrarFruita = false;
+
+		if (typeFruit == 0) text.render(std::to_string(500), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 1) text.render(std::to_string(1000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 2) text.render(std::to_string(2000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 3) text.render(std::to_string(3000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 4) text.render(std::to_string(4000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 5) text.render(std::to_string(5000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 6) text.render(std::to_string(6000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 7) text.render(std::to_string(7000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 8) text.render(std::to_string(8000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 9) text.render(std::to_string(9000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 10) text.render(std::to_string(10000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 11) text.render(std::to_string(12000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 12) text.render(std::to_string(14000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 13) text.render(std::to_string(16000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 14) text.render(std::to_string(18000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 15) text.render(std::to_string(20000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 16) text.render(std::to_string(22000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 17) text.render(std::to_string(24000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 18) text.render(std::to_string(26000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+		if (typeFruit == 19) text.render(std::to_string(28000), glm::vec2(posXfruita, posYfruita), 40, glm::vec4(1, 1, 1, 1));
+
+	}
+
 }
 
 void Scene::timerOut() {
 	if (activeTime) {
 		int time = ui->getCountDown();
 		if (time == 0) {
+			
+			engine->play2D("sounds/Ouch.mp3");
+			
 			--hp;
 
 			cout << "time" << endl;
@@ -316,6 +351,8 @@ void Scene::deleteExteriorBubbles() {
 void Scene::divideBubble(Bubble* bubble, int type, int index) {
 
 	engine->play2D("sounds/BubblePop.mp3");
+
+	srand(static_cast<unsigned int>(time(nullptr)));
 
 
 	if (type == 1) {
@@ -358,6 +395,19 @@ void Scene::divideBubble(Bubble* bubble, int type, int index) {
 			totalPoints += 50;
 			lastBubble = 1;
 			contLastBubble = 2;
+		}
+
+		if ((rand() % 100) < 100) {
+
+			cout << "fruta generada?" << endl;
+
+			Fruit* fruit = new Fruit();
+			fruit->setTileMap(map);
+			fruit->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, rand()%20);
+			fruit->setPosition(glm::vec2(posXpoints, posYpoints));
+
+			fruits.push_back(fruit);
+
 		}
 
 	}
@@ -504,6 +554,58 @@ void Scene::updateTileMap(TileMap* mapV) {
 	map->updateTileMap(glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 }
 
+void Scene::collisionFruitPlayer() {
+	posPlayerX = player->getPosX();
+	posPlayerY = player->getPosY();
+	sizePlayer = player->getSize();
+
+	for (int index = 0; index < fruits.size(); ++index) {
+		Fruit* fruit = fruits[index];
+
+		posFruitX = fruit->getPosX();
+		posFruitY = fruit->getPosY();
+		sizeFruit = fruit->getSize();
+		typeFruit = fruit->getType();
+
+		if (map->collisionFruitPlayer(posPlayerX, posPlayerY, sizePlayer, posFruitX, posFruitY, sizeFruit)) {
+			if (typeFruit == 0) totalPoints += 500;
+			if (typeFruit == 1) totalPoints += 1000;
+			if (typeFruit == 2) totalPoints += 2000;
+			if (typeFruit == 3) totalPoints += 3000;
+			if (typeFruit == 4) totalPoints += 4000;
+			if (typeFruit == 5) totalPoints += 5000;
+			if (typeFruit == 6) totalPoints += 6000;
+			if (typeFruit == 7) totalPoints += 7000;
+			if (typeFruit == 8) totalPoints += 8000;
+			if (typeFruit == 9) totalPoints += 9000;
+			if (typeFruit == 10) totalPoints += 10000;
+			if (typeFruit == 11) totalPoints += 12000;
+			if (typeFruit == 12) totalPoints += 14000;
+			if (typeFruit == 13) totalPoints += 16000;
+			if (typeFruit == 14) totalPoints += 18000;
+			if (typeFruit == 15) totalPoints += 20000;
+			if (typeFruit == 16) totalPoints += 22000;
+			if (typeFruit == 17) totalPoints += 24000;
+			if (typeFruit == 18) totalPoints += 26000;
+			if (typeFruit == 19) totalPoints += 28000;
+
+			if (index >= 0 && index < fruits.size()) {
+				fruits.erase(fruits.begin() + index);
+			}
+
+			engine->play2D("sounds/Eating.mp3");
+
+			mostrarFruita = true;
+			posXfruita = posFruitX;
+			posYfruita = posFruitY;
+
+			cout << "fruita obtenida!" << endl;
+
+		}
+
+	}
+}
+
 void Scene::collisionBubblePlayer() {
 	posPlayerX = player->getPosX();
 	posPlayerY = player->getPosY();
@@ -516,7 +618,7 @@ void Scene::collisionBubblePlayer() {
 
 		if (activeHitbox && map->collisionBubblePlayer(posPlayerX, posPlayerY, sizePlayer, posBubbleX, posBubbleY, sizeBubble)) {
 
-
+			engine->play2D("sounds/Ouch.mp3");
 			--hp;
 			activeHitbox = false;
 		}
