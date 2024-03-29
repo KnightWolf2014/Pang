@@ -226,6 +226,7 @@ void Scene::update(int deltaTime, bool& godMode)
 	if (bubbles.size() == 0 && (lvl < 3)) {
 		cout << "next lvl!" << endl;
 		lvl++;
+		if (hp < 3) ++hp;
 		init(lvl, hp, godMode, totalPoints);
 	}
 	else if (bubbles.size() == 0 && lvl == 3) {

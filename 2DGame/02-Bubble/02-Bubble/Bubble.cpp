@@ -36,15 +36,15 @@ void Bubble::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, in
 	}
 	if (type == 2) {
 		tamany = glm::ivec2(112, 112);
-		alturaMax = 64;
+		alturaMax = 100;
 	}
 	if (type == 3) {
 		tamany = glm::ivec2(96, 96);
-		alturaMax = 256;
+		alturaMax = 200;
 	}
 	if (type == 4) {
 		tamany = glm::ivec2(80, 80);
-		alturaMax = 400;
+		alturaMax = 300;
 	}
 
 
