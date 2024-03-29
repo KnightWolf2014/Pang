@@ -2,36 +2,33 @@
 #include <iostream>
 #include <GL/glew.h>
 #include "Power.h"
-#include "Game.h"
 
 #define FALL_STEP 4
 
-#define SIZE_POWER_X 38
-#define SIZE_POWER_y 38
+#define SIZE_POWER_X 48
+#define SIZE_POWER_Y 48
 
-enum PowerAnim {
-	FALLING
+enum PowerAnims {
+	FALLING, NOFALLING
 };
 
 void Power::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, int powerType) {
 	falling = true;
 
-	texProgram = shaderProgram;
-
 	type = powerType;
 
-	cout << "typeFruit: " << powerType << endl;
+	spritesheet.loadFromFile("images/Power.png", TEXTURE_PIXEL_FORMAT_RGBA);
 
+	sprite = Sprite::createSprite(glm::ivec2(SIZE_POWER_X, SIZE_POWER_Y), glm::vec2(0.33, 1), &spritesheet, &shaderProgram);
 
-	spritesheet.loadFromFile("images/playerSheet.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	cout << "spritePower: " << sprite << endl;
 
-	sprite = Sprite::createSprite(glm::ivec2(SIZE_POWER_X, SIZE_POWER_y), glm::vec2(0.2, 0.2), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(1);
+	sprite->setNumberAnimations(2);
 
-	//if (powerType == 0) {
+	if (powerType == 0) {
 	sprite->setAnimationSpeed(FALLING, 16);
 	sprite->addKeyframe(FALLING, glm::vec2(0.f, 0.f));
-	/* }
+	}
 	if (powerType == 1) {
 		sprite->setAnimationSpeed(FALLING, 16);
 		sprite->addKeyframe(FALLING, glm::vec2(0.33f, 0.f));
@@ -39,12 +36,12 @@ void Power::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, int
 	if (powerType == 2) {
 		sprite->setAnimationSpeed(FALLING, 16);
 		sprite->addKeyframe(FALLING, glm::vec2(0.66f, 0.f));
-	}*/
+	}
 	
 
-	sprite->changeAnimation(FALLING);
+	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + 3 * posPower.x), float(tileMapDispl.y + 3 * posPower.y)));
+	sprite->setPosition(glm::vec2(float(posPower.x), float(posPower.y)));
 
 
 }
@@ -54,20 +51,17 @@ void Power::update(int deltaTime)
 
 	sprite->update(deltaTime);
 
-	//cout << posPower.x << " " << posPower.y << endl;
-
 	if (falling) {
 		posPower.y += 4;
-		sprite->changeAnimation(FALLING);
 	}
 
-	if (map->collisionMoveDown(posPower, glm::ivec2(SIZE_POWER_X, SIZE_POWER_y), &posPower.y)) {
+	if (map->collisionMoveDown(posPower, glm::ivec2(SIZE_POWER_X, SIZE_POWER_Y), &posPower.y)) {
 		falling = false;
 	}
 	else falling = true;
 
 
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPower.x), float(tileMapDispl.y + posPower.y)));
+	sprite->setPosition(glm::vec2(float(posPower.x), float(posPower.y)));
 
 }
 
@@ -84,7 +78,7 @@ void Power::setTileMap(TileMap* tileMap)
 void Power::setPosition(const glm::vec2& pos)
 {
 	posPower = pos;
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPower.x), float(tileMapDispl.y + posPower.y)));
+	sprite->setPosition(glm::vec2(float(posPower.x), float(posPower.y)));
 }
 
 int Power::getPosX() {

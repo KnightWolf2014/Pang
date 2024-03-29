@@ -20,6 +20,7 @@ public:
 
 	void setTileMap(TileMap* tileMap);
 	void setPosition(const glm::vec2& pos);
+	void popping();
 
 	int getPosX();
 	int getPosY();
@@ -28,7 +29,7 @@ public:
 
 
 private:
-	bool falling, movement;
+	bool falling, movement, pop;
 	int mida;
 	int direction; //1 left, 0 right
 	glm::ivec2 tileMapDispl, posBubble;

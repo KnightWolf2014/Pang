@@ -10,7 +10,7 @@
 
 enum BubbleAnims
 {
-	FASEONE, FASETWO, FASETHREE,FASEFOUR
+	JUMPING, POPPING
 };
 
 
@@ -18,6 +18,7 @@ void Bubble::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, in
 {
 	falling = false;
 
+	pop = false;
 	movement = true;
 	mida = type;
 
@@ -48,16 +49,22 @@ void Bubble::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, in
 	}
 
 
-	spritesheet.loadFromFile("images/Bubble.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/BubbleAnimations.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	
-	sprite = Sprite::createSprite(tamany, glm::vec2(1, 1), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(4);
+	sprite = Sprite::createSprite(tamany, glm::vec2(0.2, 1), &spritesheet, &shaderProgram);
+	sprite->setNumberAnimations(2);
 
-	sprite->setAnimationSpeed(FASEONE, 16);
-	sprite->addKeyframe(FASEONE, glm::vec2(0.0f, 0.f));
+	sprite->setAnimationSpeed(JUMPING, 8);
+	sprite->addKeyframe(JUMPING, glm::vec2(0.0f, 0.f));
+
+	sprite->setAnimationSpeed(POPPING, 8);
+	sprite->addKeyframe(POPPING, glm::vec2(0.2f, 0.f));
+	sprite->addKeyframe(POPPING, glm::vec2(0.4f, 0.f));
+	sprite->addKeyframe(POPPING, glm::vec2(0.6f, 0.f));
+	sprite->addKeyframe(POPPING, glm::vec2(0.8f, 0.f));
 
 
-	sprite->changeAnimation(0);
+	sprite->changeAnimation(JUMPING);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + 3 * posBubble.x), float(tileMapDispl.y + 3 * posBubble.y)));
 
@@ -81,7 +88,13 @@ int Bubble::getType() {
 
 void Bubble::update(int deltaTime)
 {
-	sprite->update(deltaTime); 
+
+	if (pop) {
+		sprite->update(deltaTime);
+		return;
+	}
+
+	sprite->update(deltaTime);
 
 	posBubble.y += jump;
 
@@ -218,6 +231,9 @@ void Bubble::setPosition(const glm::vec2& pos)
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBubble.x), float(tileMapDispl.y + posBubble.y)));
 }
 
-
+void Bubble::popping() {
+	pop = true;
+	sprite->changeAnimation(POPPING);
+}
 
 

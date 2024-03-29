@@ -44,9 +44,11 @@ private:
 	int timerShootAnim;
 
 	ISoundEngine* engine;
+
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
+
 	Hook* hook;
 
 	ShaderProgram texProgram;

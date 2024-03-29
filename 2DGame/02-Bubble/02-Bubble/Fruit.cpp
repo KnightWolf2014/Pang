@@ -6,8 +6,8 @@
 
 #define FALL_STEP 4
 
-#define SIZE_FRUIT_X 32
-#define SIZE_FRUIT_Y 32
+#define SIZE_FRUIT_X 48
+#define SIZE_FRUIT_Y 48
 
 enum FruitAnim {
 	FALLING
@@ -20,19 +20,16 @@ void Fruit::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, int
 
 	type = fruitType;
 
-	cout << "typeFruit: " << fruitType << endl;
-
-
 	spritesheet.loadFromFile("images/Fruit.png", TEXTURE_PIXEL_FORMAT_RGBA);
 
 	sprite = Sprite::createSprite(glm::ivec2(SIZE_FRUIT_X, SIZE_FRUIT_Y), glm::vec2(0.1, 0.5), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(1);
 
-	//if (fruitType == 0) {
+	if (fruitType == 0) {
 		sprite->setAnimationSpeed(FALLING, 8);
 		sprite->addKeyframe(FALLING, glm::vec2(0.f, 0.f));
 
-	/* }
+	}
 	if (fruitType == 1) {
 		sprite->setAnimationSpeed(FALLING, 16);
 		sprite->addKeyframe(FALLING, glm::vec2(0.1f, 0.f));
@@ -108,7 +105,7 @@ void Fruit::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, int
 	if (fruitType == 19) {
 		sprite->setAnimationSpeed(FALLING, 16);
 		sprite->addKeyframe(FALLING, glm::vec2(0.9f, 0.5f));
-	}*/
+	}
 
 	sprite->changeAnimation(FALLING);
 	tileMapDispl = tileMapPos;

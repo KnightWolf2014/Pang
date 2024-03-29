@@ -36,8 +36,6 @@ private:
 	Sprite* sprite;
 	TileMap* map;
 
-	ShaderProgram texProgram;
-
 
 };
 

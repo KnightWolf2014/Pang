@@ -120,6 +120,7 @@ void Scene::init(const int& level, const int& lives, bool& godMode, int points){
 
 
 	if (level == 1) {
+
 		Bubble* bubble1 = new Bubble();
 		bubble1->init(glm::ivec2(0, 0), texProgram, 1, 0);
 		bubble1->setPosition(glm::vec2(4 * map->getTileSize(), 2 * map->getTileSize()));
@@ -279,9 +280,9 @@ void Scene::render()
 	map->render();
 	player->render();
 	for (auto& bubble : bubbles) bubble->render();
-	ui->render();
-	for (auto& fruit : fruits) fruit->render();
 	for (auto& power : powers) power->render();
+	for (auto& fruit : fruits) fruit->render();
+	ui->render();
 
 
 	if (mostrarPoints) {
@@ -380,6 +381,9 @@ void Scene::divideBubble(Bubble* bubble, int type, int index) {
 		int posX = bubble->getPosX();
 		int posY = bubble->getPosY();
 
+		bubble->popping();
+
+
 		if (index >= 0 && index < bubbles.size()) {
 			bubbles.erase(bubbles.begin() + index);
 		}
@@ -417,13 +421,11 @@ void Scene::divideBubble(Bubble* bubble, int type, int index) {
 			contLastBubble = 2;
 		}
 
-		if ((rand() % 100) < 100) {
-
-			cout << "poder generat?" << endl;
+		if ((rand() % 100) < 10) {
 
 			Power* power = new Power();
 			power->setTileMap(map);
-			power->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, rand() % 3);
+			power->init(glm::ivec2(0, 0), texProgram, rand() % 3);
 			power->setPosition(glm::vec2(posXpoints, posYpoints));
 
 			powers.push_back(power);
@@ -432,11 +434,9 @@ void Scene::divideBubble(Bubble* bubble, int type, int index) {
 		if ((rand() % 100) < 100) {
 
 
-			cout << "fruta generada?" << endl;
-
 			Fruit* fruit = new Fruit();
 			fruit->setTileMap(map);
-			fruit->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, rand()%20);
+			fruit->init(glm::ivec2(0, 0), texProgram, rand()%20);
 			fruit->setPosition(glm::vec2(posXpoints, posYpoints));
 
 			fruits.push_back(fruit);
@@ -449,6 +449,7 @@ void Scene::divideBubble(Bubble* bubble, int type, int index) {
 		int posX = bubble->getPosX();
 		int posY = bubble->getPosY();
 
+		bubble->popping();
 		if (index >= 0 && index < bubbles.size()) {
 			bubbles.erase(bubbles.begin() + index);
 		}
@@ -485,12 +486,35 @@ void Scene::divideBubble(Bubble* bubble, int type, int index) {
 			lastBubble = 2;
 			contLastBubble = 2;
 		}
+
+		if ((rand() % 100) < 20) {
+
+			Power* power = new Power();
+			power->setTileMap(map);
+			power->init(glm::ivec2(0, 0), texProgram, rand() % 3);
+			power->setPosition(glm::vec2(posXpoints, posYpoints));
+
+			powers.push_back(power);
+		}
+
+		if ((rand() % 100) < 20) {
+
+
+			Fruit* fruit = new Fruit();
+			fruit->setTileMap(map);
+			fruit->init(glm::ivec2(0, 0), texProgram, rand() % 20);
+			fruit->setPosition(glm::vec2(posXpoints, posYpoints));
+
+			fruits.push_back(fruit);
+
+		}
 	}
 	if (type == 3) {
 
 		int posX = bubble->getPosX();
 		int posY = bubble->getPosY();
 
+		bubble->popping();
 		if (index >= 0 && index < bubbles.size()) {
 			bubbles.erase(bubbles.begin() + index);
 		}
@@ -527,12 +551,35 @@ void Scene::divideBubble(Bubble* bubble, int type, int index) {
 			lastBubble = 3;
 			contLastBubble = 2;
 		}
+
+		if ((rand() % 100) < 30) {
+
+			Power* power = new Power();
+			power->setTileMap(map);
+			power->init(glm::ivec2(0, 0), texProgram, rand() % 3);
+			power->setPosition(glm::vec2(posXpoints, posYpoints));
+
+			powers.push_back(power);
+		}
+
+		if ((rand() % 100) < 30) {
+
+
+			Fruit* fruit = new Fruit();
+			fruit->setTileMap(map);
+			fruit->init(glm::ivec2(0, 0), texProgram, rand() % 20);
+			fruit->setPosition(glm::vec2(posXpoints, posYpoints));
+
+			fruits.push_back(fruit);
+
+		}
 	}
 	if (type == 4) {
 
 		int posX = bubble->getPosX();
 		int posY = bubble->getPosY();
 
+		bubble->popping();
 		if (index >= 0 && index < bubbles.size()) {
 			bubbles.erase(bubbles.begin() + index);
 		}
@@ -554,6 +601,27 @@ void Scene::divideBubble(Bubble* bubble, int type, int index) {
 			totalPoints += 200;
 			lastBubble = 4;
 			contLastBubble = 2;
+		}
+		if ((rand() % 100) < 40) {
+
+			Power* power = new Power();
+			power->setTileMap(map);
+			power->init(glm::ivec2(0, 0), texProgram, rand() % 3);
+			power->setPosition(glm::vec2(posXpoints, posYpoints));
+
+			powers.push_back(power);
+		}
+
+		if ((rand() % 100) < 40) {
+
+
+			Fruit* fruit = new Fruit();
+			fruit->setTileMap(map);
+			fruit->init(glm::ivec2(0, 0), texProgram, rand() % 20);
+			fruit->setPosition(glm::vec2(posXpoints, posYpoints));
+
+			fruits.push_back(fruit);
+
 		}
 	}
 

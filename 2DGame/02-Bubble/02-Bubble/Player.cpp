@@ -28,6 +28,9 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) {
 
 	spritesheet.loadFromFile("images/playerSheet.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(SIZE_PLAYER_X, SIZE_PLAYER_Y), glm::vec2(0.20, 0.20), &spritesheet, &shaderProgram);
+
+	cout << "spritePlayer: " << sprite << endl;
+
 	sprite->setNumberAnimations(9);
 
 	sprite->setAnimationSpeed(STAND_LEFT, 16);
