@@ -52,13 +52,14 @@ void UI::init(const int& level, const int& lives, const bool& godMode) {
 		cout << "Could not load font!!!" << endl;
 }
 
-void UI::update(int deltaTime, int& lives, bool& godMode) {
+void UI::update(int deltaTime, int& lives, bool& godMode, int totalPoints) {
 	currentTime += deltaTime;
 	timeAccumulatorCoin += deltaTime;
 	timeAccumulatorTimer += deltaTime;
 
 	hp = lives;
 	god = godMode;
+	points = totalPoints;
 }
 
 int UI::getCountDown() {
@@ -159,7 +160,9 @@ void UI::render() {
 	}
 
 	text.render("PLAYER-1", glm::vec2(50, CAMERA_HEIGHT - 90), 32, glm::vec4(1, 1, 1, 1));
-	text.render("0000000", glm::vec2(150, CAMERA_HEIGHT - 60), 32, glm::vec4(1, 1, 1, 1));
+
+
+	text.render(std::to_string(points), glm::vec2(150, CAMERA_HEIGHT - 60), 32, glm::vec4(1, 1, 1, 1));
 
 	if (god) text.render("GODMODE", glm::vec2(170, CAMERA_HEIGHT - 10), 32, glm::vec4(1, 1, 1, 1));
 

@@ -18,6 +18,7 @@
 
 #define TIME_HITBOX 500
 #define TIME_TIMER 3000
+#define TIME_SCORE 1000
 
 
 Scene::Scene()
@@ -49,8 +50,17 @@ Scene::~Scene()
 }
 
 
-void Scene::init(const int& level, const int& lives, bool& godMode){
+void Scene::init(const int& level, const int& lives, bool& godMode, int points){
 	
+	actualPoints = points;
+	totalPoints = points;
+	lastBubble = 0;
+	contLastBubble = 0;
+
+	mostrarPoints = false;
+	posXpoints = 0;
+	posYpoints = 0;
+
 	currentTime = 0.0f;
 	lvl = level;
 	hp = lives;
@@ -58,8 +68,10 @@ void Scene::init(const int& level, const int& lives, bool& godMode){
 
 	timerHitbox = TIME_HITBOX;
 	timerTime = TIME_TIMER;
+	timerScore = TIME_SCORE;
 	activeHitbox = true;
 	activeTime = false;
+	activeScore = false;
 
 	cout << "Level " << level << endl;
 
@@ -92,10 +104,9 @@ void Scene::init(const int& level, const int& lives, bool& godMode){
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 
-	//if (!text.init("fonts/DroidSerif.ttf"))
-	//	cout << "Could not load font!!!" << endl;
+	if (!text.init("fonts/DroidSerif.ttf"))
+		cout << "Could not load font!!!" << endl;
 
-	//text.render("READY", glm::vec2(50, CAMERA_HEIGHT - 90), 40, glm::vec4(1, 1, 1, 1));
 
 	if (level == 1) {
 		Bubble* bubble1 = new Bubble();
@@ -107,7 +118,6 @@ void Scene::init(const int& level, const int& lives, bool& godMode){
 
 		engine->removeAllSoundSources();
 		engine->play2D("sounds/MtFuji.mp3");
-
 	}
 	if (level == 2) {
 		Bubble* bubble1 = new Bubble();
@@ -164,6 +174,7 @@ void Scene::init(const int& level, const int& lives, bool& godMode){
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH), float(SCREEN_HEIGHT), 0.f);
 
 
+
 }
 
 void Scene::update(int deltaTime, bool& godMode)
@@ -171,7 +182,7 @@ void Scene::update(int deltaTime, bool& godMode)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	for (auto& bubble: bubbles) bubble->update(deltaTime);
-	ui->update(deltaTime, hp, godMode);
+	ui->update(deltaTime, hp, godMode, totalPoints);
 
 	if (!activeHitbox) {
 		if (timerHitbox < 0) {
@@ -188,6 +199,14 @@ void Scene::update(int deltaTime, bool& godMode)
 		timerTime -= deltaTime;
 	}
 
+	if (!activeScore) {
+		if (timerScore < 0) {
+			timerScore = TIME_SCORE;
+			activeScore = true;
+		}
+		timerScore -= deltaTime;
+	}
+
 	collisionBubbleHook();
 
 	
@@ -200,7 +219,7 @@ void Scene::update(int deltaTime, bool& godMode)
 	if (bubbles.size() == 0 && (lvl < 3)) {
 		cout << "next lvl!" << endl;
 		lvl++;
-		init(lvl, hp, godMode);
+		init(lvl, hp, godMode, totalPoints);
 	}
 	else if (bubbles.size() == 0 && lvl == 3) {
 		cout << "credits!" << endl;
@@ -210,6 +229,10 @@ void Scene::update(int deltaTime, bool& godMode)
 
 bool Scene::gameFinished() {
 	return finish;
+}
+
+int Scene::getScore() {
+	return totalPoints;
 }
 
 bool Scene::gameOver() {
@@ -234,6 +257,24 @@ void Scene::render()
 	for (auto& bubble : bubbles) bubble->render();
 	ui->render();
 
+
+	if (mostrarPoints) {
+		mostrarPoints = false;
+
+		if (contLastBubble == 0) {
+			if (lastBubble == 1) text.render(std::to_string(50), glm::vec2(posXpoints, posYpoints), 40, glm::vec4(1, 1, 1, 1));
+			if (lastBubble == 2) text.render(std::to_string(100), glm::vec2(posXpoints, posYpoints), 40, glm::vec4(1, 1, 1, 1));
+			if (lastBubble == 3) text.render(std::to_string(150), glm::vec2(posXpoints, posYpoints), 40, glm::vec4(1, 1, 1, 1));
+			if (lastBubble == 4) text.render(std::to_string(200), glm::vec2(posXpoints, posYpoints), 40, glm::vec4(1, 1, 1, 1));
+		}
+		else {
+			if (lastBubble == 1) text.render(std::to_string(50 * contLastBubble), glm::vec2(posXpoints, posYpoints), 40, glm::vec4(1, 1, 1, 1));
+			if (lastBubble == 2) text.render(std::to_string(100 * contLastBubble), glm::vec2(posXpoints, posYpoints), 40, glm::vec4(1, 1, 1, 1));
+			if (lastBubble == 3) text.render(std::to_string(150 * contLastBubble), glm::vec2(posXpoints, posYpoints), 40, glm::vec4(1, 1, 1, 1));
+			if (lastBubble == 4) text.render(std::to_string(200 * contLastBubble), glm::vec2(posXpoints, posYpoints), 40, glm::vec4(1, 1, 1, 1));
+		}
+	}
+
 }
 
 void Scene::timerOut() {
@@ -244,7 +285,7 @@ void Scene::timerOut() {
 
 			cout << "time" << endl;
 
-			init(lvl, hp, god);
+			init(lvl, hp, god, actualPoints);
 		}
 	}
 }
@@ -252,6 +293,7 @@ void Scene::timerOut() {
 void Scene::divideBubble(Bubble* bubble, int type, int index) {
 
 	engine->play2D("sounds/BubblePop.mp3");
+
 
 	if (type == 1) {
 
@@ -275,6 +317,25 @@ void Scene::divideBubble(Bubble* bubble, int type, int index) {
 		bubble2->setTileMap(map);
 
 		bubbles.push_back(bubble2);
+
+		mostrarPoints = true;
+		posXpoints = posX;
+		posYpoints = posY;
+
+		lastBubble = 1;
+
+		if (lastBubble == 1 && contLastBubble != 0) {
+			totalPoints += 50 * contLastBubble;
+
+			if (contLastBubble == 2) contLastBubble = 4;
+			else if (contLastBubble == 4) contLastBubble = 8;
+		}
+		else {
+			
+			totalPoints += 50;
+			lastBubble = 1;
+			contLastBubble = 2;
+		}
 
 	}
 	if (type == 2) {
@@ -300,6 +361,24 @@ void Scene::divideBubble(Bubble* bubble, int type, int index) {
 
 		bubbles.push_back(bubble2);
 
+		mostrarPoints = true;
+		posXpoints = posX;
+		posYpoints = posY;
+
+		lastBubble = 2;
+
+		if (lastBubble == 2 && contLastBubble != 0) {
+
+			totalPoints += 100 * contLastBubble;
+
+			if (contLastBubble == 2) contLastBubble = 4;
+			else if (contLastBubble == 4) contLastBubble = 8;
+		}
+		else {
+			totalPoints += 100;
+			lastBubble = 2;
+			contLastBubble = 2;
+		}
 	}
 	if (type == 3) {
 
@@ -324,14 +403,53 @@ void Scene::divideBubble(Bubble* bubble, int type, int index) {
 
 		bubbles.push_back(bubble2);
 
+		mostrarPoints = true;
+		posXpoints = posX;
+		posYpoints = posY;
+
+		lastBubble = 3;
+
+		if (lastBubble == 3 && contLastBubble != 0) {
+
+			totalPoints += 150 * contLastBubble;
+
+			if (contLastBubble == 2) contLastBubble = 4;
+			else if (contLastBubble == 4) contLastBubble = 8;
+		}
+		else {
+			totalPoints += 150;
+			lastBubble = 3;
+			contLastBubble = 2;
+		}
 	}
 	if (type == 4) {
+
+		int posX = bubble->getPosX();
+		int posY = bubble->getPosY();
 
 		if (index >= 0 && index < bubbles.size()) {
 			bubbles.erase(bubbles.begin() + index);
 		}
-	}
 
+		mostrarPoints = true;
+		posXpoints = posX;
+		posYpoints = posY;
+
+		lastBubble = 4;
+
+		if (lastBubble == 4 && contLastBubble != 0) {
+
+			totalPoints += 200 * contLastBubble;
+
+			if (contLastBubble == 2) contLastBubble = 4;
+			else if (contLastBubble == 4) contLastBubble = 8;
+		}
+		else {
+			totalPoints += 200;
+			lastBubble = 4;
+			contLastBubble = 2;
+		}
+	}
 
 
 }

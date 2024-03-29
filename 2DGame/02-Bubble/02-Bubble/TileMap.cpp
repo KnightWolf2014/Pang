@@ -473,7 +473,7 @@ bool TileMap::collisionBubblePlayer(int& posPlayerX, int& posPlayerY, int& sizeP
 
 bool TileMap::collisionHook(const glm::ivec2& pos, const glm::ivec2& size, const int keyFrame) const {
 
-	int x0, x1, y0, y1, ay, ax;
+	int x0, x1, y0, y1;
 
 	x0 = pos.x / tileSize + 1;
 	x1 = (pos.x + size.x) / tileSize + 1;
@@ -493,7 +493,7 @@ bool TileMap::collisionHook(const glm::ivec2& pos, const glm::ivec2& size, const
 
 TileMap* TileMap::collisionHookNewMap(const glm::ivec2& pos, const glm::ivec2& size, const int keyFrame) {
 
-	int x0, x1, y0, y1, ay, ax;
+	int x0, x1, y0, y1;
 
 	x0 = pos.x / tileSize + 1;
 	x1 = (pos.x + size.x) / tileSize + 1;

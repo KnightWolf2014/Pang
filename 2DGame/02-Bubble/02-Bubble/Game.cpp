@@ -12,7 +12,7 @@ void Game::init()
 {
 
 	bPlay = true, start = false, gameOver = false, godMode = false, gameFinished = false;
-	viewType = 0, level = 0, lives = 3;
+	viewType = 0, level = 0, lives = 3, point = 0;
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
 
 	SoundProgram::instance().init();
@@ -61,10 +61,12 @@ void Game::render()
 			}
 
 			if (gameFinished) {
+
 				viewType = 4;
 				start = false;
 				engine->removeAllSoundSources();
 				menu->init(viewType);
+				menu->setScore(scene->getScore());
 			}
 		}
 	}
@@ -96,25 +98,25 @@ void Game::keyPressed(int key)
 			start = true;
 			level = 1;
 			viewType = 2;
-			scene->init(level, lives, godMode);
+			scene->init(level, lives, godMode, point);
 		}
 	}
 	if (key == GLFW_KEY_1) {
 		if (viewType == 2) {
 			level = 1;
-			scene->init(level, lives, godMode);
+			scene->init(level, lives, godMode, point);
 		}
 	}
 	if (key == GLFW_KEY_2) {
 		if (viewType == 2) {
 			level = 2;
-			scene->init(level, lives, godMode);
+			scene->init(level, lives, godMode, point);
 		}
 	}
 	if (key == GLFW_KEY_3) {
 		if (viewType == 2) {
 			level = 3;
-			scene->init(level, lives, godMode);
+			scene->init(level, lives, godMode, point);
 		}
 	}
 	if (key == GLFW_KEY_G) {

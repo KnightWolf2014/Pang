@@ -28,13 +28,14 @@ public:
 	Scene();
 	~Scene();
 
-	void init(const int& level, const int& lives, bool& godMode);
+	void init(const int& level, const int& lives, bool& godMode, int points);
 	void update(int deltaTime, bool& godMode);
 	void render();
 	bool gameOver();
 	bool gameFinished();
 	void updateTileMap(TileMap* mapV);
 	void burst();
+	int getScore();
 
 	
 private:
@@ -62,12 +63,14 @@ private:
 
 	int posPlayerX, posPlayerY, posBubbleX, posBubbleY, posHookX, posHookY;
 	int sizePlayer, sizeBubble;
-	int timerHitbox, timerTime;
-	bool activeHitbox, activeTime;
+	int timerHitbox, timerTime, timerScore;
+	bool activeHitbox, activeTime, activeScore;
 	bool god;
 	bool finish;
+	bool mostrarPoints;
 
 	int viewType;
+	int totalPoints, lastBubble, actualPoints, contLastBubble, posXpoints, posYpoints;
 };
 
 

@@ -52,6 +52,10 @@ void Menu::update(int deltaTime) {
 
 }
 
+void Menu::setScore(int score) {
+	totalPoints = score;
+}
+
 void Menu::render() {
 
 	glm::mat4 modelview;
@@ -71,6 +75,10 @@ void Menu::render() {
 			timeAccumulatorCoin = 0.0f;
 		}
 		if (showInsertCoin) text.render("INSERT COIN [space]", glm::vec2(330, 600), 52, glm::vec4(1, 0.5, 0, 1));
+	}
+
+	if (type == 4) {
+		text.render("TOTAL POINTS: " + std::to_string(totalPoints), glm::vec2(380, 300), 40, glm::vec4(1, 1, 0, 1));
 	}
 }
 

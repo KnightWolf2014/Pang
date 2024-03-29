@@ -31,9 +31,9 @@ void Bubble::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, in
 
 
 	if (type == 1) tamany = glm::ivec2(128, 128);
-	if (type == 2) tamany = glm::ivec2(80, 80);
-	if (type == 3) tamany = glm::ivec2(64, 64);
-	if (type == 4) tamany = glm::ivec2(32, 32);
+	if (type == 2) tamany = glm::ivec2(112, 112);
+	if (type == 3) tamany = glm::ivec2(96, 96);
+	if (type == 4) tamany = glm::ivec2(80, 80);
 
 
 	spritesheet.loadFromFile("images/Bubble.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -93,7 +93,6 @@ void Bubble::update(int deltaTime)
 	}
 
 
-
 		if (map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y))
 		{
 			while (map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y))
@@ -114,12 +113,78 @@ void Bubble::update(int deltaTime)
 		else posBubble.x -= 4;
 
 		if (map->bubbleCollisionMoveRight(posBubble, tamany, &posBubble.x)) {
-			posBubble.x -= 4;
+			while (map->bubbleCollisionMoveRight(posBubble, tamany, &posBubble.x))
+				posBubble.x -= 1;
 			direction = 1;
 		}
 		if (map->bubbleCollisionMoveLeft(posBubble, tamany, &posBubble.x)) {
-			posBubble.x += 4;
+			while (map->bubbleCollisionMoveLeft(posBubble, tamany, &posBubble.x))
+				posBubble.x += 1;
 			direction = 0;
+		}
+
+
+
+		if (map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y) && map->bubbleCollisionMoveRight(posBubble, tamany, &posBubble.x)) {
+			if (map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y)) {
+				while (map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y))
+					posBubble.y -= 1;
+				jump = 0;
+				energy = alturaMax - posBubble.y;
+
+				if (map->bubbleCollisionMoveRight(posBubble, tamany, &posBubble.x)) {
+					while (map->bubbleCollisionMoveRight(posBubble, tamany, &posBubble.x))
+						posBubble.x -= 1;
+					direction = 1;
+				}
+			}
+		}
+
+		if (map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y) && map->bubbleCollisionMoveLeft(posBubble, tamany, &posBubble.x)) {
+			if (map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y)) {
+				while (map->bubbleCollisionMoveDown(posBubble, tamany, &posBubble.y))
+					posBubble.y -= 1;
+				jump = 0;
+				energy = alturaMax - posBubble.y;
+
+
+				if (map->bubbleCollisionMoveLeft(posBubble, tamany, &posBubble.x)) {
+					while (map->bubbleCollisionMoveLeft(posBubble, tamany, &posBubble.x))
+						posBubble.x += 1;
+					direction = 0;
+				}
+			}
+		}
+
+		if (map->bubbleCollisionMoveUp(posBubble, tamany, &posBubble.y) && map->bubbleCollisionMoveRight(posBubble, tamany, &posBubble.x)) {
+			if (map->bubbleCollisionMoveUp(posBubble, tamany, &posBubble.y)) {
+				while (map->bubbleCollisionMoveUp(posBubble, tamany, &posBubble.y))
+					posBubble.y += 1;
+				jump = 0;
+				energy = 0;
+
+
+				if (map->bubbleCollisionMoveRight(posBubble, tamany, &posBubble.x)) {
+					while (map->bubbleCollisionMoveRight(posBubble, tamany, &posBubble.x))
+						posBubble.x -= 1;
+					direction = 1;
+				}
+			}
+		}
+
+		if (map->bubbleCollisionMoveUp(posBubble, tamany, &posBubble.y) && map->bubbleCollisionMoveLeft(posBubble, tamany, &posBubble.x)) {
+			if (map->bubbleCollisionMoveUp(posBubble, tamany, &posBubble.y)) {
+				while (map->bubbleCollisionMoveUp(posBubble, tamany, &posBubble.y))
+					posBubble.y += 1;
+				jump = 0;
+				energy = 0;
+
+				if (map->bubbleCollisionMoveLeft(posBubble, tamany, &posBubble.x)) {
+					while (map->bubbleCollisionMoveLeft(posBubble, tamany, &posBubble.x))
+						posBubble.x += 1;
+					direction = 0;
+				}
+			}
 		}
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBubble.x), float(tileMapDispl.y + posBubble.y)));

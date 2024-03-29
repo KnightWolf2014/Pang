@@ -18,12 +18,14 @@ public:
 	void init(const int& idScene);
 	void render();
 	void update(int deltaTime);
+	void setScore(int score);
 
 private:
 	void initShaders();
 
 private:
 	float currentTime, timeAccumulatorCoin;
+	int totalPoints;
 	bool showInsertCoin;
 	int type;
 	TexturedQuad *background;

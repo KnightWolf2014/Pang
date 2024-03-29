@@ -22,7 +22,7 @@ public:
 
 	void init(const int& level, const int& lives, const bool& godMode);
 	void render();
-	void update(int deltaTime, int& lives, bool& godMode);
+	void update(int deltaTime, int& lives, bool& godMode, int totalPoints);
 	int getCountDown();
 
 private:
@@ -31,6 +31,7 @@ private:
 private:
 	float currentTime, timeAccumulatorCoin, timeAccumulatorTimer;
 	bool showInsertCoin, god;
+	int points;
 	Quad* quad;
 	Texture texs[2];
 	TexturedQuad* texQuad[3];
