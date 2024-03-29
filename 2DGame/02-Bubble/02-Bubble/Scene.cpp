@@ -622,6 +622,9 @@ void Scene::collisionBubblePlayer() {
 
 			engine->play2D("sounds/Ouch.mp3");
 			--hp;
+
+			init(lvl, hp, god, actualPoints);
+
 			activeHitbox = false;
 		}
 	}
