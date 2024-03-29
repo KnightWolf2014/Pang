@@ -653,7 +653,6 @@ void Scene::collisionBubbleHook() {
 }
 
 
-
 void Scene::initShaders()
 {
 	Shader vShader, fShader;
