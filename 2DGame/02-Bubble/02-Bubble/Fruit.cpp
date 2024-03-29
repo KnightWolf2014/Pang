@@ -70,43 +70,43 @@ void Fruit::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, int
 	}
 	if (fruitType == 10) {
 		sprite->setAnimationSpeed(FALLING, 16);
-		sprite->addKeyframe(FALLING, glm::vec2(0.f, 0.1f));
+		sprite->addKeyframe(FALLING, glm::vec2(0.f, 0.5f));
 	}
 	if (fruitType == 11) {
 		sprite->setAnimationSpeed(FALLING, 16);
-		sprite->addKeyframe(FALLING, glm::vec2(0.1f, 0.1f));
+		sprite->addKeyframe(FALLING, glm::vec2(0.1f, 0.5f));
 	}
 	if (fruitType == 12) {
 		sprite->setAnimationSpeed(FALLING, 16);
-		sprite->addKeyframe(FALLING, glm::vec2(0.2f, 0.1f));
+		sprite->addKeyframe(FALLING, glm::vec2(0.2f, 0.5f));
 	}
 	if (fruitType == 13) {
 		sprite->setAnimationSpeed(FALLING, 16);
-		sprite->addKeyframe(FALLING, glm::vec2(0.3f, 0.1f));
+		sprite->addKeyframe(FALLING, glm::vec2(0.3f, 0.5f));
 	}
 	if (fruitType == 14) {
 		sprite->setAnimationSpeed(FALLING, 16);
-		sprite->addKeyframe(FALLING, glm::vec2(0.4f, 0.1f));
+		sprite->addKeyframe(FALLING, glm::vec2(0.4f, 0.5f));
 	}
 	if (fruitType == 15) {
 		sprite->setAnimationSpeed(FALLING, 16);
-		sprite->addKeyframe(FALLING, glm::vec2(0.5f, 0.1f));
+		sprite->addKeyframe(FALLING, glm::vec2(0.5f, 0.5f));
 	}
 	if (fruitType == 16) {
 		sprite->setAnimationSpeed(FALLING, 16);
-		sprite->addKeyframe(FALLING, glm::vec2(0.6f, 0.1f));
+		sprite->addKeyframe(FALLING, glm::vec2(0.6f, 0.5f));
 	}
 	if (fruitType == 17) {
 		sprite->setAnimationSpeed(FALLING, 16);
-		sprite->addKeyframe(FALLING, glm::vec2(0.7f, 0.1f));
+		sprite->addKeyframe(FALLING, glm::vec2(0.7f, 0.5f));
 	}
 	if (fruitType == 18) {
 		sprite->setAnimationSpeed(FALLING, 16);
-		sprite->addKeyframe(FALLING, glm::vec2(0.8f, 0.1f));
+		sprite->addKeyframe(FALLING, glm::vec2(0.8f, 0.5f));
 	}
 	if (fruitType == 19) {
 		sprite->setAnimationSpeed(FALLING, 16);
-		sprite->addKeyframe(FALLING, glm::vec2(0.9f, 0.1f));
+		sprite->addKeyframe(FALLING, glm::vec2(0.9f, 0.5f));
 	}*/
 
 	sprite->changeAnimation(0);
@@ -134,7 +134,7 @@ void Fruit::update(int deltaTime)
 	else falling = true;
 
 
-	sprite->setPosition(glm::vec2(float(posFruit.x), float(posFruit.y)));
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posFruit.x), float(tileMapDispl.y + posFruit.y)));
 
 }
 
@@ -151,7 +151,7 @@ void Fruit::setTileMap(TileMap* tileMap)
 void Fruit::setPosition(const glm::vec2& pos)
 {
 	posFruit = pos;
-	sprite->setPosition(glm::vec2(float(posFruit.x), float(posFruit.y)));
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posFruit.x), float(tileMapDispl.y + posFruit.y)));
 }
 
 int Fruit::getPosX() {
