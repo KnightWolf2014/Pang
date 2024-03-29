@@ -644,8 +644,11 @@ void Scene::collisionBubbleHook() {
 		posBubbleY = bubble->getPosY();
 		sizeBubble = bubble->getSize();
 
-		if (map->collisionBubbleHook(posBubbleX, posBubbleY, sizeBubble, hookPos, glm::ivec2(27, 567), keyFrame)) 
-			divideBubble(bubble,type,index);
+		if (map->collisionBubbleHook(posBubbleX, posBubbleY, sizeBubble, hookPos, glm::ivec2(27, 567), keyFrame)) {
+			divideBubble(bubble, type, index);
+			player->setIsShooting(false);
+			break;
+		}
 	}
 }
 

@@ -31,6 +31,8 @@ public:
 	int getHookKeyFrame();
 
 	bool isShooting();
+	void setIsShooting(bool val);
+
 
 	glm::ivec2 getHookPos();
 	
