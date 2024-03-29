@@ -46,6 +46,7 @@ private:
 	void initShaders();
 	void collisionBubblePlayer();
 	void collisionBubbleHook();
+	void collisionBubbleDoubleHook();
 	void collisionFruitPlayer();
 	void collisionPowerPlayer();
 	void divideBubble(Bubble* bubble, int type, int index);

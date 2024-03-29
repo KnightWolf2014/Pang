@@ -24,6 +24,10 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) {
 	timerShootAnim = TIME_EXIT_ANIM;
 	texProgram = shaderProgram;
 
+	activeDoubleHook = false;
+	shootingLeft = false;
+	shootingRight = false;
+
 	engine = SoundProgram::instance().getSoundEngine();
 
 	spritesheet.loadFromFile("images/playerSheet.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -81,24 +85,74 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) {
 	hook->init(glm::vec2(0), texProgram);
 	hook->setTileMap(map);
 
+	doubleHookLeft = new Hook();
+	doubleHookLeft->init(glm::vec2(0), texProgram);
+	doubleHookLeft->setTileMap(map);
+	doubleHookRight = new Hook();
+	doubleHookRight->init(glm::vec2(0), texProgram);
+	doubleHookRight->setTileMap(map);
 }
+
 
 void Player::update(int deltaTime)
 {
 	if (shooting) {
-		if (hook->stopShooting() ) {
-			shooting = false;
 
+		if (activeDoubleHook) {
 
-			TileMap* newTileMap = hook->updateIfMapDestroyed();
+			bool stopLeft = doubleHookLeft->stopShooting();
+			bool stopRight = doubleHookRight->stopShooting();
 
-			if (newTileMap != NULL) {
-				setTileMap(newTileMap);
-				Game::instance().updateTileMap(newTileMap);
+			TileMap* newTileMap;
+
+			if (stopLeft) {
+				shootingLeft = false;
+				newTileMap = doubleHookLeft->updateIfMapDestroyed();
+
+				if (newTileMap != NULL) {
+					setTileMap(newTileMap);
+					Game::instance().updateTileMap(newTileMap);
+				}
+
+			}
+			else {
+				doubleHookLeft->update(deltaTime);
+				shootingLeft = true;
 			}
 
+			if (stopRight) {
+				shootingRight = false;
+				newTileMap = doubleHookRight->updateIfMapDestroyed();
+
+				if (newTileMap != NULL) {
+					setTileMap(newTileMap);
+					Game::instance().updateTileMap(newTileMap);
+				}
+
+			}
+			else {
+				doubleHookRight->update(deltaTime);
+				shootingRight = true;
+			}
+
+			if (stopLeft && stopRight) activeDoubleHook = false;
+
 		}
-		else hook->update(deltaTime);
+		else {
+
+			if (hook->stopShooting()) {
+				shooting = false;
+
+				TileMap* newTileMap = hook->updateIfMapDestroyed();
+
+				if (newTileMap != NULL) {
+					setTileMap(newTileMap);
+					Game::instance().updateTileMap(newTileMap);
+				}
+
+			}
+			else if (!shootingRight)  hook->update(deltaTime);
+		}
 	}
 
 	sprite->update(deltaTime);
@@ -129,10 +183,17 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(SHOOTING_LEFT);
 		else if (right_orientation && sprite->animation() != SHOOTING_RIGHT)
 			sprite->changeAnimation(SHOOTING_RIGHT);
-
 		shooting = true;
 		activeShootAnim = true;
-		hook->setPosition(glm::vec2(posPlayer));
+
+		if (activeDoubleHook) {
+			if (!shootingLeft) doubleHookLeft->setPosition(glm::vec2(posPlayer.x - SIZE_PLAYER_X, posPlayer.y));
+			if (!shootingRight) doubleHookRight->setPosition(glm::vec2(posPlayer.x + SIZE_PLAYER_X, posPlayer.y));
+
+		}
+		else hook->setPosition(glm::vec2(posPlayer));
+
+
 
 		engine->play2D("sounds/Shoot.mp3");
 
@@ -252,7 +313,15 @@ void Player::update(int deltaTime)
 
 void Player::render()
 {
-	if (shooting) hook->render();
+	if (shooting) {
+		if (activeDoubleHook) {
+			if (shootingLeft) doubleHookLeft->render();
+			if (shootingRight) doubleHookRight->render();
+
+		}
+		else hook->render();
+	}
+
 	sprite->render();
 }
 
@@ -297,6 +366,13 @@ int Player::getHookKeyFrame() {
 	return hook->getKeyFrame();
 }
 
+int Player::getLeftHookKeyFrame() {
+	return doubleHookLeft->getKeyFrame();
+}
+int Player::getRightHookKeyFrame() {
+	return doubleHookRight->getKeyFrame();
+}
+
 bool Player::isShooting() {
 	return shooting;
 }
@@ -304,3 +380,31 @@ bool Player::isShooting() {
 void Player::setIsShooting(bool val) {
 	shooting = false;
 }
+
+void Player::setActiveDoubleHook(bool val) {
+	activeDoubleHook = val;
+}
+
+glm::ivec2 Player::getLeftHookPos() {
+	return glm::ivec2(doubleHookLeft->getPosX(), doubleHookLeft->getPosY());
+
+}
+glm::ivec2 Player::getRightHookPos() {
+	return glm::ivec2(doubleHookRight->getPosX(), doubleHookRight->getPosY());
+
+}
+
+bool Player::isActiveDoubleHook() {
+	return activeDoubleHook;
+}
+
+void Player::setShootingLeftHook(bool value) {
+	shootingLeft = value;
+
+}
+void Player::setShootingRightHook(bool value) {
+	shootingRight = value;
+}
+
+bool Player::getIsShootingLeft() { return shootingLeft; }
+bool Player::getIsShootingRight() { return shootingRight; }

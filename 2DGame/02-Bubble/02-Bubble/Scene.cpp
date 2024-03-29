@@ -231,7 +231,12 @@ void Scene::update(int deltaTime, bool& godMode)
 	collisionPowerPlayer();
 
 
-	if(player->isShooting()) collisionBubbleHook();
+	if (player->isShooting()) {
+
+		if (player->isActiveDoubleHook()) collisionBubbleDoubleHook();
+		else collisionBubbleHook();
+
+	}
 
 	deleteExteriorBubbles();
 
@@ -636,7 +641,7 @@ void Scene::equipWeapon() {
 }
 
 void Scene::doubleHook() {
-
+	player->setActiveDoubleHook(true);
 	cout << "doubleHook" << endl;
 	cout << "--------------" << endl;
 }
@@ -701,6 +706,45 @@ void Scene::collisionPowerPlayer() {
 		}
 
 	}
+}
+
+void Scene::collisionBubbleDoubleHook() {
+	glm::ivec2 hookLeftPos = player->getLeftHookPos();
+	glm::ivec2 hookRightPos = player->getRightHookPos();
+
+	int keyFrameLeft = player->getLeftHookKeyFrame();
+	int keyFrameRight = player->getRightHookKeyFrame();
+
+	for (int index = 0; index < bubbles.size(); ++index) {
+		Bubble* bubble = bubbles[index];
+		int type = bubble->getType();
+
+		posBubbleX = bubble->getPosX();
+		posBubbleY = bubble->getPosY();
+		sizeBubble = bubble->getSize();
+
+		if (player->getIsShootingLeft()) {
+			if (map->collisionBubbleHook(posBubbleX, posBubbleY, sizeBubble, hookLeftPos, glm::ivec2(27, 567), keyFrameLeft)) {
+				divideBubble(bubble, type, index);
+				player->setShootingLeftHook(false);
+				break;
+			}
+
+		}
+
+		if (player->getIsShootingRight()) {
+			if (map->collisionBubbleHook(posBubbleX, posBubbleY, sizeBubble, hookRightPos, glm::ivec2(27, 567), keyFrameRight)) {
+				divideBubble(bubble, type, index);
+				player->setShootingRightHook(false);
+				break;
+			}
+		}
+
+
+	}
+
+
+
 }
 
 void Scene::collisionFruitPlayer() {

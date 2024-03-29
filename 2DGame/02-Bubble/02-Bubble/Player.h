@@ -25,6 +25,22 @@ public:
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
 
+	glm::ivec2 getLeftHookPos();
+	glm::ivec2 getRightHookPos();
+
+	void setShootingLeftHook(bool value);
+	void setShootingRightHook(bool value);
+
+	int getLeftHookKeyFrame();
+	int getRightHookKeyFrame();
+
+	bool isActiveDoubleHook();
+
+	bool getIsShootingLeft();
+	bool getIsShootingRight();
+
+	void setActiveDoubleHook(bool val);
+
 	int getPosX();
 	int getPosY();
 	int getSize();
@@ -43,6 +59,8 @@ private:
 	int timerExitStairs;
 	int timerShootAnim;
 
+	bool shootingLeft, shootingRight, activeDoubleHook;
+
 	ISoundEngine* engine;
 
 	Texture spritesheet;
@@ -50,6 +68,9 @@ private:
 	TileMap *map;
 
 	Hook* hook;
+
+	Hook* doubleHookLeft;
+	Hook* doubleHookRight;
 
 	ShaderProgram texProgram;
 
