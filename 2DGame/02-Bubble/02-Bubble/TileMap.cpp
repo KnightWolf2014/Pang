@@ -534,3 +534,48 @@ TileMap* TileMap::collisionHookNewMap(const glm::ivec2& pos, const glm::ivec2& s
 void TileMap::updateTileMap(const glm::vec2& minCoords, ShaderProgram& program) {
 	prepareArrays(minCoords, program);
 }
+
+
+bool TileMap::collisionBubbleHook(int& posBubbleX, int& posBubbleY, int& sizeBubbl, const glm::ivec2& posH, const glm::ivec2& sizeH, const int keyFrame) const {
+	
+	int xh0, xh1, yh0, yh1;
+	xh0 = posH.x / tileSize + 1;
+	xh1 = (posH.x + sizeH.x) / tileSize + 1;
+	yh1 = (posH.y + 96) / tileSize - 1;
+	yh0 = (posH.y - (sizeH.y - 96) * (keyFrame - 1) / 70) / tileSize;
+
+	int xb0, xb1, yb0, yb1;
+
+	xb0 = posBubbleX / tileSize;
+	xb1 = (posBubbleX + posBubbleX - 1) / tileSize;
+	yb0 = posBubbleY / tileSize;
+	yb1 = (posBubbleY + sizeBubbl - 1) / tileSize;
+
+	int xMedio = (xb0 + xb1) / 2;
+
+	for (int x = xMedio; x >= xb0; x--) {
+		for (int y = yb0; y <= yb1; y++) {
+
+			int dx = posBubbleX + sizeBubbl / 2 - (x * tileSize + tileSize / 2);
+			int dy = posBubbleY + sizeBubbl / 2 - (y * tileSize + tileSize / 2);
+			int distanceSquared = dx * dx + dy * dy;
+
+			int radiusSquared = (sizeBubbl / 2) * (sizeBubbl / 2);
+			if (distanceSquared <= radiusSquared && collisionBubbleHook2(xh0,xh1,yh0,yh1,x,y))
+				return true;
+		}
+	}
+
+	return false;
+}
+
+bool TileMap::collisionBubbleHook2(int x0, int x1, int y0, int y1, int xBubble, int yBubble) const {
+	
+	for (int y = y0; y <= y1; y++) {
+		for (int x = x0; x <= x1; ++x) {
+			if (y * mapSize.x + x == yBubble * mapSize.x + xBubble) return true;
+		}
+	}
+
+	return false;
+}

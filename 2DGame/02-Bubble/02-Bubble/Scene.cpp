@@ -185,6 +185,8 @@ void Scene::update(int deltaTime, bool& godMode)
 
 	collisionBubbleHook();
 
+	
+
 	if (!godMode) {
 		collisionBubblePlayer();
 		timerOut();
@@ -233,94 +235,101 @@ void Scene::timerOut() {
 	}
 }
 
+void Scene::divideBubble(Bubble* bubble, int type, int index) {
+
+	if (type == 1) {
+
+		int posX = bubble->getPosX();
+		int posY = bubble->getPosY();
+
+		if (index >= 0 && index < bubbles.size()) {
+			bubbles.erase(bubbles.begin() + index);
+		}
+
+		Bubble* bubble1 = new Bubble();
+		bubble1->init(glm::ivec2(0, 0), texProgram, 2, 1);
+		bubble1->setPosition(glm::vec2(posX, posY));
+		bubble1->setTileMap(map);
+
+		bubbles.push_back(bubble1);
+
+		Bubble* bubble2 = new Bubble();
+		bubble2->init(glm::ivec2(0, 0), texProgram, 2, 0);
+		bubble2->setPosition(glm::vec2(posX, posY));
+		bubble2->setTileMap(map);
+
+		bubbles.push_back(bubble2);
+
+	}
+	if (type == 2) {
+
+		int posX = bubble->getPosX();
+		int posY = bubble->getPosY();
+
+		if (index >= 0 && index < bubbles.size()) {
+			bubbles.erase(bubbles.begin() + index);
+		}
+
+		Bubble* bubble1 = new Bubble();
+		bubble1->init(glm::ivec2(0, 0), texProgram, 3, 1);
+		bubble1->setPosition(glm::vec2(posX, posY));
+		bubble1->setTileMap(map);
+
+		bubbles.push_back(bubble1);
+
+		Bubble* bubble2 = new Bubble();
+		bubble2->init(glm::ivec2(0, 0), texProgram, 3, 0);
+		bubble2->setPosition(glm::vec2(posX, posY));
+		bubble2->setTileMap(map);
+
+		bubbles.push_back(bubble2);
+
+	}
+	if (type == 3) {
+
+		int posX = bubble->getPosX();
+		int posY = bubble->getPosY();
+
+		if (index >= 0 && index < bubbles.size()) {
+			bubbles.erase(bubbles.begin() + index);
+		}
+
+		Bubble* bubble1 = new Bubble();
+		bubble1->init(glm::ivec2(0, 0), texProgram, 4, 1);
+		bubble1->setPosition(glm::vec2(posX, posY));
+		bubble1->setTileMap(map);
+
+		bubbles.push_back(bubble1);
+
+		Bubble* bubble2 = new Bubble();
+		bubble2->init(glm::ivec2(0, 0), texProgram, 4, 0);
+		bubble2->setPosition(glm::vec2(posX, posY));
+		bubble2->setTileMap(map);
+
+		bubbles.push_back(bubble2);
+
+	}
+	if (type == 4) {
+
+		if (index >= 0 && index < bubbles.size()) {
+			bubbles.erase(bubbles.begin() + index);
+		}
+	}
+
+}
+
+
+
 void Scene::burst() {
-
-
 
 	for (int index = 0; index < bubbles.size(); ++index) {
 		Bubble* bubble = bubbles[index];
 		int type = bubble->getType();
 
 		//cout << "type: " << type << endl;
+		
+		divideBubble(bubble,type,index);
 
-		if (type == 1) {
-
-			int posX = bubble->getPosX();
-			int posY = bubble->getPosY();
-
-			if (index >= 0 && index < bubbles.size()) {
-				bubbles.erase(bubbles.begin() + index);
-			}
-
-			Bubble* bubble1 = new Bubble();
-			bubble1->init(glm::ivec2(0, 0), texProgram, 2, 1);
-			bubble1->setPosition(glm::vec2(posX, posY));
-			bubble1->setTileMap(map);
-
-			bubbles.push_back(bubble1);
-
-			Bubble* bubble2 = new Bubble();
-			bubble2->init(glm::ivec2(0, 0), texProgram, 2, 0);
-			bubble2->setPosition(glm::vec2(posX, posY));
-			bubble2->setTileMap(map);
-
-			bubbles.push_back(bubble2);
-
-		}
-		if (type == 2) {
-
-			int posX = bubble->getPosX();
-			int posY = bubble->getPosY();
-
-			if (index >= 0 && index < bubbles.size()) {
-				bubbles.erase(bubbles.begin() + index);
-			}
-
-			Bubble* bubble1 = new Bubble();
-			bubble1->init(glm::ivec2(0, 0), texProgram, 3, 1);
-			bubble1->setPosition(glm::vec2(posX, posY));
-			bubble1->setTileMap(map);
-
-			bubbles.push_back(bubble1);
-
-			Bubble* bubble2 = new Bubble();
-			bubble2->init(glm::ivec2(0, 0), texProgram, 3, 0);
-			bubble2->setPosition(glm::vec2(posX, posY));
-			bubble2->setTileMap(map);
-
-			bubbles.push_back(bubble2);
-
-		}
-		if (type == 3) {
-
-			int posX = bubble->getPosX();
-			int posY = bubble->getPosY();
-
-			if (index >= 0 && index < bubbles.size()) {
-				bubbles.erase(bubbles.begin() + index);
-			}
-
-			Bubble* bubble1 = new Bubble();
-			bubble1->init(glm::ivec2(0, 0), texProgram, 4, 1);
-			bubble1->setPosition(glm::vec2(posX, posY));
-			bubble1->setTileMap(map);
-
-			bubbles.push_back(bubble1);
-
-			Bubble* bubble2 = new Bubble();
-			bubble2->init(glm::ivec2(0, 0), texProgram, 4, 0);
-			bubble2->setPosition(glm::vec2(posX, posY));
-			bubble2->setTileMap(map);
-
-			bubbles.push_back(bubble2);
-
-		}
-		if (type == 4) {
-
-			if (index >= 0 && index < bubbles.size()) {
-				bubbles.erase(bubbles.begin() + index);
-			}
-		}
 
 		cout << "index: " << index << endl;
 		//cout << "maxRec: " << maxRec << endl;
@@ -357,13 +366,20 @@ void Scene::collisionBubblePlayer() {
 
 void Scene::collisionBubbleHook() {
 
-	/*posBubbleX = bubble->getPosX();
-	posBubbleY = bubble->getPosY();
-	sizeBubble = bubble->getSize();
+	glm::ivec2 hookPos = player->getHookPos();
+	int keyFrame = player->getHookKeyFrame();
 
-	posHookX = hook->getPosX();
-	posHookY = hook->getPosY();*/
+	for (int index = 0; index < bubbles.size(); ++index) {
+		Bubble* bubble = bubbles[index];
+		int type = bubble->getType();
 
+		posBubbleX = bubble->getPosX();
+		posBubbleY = bubble->getPosY();
+		sizeBubble = bubble->getSize();
+
+		if (map->collisionBubbleHook(posBubbleX, posBubbleY, sizeBubble, hookPos, glm::ivec2(27, 567), keyFrame)) 
+			divideBubble(bubble,type,index);
+	}
 }
 
 

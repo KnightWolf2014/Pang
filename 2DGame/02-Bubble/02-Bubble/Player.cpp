@@ -286,3 +286,11 @@ int Player::getPosY() {
 int Player::getSize() {
 	return 96;
 }
+
+glm::ivec2 Player::getHookPos() {
+	return glm::ivec2(hook->getPosX(), hook->getPosY());
+}
+
+int Player::getHookKeyFrame() {
+	return hook->getKeyFrame();
+}

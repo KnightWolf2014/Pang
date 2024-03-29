@@ -28,6 +28,9 @@ public:
 	int getPosX();
 	int getPosY();
 	int getSize();
+	int getHookKeyFrame();
+
+	glm::ivec2 getHookPos();
 	
 private:
 	bool falling, inStairs, activeExitStairs, activeShootAnim, left_orientation, right_orientation, shooting;

@@ -23,6 +23,7 @@ public:
 
 	int getPosX();
 	int getPosY();
+	int getKeyFrame();
 
 
 	TileMap* updateIfMapDestroyed();

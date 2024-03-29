@@ -12,7 +12,7 @@ void Hook::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) {
 	sprite = Sprite::createSprite(glm::ivec2(27, 567), glm::vec2(1.0 / 70.0, 1), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(1);
 
-	sprite->setAnimationSpeed(ACTION, 48);
+	sprite->setAnimationSpeed(ACTION, 64);
 
 	engine = SoundProgram::instance().getSoundEngine();
 
@@ -68,4 +68,9 @@ int Hook::getPosX() {
 
 int Hook::getPosY() {
 	return posHook.y;
+}
+
+
+int Hook::getKeyFrame() {
+	return sprite->getCurrentKeyFrame();
 }

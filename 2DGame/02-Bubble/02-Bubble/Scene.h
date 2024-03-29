@@ -38,11 +38,11 @@ private:
 	void initShaders();
 	void collisionBubblePlayer();
 	void collisionBubbleHook();
+	void divideBubble(Bubble* bubble, int type, int index);
 	void timerOut();
 
 private:
 	TileMap *map;
-	Hook* hook;
 	Player* player;
 	Levels *levels;
 	//Bubble *bubble;
