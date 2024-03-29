@@ -251,6 +251,8 @@ void Scene::timerOut() {
 
 void Scene::divideBubble(Bubble* bubble, int type, int index) {
 
+	engine->play2D("sounds/BubblePop.mp3");
+
 	if (type == 1) {
 
 		int posX = bubble->getPosX();
@@ -329,6 +331,8 @@ void Scene::divideBubble(Bubble* bubble, int type, int index) {
 			bubbles.erase(bubbles.begin() + index);
 		}
 	}
+
+
 
 }
 
