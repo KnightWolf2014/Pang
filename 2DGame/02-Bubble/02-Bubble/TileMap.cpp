@@ -378,7 +378,7 @@ bool TileMap::collisionStairs(const glm::ivec2& pos, const glm::ivec2& size, int
 	for (int y = y0; y <= y1; y++) {
 		for (int x = x0; x <= x1; ++x) {
 			if (map[y * mapSize.x + x] == 3 || map[y * mapSize.x + x] == 14) {
-				posX = x*tileSize-size.x/2;
+				posX = x*tileSize-size.x/3;
 				return true;
 			}
 		}
