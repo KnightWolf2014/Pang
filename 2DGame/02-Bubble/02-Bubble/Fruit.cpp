@@ -29,8 +29,9 @@ void Fruit::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, int
 	sprite->setNumberAnimations(1);
 
 	//if (fruitType == 0) {
-		sprite->setAnimationSpeed(FALLING, 16);
+		sprite->setAnimationSpeed(FALLING, 8);
 		sprite->addKeyframe(FALLING, glm::vec2(0.f, 0.f));
+
 	/* }
 	if (fruitType == 1) {
 		sprite->setAnimationSpeed(FALLING, 16);
@@ -109,7 +110,7 @@ void Fruit::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, int
 		sprite->addKeyframe(FALLING, glm::vec2(0.9f, 0.5f));
 	}*/
 
-	sprite->changeAnimation(0);
+	sprite->changeAnimation(FALLING);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + 3 * posFruit.x), float(tileMapDispl.y + 3 * posFruit.y)));
 

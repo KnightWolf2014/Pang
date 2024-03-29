@@ -124,16 +124,22 @@ void Game::keyPressed(int key)
 
 		cout << "godmode: " << godMode << endl;
 	}
-	if (key == GLFW_KEY_U) {
+	if (key == GLFW_KEY_T) {
 		if (viewType == 2) {
-			cout << "burst!" << endl;
-			scene->burst();
+			cout << "STOP!" << endl;
+			scene->stop();
 		}
 	}
 	if (key == GLFW_KEY_Y) {
 		if (viewType == 2) {
-			cout << "STOP!" << endl;
-			scene->stop();
+			cout << "DoubleHook!" << endl;
+			scene->doubleHook();
+		}
+	}
+	if (key == GLFW_KEY_U) {
+		if (viewType == 2) {
+			cout << "Burst!" << endl;
+			scene->burst();
 		}
 	}
 	if (key == GLFW_KEY_LEFT_CONTROL) {

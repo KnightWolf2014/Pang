@@ -9,7 +9,7 @@
 #define SIZE_POWER_X 38
 #define SIZE_POWER_y 38
 
-enum FruitAnim {
+enum PowerAnim {
 	FALLING
 };
 
@@ -23,9 +23,9 @@ void Power::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, int
 	cout << "typeFruit: " << powerType << endl;
 
 
-	spritesheet.loadFromFile("images/Power.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/playerSheet.png", TEXTURE_PIXEL_FORMAT_RGBA);
 
-	sprite = Sprite::createSprite(glm::ivec2(SIZE_POWER_X, SIZE_POWER_y), glm::vec2(0.33, 1), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(SIZE_POWER_X, SIZE_POWER_y), glm::vec2(0.2, 0.2), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(1);
 
 	//if (powerType == 0) {
@@ -42,7 +42,7 @@ void Power::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, int
 	}*/
 	
 
-	sprite->changeAnimation(0);
+	sprite->changeAnimation(FALLING);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + 3 * posPower.x), float(tileMapDispl.y + 3 * posPower.y)));
 

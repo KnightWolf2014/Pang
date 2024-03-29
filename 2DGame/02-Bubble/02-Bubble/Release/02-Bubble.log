@@ -1,28 +1,15 @@
-﻿  Scene.cpp
+﻿  Power.cpp
 J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Game.h(12,1): warning C4005: 'SCREEN_HEIGHT': redefinición de macro
-  (compilando archivo de origen "Scene.cpp")
+  (compilando archivo de origen "Power.cpp")
   J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\UI.h(15,1):
   vea la definición anterior de 'SCREEN_HEIGHT'
   
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(349,28): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(356,28): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(361,28): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(383,27): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(452,27): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(494,27): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(536,27): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(584,28): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(606,28): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(622,28): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(643,28): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(673,28): warning C4018: '<': no coinciden signed/unsigned
-J:\Escritorio\Pang\2DGame\02-Bubble\02-Bubble\Scene.cpp(717,28): warning C4018: '<': no coinciden signed/unsigned
 SOIL.lib(SOIL.obj) : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificación '/OPT:ICF'
 LINK : warning LNK4098: la biblioteca predeterminada'MSVCRTD' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
   Generando código
-  2 of 831 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+  1 of 831 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    8 functions had inline decision re-evaluated but remain unchanged
+    9 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
 SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_DXT.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_helper.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
